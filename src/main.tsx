@@ -1,3 +1,10 @@
 import { createRoot } from 'react-dom/client'
+import { Test } from './Test'
 
-createRoot(document.getElementById('main')!).render(<div>Hi hello</div>)
+const rootDiv = document.getElementById('main')!
+
+createRoot(rootDiv).render(
+  <div>
+    <Test />
+  </div>,
+)

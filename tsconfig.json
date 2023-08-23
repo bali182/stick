@@ -4,7 +4,7 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "jsx": "react-jsx",
-    "target": "ES2021",
+    "target": "ES2022",
     "sourceMap": true,
     "esModuleInterop": true,
     "strict": true,
@@ -21,7 +21,7 @@
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
-    "lib": ["ES2021", "DOM"]
+    "lib": ["ES2022", "DOM"]
   },
-  "files": ["src/main.tsx"]
+  "include": ["src/**/*"]
 }
