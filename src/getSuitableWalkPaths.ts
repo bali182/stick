@@ -1,5 +1,16 @@
-import { Chord, WalkPath } from './types'
+import { getTotalNoteDistance } from './getTotalNoteDistance'
+import { getWalkingBassBar } from './getWalkingBassBar'
+import { Chord, PitchedNote, SolvedWalkPath, WalkPath } from './types'
 
-export function getSuitableWalkPaths(current: Chord, next: Chord, paths: WalkPath[]): WalkPath[] {
-  return []
+export function getPossibleWalkingBassBars(current: Chord, next: Chord, paths: WalkPath[]): SolvedWalkPath[] {
+  const distances = new Map<SolvedWalkPath, number>()
+  const solvedPaths = paths.map((path): SolvedWalkPath => [path, getWalkingBassBar(current, next, path)])
+
+  solvedPaths.forEach((solvedPath) => {
+    const [, notes] = solvedPath
+    const notesWithNextRoot = [...notes.map(([, n]) => n).filter((n): n is PitchedNote => n !== 'REST'), next.root]
+    distances.set(solvedPath, getTotalNoteDistance(notesWithNextRoot))
+  })
+
+  return solvedPaths.sort((a, b) => distances.get(a)! - distances.get(b)!)
 }

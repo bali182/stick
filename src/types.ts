@@ -1,7 +1,6 @@
 export type WalkPath = {
   id: string
   steps: Step[]
-  target?: Pitch
 }
 
 export type Duration = 'WHOLE' | 'HALF' | 'QARTER' | 'EIGHT' | 'SIXTEENTH'
@@ -43,6 +42,7 @@ export type Note = {
 export type PitchedNote = Note & { pitch: number }
 
 export type TimedNote = [Duration, PitchedNote | 'REST']
+export type SolvedWalkPath = [WalkPath, TimedNote[]]
 
 export type Chord = {
   root: PitchedNote

@@ -1,4 +1,4 @@
-import { Accidental, Note, NoteName } from './types'
+import { Accidental, Note, NoteName, PitchedNote } from './types'
 
 type InternalNote = WholeInternalNote | HalfInternalNote
 
@@ -20,7 +20,7 @@ const CHROMATIC_SCALE: InternalNote[] = [
   { type: 'whole', name: 'B' },
 ]
 
-export function getNoteIndex(note: Note): number {
+export function idx(note: Note): number {
   const mainIdx = CHROMATIC_SCALE.findIndex((n) => n.type === 'whole' && n.name === note.name)
   if (note.accidental === undefined) {
     return mainIdx
@@ -37,7 +37,7 @@ export function getNoteIndex(note: Note): number {
 
 export function t(note: Note, amount: number, acc: Accidental = '#'): Note {
   const accidental = note.accidental ?? acc
-  const transposedNoteIndex = getNoteIndex(note) + amount
+  const transposedNoteIndex = idx(note) + amount
   const newNoteIndex = transposedNoteIndex % CHROMATIC_SCALE.length
   const newInternalNote = CHROMATIC_SCALE[newNoteIndex]!
   if (newInternalNote.type === 'whole') {
@@ -46,4 +46,10 @@ export function t(note: Note, amount: number, acc: Accidental = '#'): Note {
   return accidental === '#'
     ? { name: newInternalNote.sharpName, accidental: '#' }
     : { name: newInternalNote.flatName, accidental: 'b' }
+}
+
+export function d(a: PitchedNote, b: PitchedNote): number {
+  const aValue = (a.pitch - 1) * CHROMATIC_SCALE.length
+  const bValue = (b.pitch - 1) * CHROMATIC_SCALE.length
+  return aValue - bValue
 }

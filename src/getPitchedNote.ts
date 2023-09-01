@@ -1,4 +1,4 @@
-import { getNoteIndex, t } from './note'
+import { idx, t } from './note'
 import { Chord, ChordTone, Note, Pitch, PitchedNote } from './types'
 
 function getChordTone(chord: Chord, tone: ChordTone): Note {
@@ -28,8 +28,8 @@ export function getPitchedNote(current: Chord, next: Chord, pitch: Pitch): Pitch
   const root = chord.root
   const chordTone = getChordTone(chord, pitch.chordTone)
   const targetNote = t(chordTone, pitch.interval, chordTone.accidental)
-  const rootIndex = getNoteIndex(root)
-  const noteIndex = getNoteIndex(targetNote)
+  const rootIndex = idx(root)
+  const noteIndex = idx(targetNote)
   switch (pitch.direction) {
     case 'NONE':
       return getNoteWithNoneDirection(targetNote, current, next)
