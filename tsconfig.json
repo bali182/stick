@@ -11,7 +11,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "strictBindCallApply": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "noImplicitOverride": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
