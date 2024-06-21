@@ -1,8 +1,8 @@
 import { getTotalNoteDistance } from './getTotalNoteDistance'
 import { getWalkingBassBar } from './getWalkingBassBar'
-import { Chord, PitchedNote, SolvedWalkPath, WalkPath } from './types'
+import { Chord, PitchedNote, SolvedWalkPath, Transition } from './types'
 
-export function getPossibleWalkingBassBars(current: Chord, next: Chord, paths: WalkPath[]): SolvedWalkPath[] {
+export function getPossibleWalkingBassBars(current: Chord, next: Chord, paths: Transition[]): SolvedWalkPath[] {
   const distances = new Map<SolvedWalkPath, number>()
   const solvedPaths = paths.map((path): SolvedWalkPath => [path, getWalkingBassBar(current, next, path)])
 

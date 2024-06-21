@@ -1,9 +1,9 @@
-import { Accidental, Note, NoteName, PitchedNote } from './types'
+import { Accidental, Note, SimpleNoteName, PitchedNote } from './types'
 
 type InternalNote = WholeInternalNote | HalfInternalNote
 
-type WholeInternalNote = { type: 'whole'; name: NoteName }
-type HalfInternalNote = { type: 'half'; sharpName: NoteName; flatName: NoteName }
+type WholeInternalNote = { type: 'whole'; name: SimpleNoteName }
+type HalfInternalNote = { type: 'half'; sharpName: SimpleNoteName; flatName: SimpleNoteName }
 
 const CHROMATIC_SCALE: InternalNote[] = [
   { type: 'whole', name: 'C' },

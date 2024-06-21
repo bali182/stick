@@ -17,10 +17,15 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.7",
+    "jotai": "^2.8.3",
     "nanoid": "^4.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.8.0",
+    "react-select": "^5.8.0",
+    "react-tiny-popover": "^8.0.4",
+    "tonal": "^6.0.1",
+    "uniqolor": "^1.1.1",
     "vextab": "^3.0.6"
   },
   "devDependencies": {

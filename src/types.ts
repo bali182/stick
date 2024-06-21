@@ -1,5 +1,6 @@
-export type WalkPath = {
+export type Transition = {
   id: string
+  name: string
   steps: Step[]
 }
 
@@ -20,7 +21,26 @@ export type Pitch = {
   direction: ChordToneDirection
 }
 
-export type NoteName = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B'
+export type NoteName =
+  | 'C'
+  | 'C#'
+  | 'Db'
+  | 'D'
+  | 'D#'
+  | 'Eb'
+  | 'E'
+  | 'F'
+  | 'F#'
+  | 'Gb'
+  | 'G'
+  | 'G#'
+  | 'Ab'
+  | 'A'
+  | 'A#'
+  | 'Bb'
+  | 'B'
+
+export type SimpleNoteName = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B'
 export type Accidental = '#' | 'b'
 export type ChordType =
   | 'MAJOR'
@@ -35,18 +55,30 @@ export type ChordType =
   | 'AUGMENTED-SEVENTH'
 
 export type Note = {
-  name: NoteName
+  name: SimpleNoteName
   accidental?: Accidental
 }
 
 export type PitchedNote = Note & { pitch: number }
 
 export type TimedNote = [Duration, PitchedNote | 'REST']
-export type SolvedWalkPath = [WalkPath, TimedNote[]]
+export type SolvedWalkPath = [Transition, TimedNote[]]
+
+export type ChordSymbol = {
+  root?: NoteName
+  name: NoteName
+  type: ChordType
+}
 
 export type Chord = {
   root: PitchedNote
   third: Note
   fifth: Note
   seventh?: Note
+  transition?: Transition
+}
+
+export type SelectItem<T> = {
+  label: string
+  value: T
 }
