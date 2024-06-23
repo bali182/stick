@@ -1,3 +1,5 @@
 import { atom } from 'jotai'
+import { ChordProgression } from '../chartModel'
+import { defaultChordProgression } from '../defaultChordProgression'
 
-const progression = atom({})
+export const progression = atom<ChordProgression>(defaultChordProgression)

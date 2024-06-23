@@ -1,21 +1,16 @@
 import { FC } from 'react'
-import {
-  ChordSymbol,
-  ChordType,
-  NoteName,
-  SelectItem,
-  Transition,
-} from '../types'
+import { SelectItem, Transition } from '../types'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
+import { STRATEGIES } from '../strategies/strategies'
 
 export type TransitionEditorProps = {
-  transition: Transition
-  onChange: (transition: Transition) => void
+  transitionId: string | undefined
+  onChange: (transitionId: string) => void
 }
 
 const chordEditorStyle = css`
@@ -45,7 +40,7 @@ const leftSelectStyles: StylesConfig = {
   ...baseProps,
   menu: (provided): CSSObjectWithLabel => ({
     ...provided,
-    minWidth: '60px',
+    minWidth: '180px',
   }),
 }
 
@@ -54,16 +49,20 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
   IndicatorSeparator: () => null,
 }
 
-export const ChordEditor: FC<TransitionEditorProps> = ({
-  transition,
+const TRANSITIONS: SelectItem<string>[] = STRATEGIES.map(
+  ({ id, name }): SelectItem<string> => ({ label: name, value: id }),
+)
+console.log(TRANSITIONS)
+
+export const TransitionEditor: FC<TransitionEditorProps> = ({
+  transitionId,
   onChange,
 }) => {
-  const nameItem: SelectItem<Transition> = {
-    label: transition.name,
-    value: transition,
-  }
+  const nameItem = transitionId
+    ? TRANSITIONS.find(({ value }) => value === transitionId)
+    : undefined
 
-  const onTransitionChange = (data: SelectItem<Transition>): void => {
+  const onTransitionChange = (data: SelectItem<string>): void => {
     onChange(data.value)
   }
 
@@ -71,7 +70,7 @@ export const ChordEditor: FC<TransitionEditorProps> = ({
     <div className={chordEditorStyle}>
       <Select
         value={nameItem}
-        options={[]}
+        options={TRANSITIONS}
         placeholder="Transition"
         styles={leftSelectStyles}
         components={overrideComponents}

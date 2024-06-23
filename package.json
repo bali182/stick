@@ -18,7 +18,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.7",
     "jotai": "^2.8.3",
-    "nanoid": "^4.0.2",
+    "nanoid": "5.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.8.0",

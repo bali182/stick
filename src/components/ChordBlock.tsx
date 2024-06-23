@@ -1,15 +1,16 @@
 import { FC, useState } from 'react'
 import { css } from '@emotion/css'
 import uniqolor from 'uniqolor'
-import { ChordSymbol, Transition } from '../types'
 import { getChordSymbolName } from '../getChordSymbolName'
 import { Popover } from 'react-tiny-popover'
 import { PopoverContent } from './PopoverContent'
 import { ChordEditor } from './ChordEditor'
+import { STRATEGY_MAP } from '../strategies/strategies'
+import { ChordSymbol } from '../chartModel'
+import { TransitionEditor } from './TransitionEditor'
 
 export type BarBlockProps = {
   chord: ChordSymbol
-  transition: Transition | undefined
 }
 
 const chordBlockStyle = (chord: ChordSymbol) => {
@@ -60,7 +61,8 @@ const pathStyle = css`
   }
 `
 
-export const ChordBlock: FC<BarBlockProps> = ({ chord, transition }) => {
+export const ChordBlock: FC<BarBlockProps> = ({ chord }) => {
+  const transition = chord.path ? STRATEGY_MAP[chord.path] : undefined
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
   const [isTypePickerOpen, setTypePickerOpen] = useState(false)
   const toggleChordPicker = () => setChordPickerOpen(!isChordPickerOpen)
@@ -92,7 +94,11 @@ export const ChordBlock: FC<BarBlockProps> = ({ chord, transition }) => {
         onClickOutside={closeTypePicker}
         clickOutsideCapture={true}
         positions={['bottom', 'right', 'left']}
-        content={(props) => <PopoverContent {...props}>Hello</PopoverContent>}
+        content={(props) => (
+          <PopoverContent {...props}>
+            <TransitionEditor transitionId={chord.path} onChange={() => {}} />
+          </PopoverContent>
+        )}
       >
         <div onClick={toggleTypePicker} className={pathStyle}>
           {transition?.name ?? '+ Transition'}

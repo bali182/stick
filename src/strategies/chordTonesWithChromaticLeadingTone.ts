@@ -66,3 +66,21 @@ export const toAnyAscDescHigherChrom: Transition = {
     step(durations.quarter(), pitches.next.root(+1)),
   ],
 }
+
+export const toAnyHigherChrom: Transition = {
+  id: 'cR_nR+1',
+  name: 'R C↑',
+  steps: [
+    step(durations.quarter(), pitches.current.root()),
+    step(durations.quarter(), pitches.next.root(+1)),
+  ],
+}
+
+export const toAnyLowerChrom: Transition = {
+  id: 'cR_nR-1',
+  name: 'R C↓',
+  steps: [
+    step(durations.quarter(), pitches.current.root()),
+    step(durations.quarter(), pitches.next.root(-1)),
+  ],
+}

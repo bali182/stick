@@ -64,11 +64,6 @@ export type PitchedNote = Note & { pitch: number }
 export type TimedNote = [Duration, PitchedNote | 'REST']
 export type SolvedWalkPath = [Transition, TimedNote[]]
 
-export type ChordSymbol = {
-  root?: NoteName
-  name: NoteName
-  type: ChordType
-}
 
 export type Chord = {
   root: PitchedNote

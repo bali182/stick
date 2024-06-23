@@ -2,7 +2,6 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { ChordBlock } from './ChordBlock'
 import { BarModel } from '../chartModel'
-import { toAnyAscLowerChrom } from '../strategies/chordTonesWithChromaticLeadingTone'
 
 export type BarBlockProps = {
   bar: BarModel
@@ -42,11 +41,7 @@ export const BarBlock: FC<BarBlockProps> = ({ bar, count }) => {
     <div className={barBlockStyle}>
       <div className={chordsContainerStyle}>
         {bar.chords.map((chord, i) => (
-          <ChordBlock
-            chord={chord}
-            key={i}
-            transition={i % 2 === 0 ? undefined : toAnyAscLowerChrom}
-          />
+          <ChordBlock chord={chord} key={i} />
         ))}
       </div>
       <div className={barCountContainerStyle}>&#65283;{count}</div>
