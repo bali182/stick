@@ -1,17 +1,18 @@
 import { ChordType, NoteName } from './types'
 
-export type BarModel = {
-  id: string
-  chords: ChordSymbol[]
+export type BarModel = HasId & {
+  chords: string[]
 }
 
-export type ChordProgression = {
-  id: string
-  bars: BarModel[]
+export type ChordProgression = HasId & {
+  bars: string[]
 }
 
-export type ChordSymbol = {
+export type HasId = {
   id: string
+}
+
+export type ChordSymbol = HasId & {
   root?: NoteName
   name: NoteName
   type: ChordType

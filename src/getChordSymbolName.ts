@@ -25,7 +25,10 @@ function getChordTypeSuffix(type: ChordType): string {
   }
 }
 
-export function getChordSymbolName(chord: ChordSymbol): string {
+export function getChordSymbolName(chord: ChordSymbol | undefined): string {
+  if (!chord) {
+    return 'Missing'
+  }
   const chordName = `${chord.name}${getChordTypeSuffix(chord.type)}`
   return chord.root !== undefined && chord.root !== chord.name
     ? `${chordName}/${chord.root}`

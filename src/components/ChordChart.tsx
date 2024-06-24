@@ -1,10 +1,13 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
-import { ChordProgression } from '../chartModel'
 import { BarBlock } from './BarBlock'
+import { useSelector } from 'react-redux'
+import { getProgression } from '../state/progressions'
+import { AppState } from '../state/store'
+import { ChordProgression } from '../chartModel'
 
 export type ChartProps = {
-  progression: ChordProgression
+  progressionId: string
 }
 
 const chordChartStyle = css`
@@ -13,11 +16,19 @@ const chordChartStyle = css`
   gap: 10px;
 `
 
-export const ChordChart: FC<ChartProps> = ({ progression }) => {
+export const ChordChart: FC<ChartProps> = ({ progressionId }) => {
+  const progression = useSelector<AppState, ChordProgression>(
+    (state) => getProgression(state, progressionId)!,
+  )
   return (
     <div className={chordChartStyle}>
-      {progression.bars.map((bar, i) => (
-        <BarBlock bar={bar} key={i} count={i + 1} />
+      {progression.bars.map((barId, i) => (
+        <BarBlock
+          progressionId={progressionId}
+          barId={barId}
+          count={i + 1}
+          key={barId}
+        />
       ))}
     </div>
   )
