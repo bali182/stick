@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { SelectItem, Transition } from '../types'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
@@ -7,6 +6,7 @@ import Select, {
 } from 'react-select'
 import { css } from '@emotion/css'
 import { STRATEGIES } from '../strategies/strategies'
+import { SelectItem } from '../chartModel'
 
 export type TransitionEditorProps = {
   transitionId: string | undefined
@@ -52,7 +52,6 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
 const TRANSITIONS: SelectItem<string>[] = STRATEGIES.map(
   ({ id, name }): SelectItem<string> => ({ label: name, value: id }),
 )
-console.log(TRANSITIONS)
 
 export const TransitionEditor: FC<TransitionEditorProps> = ({
   transitionId,

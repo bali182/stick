@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { css } from '@emotion/css'
 import uniqolor from 'uniqolor'
 import { getChordSymbolName } from '../getChordSymbolName'
@@ -11,9 +11,10 @@ import { TransitionEditor } from './TransitionEditor'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../state/store'
 import { deleteChord, getChord, updateChord } from '../state/chords'
-import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
+import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { removeChords } from '../state/bars'
+import { getNextChord } from '../state/getNextChord'
 
 export type BarBlockProps = {
   progressionId: string
@@ -61,6 +62,9 @@ const pathStyle = css`
   background-color: #ffffff30;
   transition: box-shadow 0.2s ease, background-color 0.2s ease;
   user-select: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   &:hover {
     background-color: #ffffff40;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -79,17 +83,27 @@ const addTransitionIconStyle = css`
   color: #fff;
   cursor: pointer;
   position: relative;
+  display: inline;
   top: 3px;
 `
 
-export const ChordBlock: FC<BarBlockProps> = ({ barId, chordId }) => {
+export const ChordBlock: FC<BarBlockProps> = ({
+  progressionId,
+  barId,
+  chordId,
+}) => {
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getChord(state, chordId),
+  )
+  const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
+    getNextChord(state, progressionId, barId, chordId),
   )
   const dispatch = useDispatch<AppDispatch>()
   const transition = chord?.path ? STRATEGY_MAP[chord.path] : undefined
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
   const [isTransitionPickerOpen, setTransitionPickerOpen] = useState(false)
+  const [isHovered, setHovered] = useState(false)
+
   const toggleChordPicker = () => setChordPickerOpen(!isChordPickerOpen)
   const closeChordPicker = () => setChordPickerOpen(false)
 
@@ -109,10 +123,17 @@ export const ChordBlock: FC<BarBlockProps> = ({ barId, chordId }) => {
     dispatch(deleteChord({ chordId }))
   }
 
-  const color = uniqolor(getChordSymbolName(chord), {
-    format: 'hex',
-    lightness: 45,
-  }).color
+  const onMouseEnter = () => setHovered(true)
+  const onMouseLeave = () => setHovered(false)
+
+  const color = useMemo(
+    () =>
+      uniqolor(getChordSymbolName(chord), {
+        format: 'hex',
+        lightness: 40,
+      }).color,
+    [chord],
+  )
 
   if (!chord) {
     return (
@@ -124,8 +145,14 @@ export const ChordBlock: FC<BarBlockProps> = ({ barId, chordId }) => {
   }
 
   return (
-    <div className={chordBlockStyle(color)}>
-      <FiTrash2 className={trashIconStyle} onClick={onChordDeleted} />
+    <div
+      className={chordBlockStyle(color)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {isHovered ? (
+        <FiTrash2 className={trashIconStyle} onClick={onChordDeleted} />
+      ) : null}
       <Popover
         isOpen={isChordPickerOpen}
         onClickOutside={closeChordPicker}
@@ -141,28 +168,30 @@ export const ChordBlock: FC<BarBlockProps> = ({ barId, chordId }) => {
           <span>{getChordSymbolName(chord)}</span>
         </div>
       </Popover>
-      <Popover
-        isOpen={isTransitionPickerOpen}
-        onClickOutside={closeTransitionPicker}
-        clickOutsideCapture={true}
-        positions={['bottom', 'right', 'left']}
-        content={(props) => (
-          <PopoverContent {...props}>
-            <TransitionEditor
-              transitionId={chord.path}
-              onChange={onTransitionChange}
-            />
-          </PopoverContent>
-        )}
-      >
-        <div onClick={toggleTransitionPicker} className={pathStyle}>
-          {transition?.name ?? (
-            <>
-              <RiFootprintFill className={addTransitionIconStyle} /> Walk
-            </>
+      {nextChord !== undefined ? (
+        <Popover
+          isOpen={isTransitionPickerOpen}
+          onClickOutside={closeTransitionPicker}
+          clickOutsideCapture={true}
+          positions={['bottom', 'right', 'left']}
+          content={(props) => (
+            <PopoverContent {...props}>
+              <TransitionEditor
+                transitionId={chord.path}
+                onChange={onTransitionChange}
+              />
+            </PopoverContent>
           )}
-        </div>
-      </Popover>
+        >
+          <div onClick={toggleTransitionPicker} className={pathStyle}>
+            {transition?.name ?? (
+              <>
+                <RiFootprintFill className={addTransitionIconStyle} /> Walk
+              </>
+            )}
+          </div>
+        </Popover>
+      ) : null}
     </div>
   )
 }

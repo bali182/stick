@@ -21,38 +21,8 @@ export type Pitch = {
   direction: ChordToneDirection
 }
 
-export type NoteName =
-  | 'C'
-  | 'C#'
-  | 'Db'
-  | 'D'
-  | 'D#'
-  | 'Eb'
-  | 'E'
-  | 'F'
-  | 'F#'
-  | 'Gb'
-  | 'G'
-  | 'G#'
-  | 'Ab'
-  | 'A'
-  | 'A#'
-  | 'Bb'
-  | 'B'
-
 export type SimpleNoteName = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B'
 export type Accidental = '#' | 'b'
-export type ChordType =
-  | 'MAJOR'
-  | 'DOMINANT-SEVENTH'
-  | 'MAJOR-SEVENTH'
-  | 'MINOR'
-  | 'MINOR-SEVENTH'
-  | 'DIMINISHED'
-  | 'HALF-DIMINISHED'
-  | 'DIMINISHED-SEVENTH'
-  | 'AUGMENTED'
-  | 'AUGMENTED-SEVENTH'
 
 export type Note = {
   name: SimpleNoteName
@@ -71,9 +41,4 @@ export type Chord = {
   fifth: Note
   seventh?: Note
   transition?: Transition
-}
-
-export type SelectItem<T> = {
-  label: string
-  value: T
 }

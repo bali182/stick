@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { getProgression } from '../state/progressions'
 import { AppState } from '../state/store'
 import { ChordProgression } from '../chartModel'
+import { AddBarBlock } from './AddBarBlock'
 
 export type ChartProps = {
   progressionId: string
@@ -13,7 +14,9 @@ export type ChartProps = {
 const chordChartStyle = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 10px;
+  grid-auto-rows: 1fr;
+  gap: 16px;
+  flex-grow: 1;
 `
 
 export const ChordChart: FC<ChartProps> = ({ progressionId }) => {
@@ -30,6 +33,7 @@ export const ChordChart: FC<ChartProps> = ({ progressionId }) => {
           key={barId}
         />
       ))}
+      <AddBarBlock progressionId={progressionId} />
     </div>
   )
 }

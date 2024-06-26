@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { barsReducer } from './bars'
-import { progressionsReducer } from './progressions'
-import { chordsReducer } from './chords'
+import { BarsState, barsReducer } from './bars'
+import { ProgressionsState, progressionsReducer } from './progressions'
+import { ChordSymbolsState, chordsReducer } from './chords'
 
 export const store = configureStore({
   reducer: {
@@ -11,5 +11,10 @@ export const store = configureStore({
   },
 })
 
-export type AppState = ReturnType<typeof store.getState>
+export type AppState = {
+  bars: BarsState
+  progressions: ProgressionsState
+  chords: ChordSymbolsState
+}
+
 export type AppDispatch = typeof store.dispatch

@@ -1,12 +1,11 @@
 import { FC } from 'react'
-import { ChordType, NoteName, SelectItem } from '../types'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import { ChordSymbol } from '../chartModel'
+import { ChordSymbol, ChordType, NoteName, SelectItem } from '../chartModel'
 
 export type ChordEditorProps = {
   chord: ChordSymbol

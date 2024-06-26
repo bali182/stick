@@ -13,3 +13,9 @@ export function removeByKeys<T>(
     .filter(([key]) => !keys.includes(key))
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
+
+export function isNil<T>(
+  input: T | null | undefined,
+): input is null | undefined {
+  return input === null || input === undefined
+}

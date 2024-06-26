@@ -6,6 +6,7 @@ import { addChords, deleteBar, getBar } from '../state/bars'
 import { AppDispatch, AppState } from '../state/store'
 import { BarModel, ChordSymbol } from '../chartModel'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
+import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { createChord, deleteChords, getChord } from '../state/chords'
 import { removeBars } from '../state/progressions'
 import { nanoid } from 'nanoid'
@@ -21,7 +22,15 @@ const barBlockStyle = css`
   flex-direction: column;
   gap: 0px;
   border-radius: 10px;
-  background: linear-gradient(0deg, #ededed 0%, #ffffff 100%);
+  background-color: #ffffff30;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: none;
+  height: 170px;
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-color: #ffffff35;
+  }
 `
 
 const chordsContainerStyle = css`
@@ -29,15 +38,16 @@ const chordsContainerStyle = css`
   flex: 1;
   flex-direction: row;
   gap: 10px;
+  padding: 10px 10px 0px 10px;
   position: relative;
 `
 
 const barCountContainerStyle = css`
   display: flex;
-  padding: 4px 10px;
+  padding: 6px 10px;
   align-items: center;
   justify-content: space-between;
-  color: #888;
+  color: #fff;
   font-family: 'Poppins';
   font-size: 1em;
 `
@@ -48,22 +58,23 @@ const addChordOverlayStyle = css`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  top: 0px;
-  right: 0px;
+  top: 10px;
+  right: 10px;
+  bottom: 0px;
   border-radius: 10px;
-  width: 30px;
-  height: 100%;
-  background-image: linear-gradient(90deg, #ffffff00 0%, #00000040 100%); ;
+  width: 40px;
+  background-image: linear-gradient(90deg, #00000000 0%, #00000030 100%); ;
 `
 
 const emptyBarAddButtonStyle = css`
   font-family: 'Poppins';
   font-weight: bold;
-  color: #555;
+  color: #ffffffaa;
   padding: 0px 15px;
   font-size: 2em;
   text-align: center;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease,
+    background-color 0.2s ease;
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -72,20 +83,25 @@ const emptyBarAddButtonStyle = css`
   border-radius: 10px;
   gap: 10px;
   padding: 14px;
+  border: 2px dashed #ffffff30;
+  background-color: #ffffff15;
   cursor: pointer;
   &:hover {
-    color: #222;
+    color: #ffffffcc;
+    background: #ffffff25;
+    border-color: #ffffff60;
   }
 `
 
 const addChordCloneStyle = css`
   color: #fff;
+  font-size: 1.8em;
 `
 
 const addFirstChordStyle = css``
 
 const trashIconStyle = css`
-  color: #888;
+  color: #fff;
   cursor: pointer;
 `
 
@@ -94,7 +110,8 @@ export const BarBlock: FC<BarBlockProps> = ({
   progressionId,
   count,
 }) => {
-  const [chordsAreaHovered, setChordsAreaHovered] = useState(false)
+  const [isHovered, setHovered] = useState(false)
+  const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
   const bar = useSelector<AppState, BarModel | undefined>((state) =>
     getBar(state, barId),
   )
@@ -103,7 +120,6 @@ export const BarBlock: FC<BarBlockProps> = ({
       return undefined
     }
     const chordId = bar?.chords[0]!
-    console.log({ bar, chordId })
     return getChord(state, chordId)
   })
 
@@ -134,12 +150,10 @@ export const BarBlock: FC<BarBlockProps> = ({
     dispatch(addChords({ barId, chordIds: [clonedChord.id] }))
   }
 
-  const onChordsAreaMouseEnter = () => {
-    setChordsAreaHovered(true)
-  }
-  const onChordsAreaMouseLeave = () => {
-    setChordsAreaHovered(false)
-  }
+  const onMouseEnter = () => setHovered(true)
+  const onMouseLeave = () => setHovered(false)
+  const onChordsAreaMouseEnter = () => setChordsAreaHovered(true)
+  const onChordsAreaMouseLeave = () => setChordsAreaHovered(false)
 
   if (!bar) {
     return (
@@ -151,7 +165,11 @@ export const BarBlock: FC<BarBlockProps> = ({
   }
 
   return (
-    <div className={barBlockStyle}>
+    <div
+      className={barBlockStyle}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div
         className={chordsContainerStyle}
         onMouseEnter={onChordsAreaMouseEnter}
@@ -165,9 +183,9 @@ export const BarBlock: FC<BarBlockProps> = ({
             key={i}
           />
         ))}
-        {bar.chords.length === 1 && chordsAreaHovered ? (
+        {bar.chords.length === 1 && isChordsAreaHovered ? (
           <div className={addChordOverlayStyle} onClick={onAddSecondChord}>
-            <FiPlusSquare className={addChordCloneStyle} />
+            <LuSplitSquareHorizontal className={addChordCloneStyle} />
           </div>
         ) : null}
         {bar.chords.length === 0 ? (
@@ -178,7 +196,9 @@ export const BarBlock: FC<BarBlockProps> = ({
       </div>
       <div className={barCountContainerStyle}>
         <span>&#65283;{count}</span>
-        <FiTrash2 className={trashIconStyle} onClick={onDeleteBar} />
+        {isHovered ? (
+          <FiTrash2 className={trashIconStyle} onClick={onDeleteBar} />
+        ) : null}
       </div>
     </div>
   )

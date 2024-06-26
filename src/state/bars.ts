@@ -17,7 +17,7 @@ const initialState: BarsState = {
   },
   'default-second-bar': {
     id: 'default-second-bar',
-    chords: [],
+    chords: ['default-second-bar-f'],
   },
   'default-third-bar': {
     id: 'default-third-bar',
