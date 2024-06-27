@@ -1,16 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-export type ActiveTabState = 'EDITOR' | 'SHEET_MUSIC'
-
-export type ConfigState = {
-  activeTab: ActiveTabState
-}
+export type ConfigState = {}
 
 export type UpdateConfigPayload = Partial<ConfigState>
 
-const initialState: ConfigState = {
-  activeTab: 'EDITOR',
-}
+const initialState: ConfigState = {}
 
 const configSlice = createSlice({
   name: 'config',
@@ -21,11 +15,9 @@ const configSlice = createSlice({
       ...payload,
     }),
   },
-  selectors: {
-    getActiveTab: (state): ActiveTabState => state.activeTab,
-  },
+  selectors: {},
 })
 
 export const { updateConfig } = configSlice.actions
 export const { reducer: configReducer } = configSlice
-export const { getActiveTab } = configSlice.selectors
+export const {} = configSlice.selectors

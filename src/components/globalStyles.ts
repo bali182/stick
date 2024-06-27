@@ -48,4 +48,8 @@ export const globalStyles = css`
   h6 {
     overflow-wrap: break-word;
   }
+  
+  a:-webkit-any-link {
+    text-decoration: none;
+  }
 `
