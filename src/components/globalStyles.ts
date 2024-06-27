@@ -5,18 +5,19 @@ export const globalStyles = css`
   *::before,
   *::after {
     box-sizing: border-box;
-  }
-
-  * {
     margin: 0px;
     padding: 0px;
-    font-family: 'Quicksand', sans-serif;
+  }
+
+  div,
+  span {
+    font-family: 'Poppins', sans-serif;
   }
 
   body {
     -webkit-font-smoothing: antialiased;
     background-color: #000000;
-    background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+    background: linear-gradient(147deg, #000000 0%, #434343 74%);
     height: 100vh;
     width: 100vw;
     overflow: hidden;

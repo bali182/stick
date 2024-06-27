@@ -20,7 +20,6 @@ const chordEditorStyle = css`
 
 const fontChangeProps = (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
   ...provided,
-  fontFamily: 'Poppins',
   fontSize: '1.2em',
 })
 

@@ -37,7 +37,6 @@ const chordBlockStyle = (color: string) => {
 }
 
 const chordNameStyle = css`
-  font-family: 'Poppins';
   font-weight: bold;
   color: #ffffffde;
   padding: 0px 15px;
@@ -53,7 +52,6 @@ const chordNameStyle = css`
   }
 `
 const pathStyle = css`
-  font-family: 'Poppins';
   color: #ffffffdd;
   font-size: 1.2em;
   border-radius: 6px;

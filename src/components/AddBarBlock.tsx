@@ -31,7 +31,6 @@ const barBlockStyle = css`
 `
 
 const addButtonStyle = css`
-  font-family: 'Poppins';
   font-weight: bold;
   color: #ffffffaa;
   font-size: 2em;

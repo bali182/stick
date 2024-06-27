@@ -1,9 +1,8 @@
 import { useRef, useEffect, FC } from 'react'
-import { AlphaTabApi } from '@coderline/alphatab'
+import { AlphaTabApi, RenderingResources } from '@coderline/alphatab'
 
 export type TabProps = {
   id: string
-  children: string
 }
 
 const content = `

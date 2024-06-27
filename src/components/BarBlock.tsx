@@ -48,7 +48,6 @@ const barCountContainerStyle = css`
   align-items: center;
   justify-content: space-between;
   color: #fff;
-  font-family: 'Poppins';
   font-size: 1em;
 `
 
@@ -63,11 +62,10 @@ const addChordOverlayStyle = css`
   bottom: 0px;
   border-radius: 10px;
   width: 40px;
-  background-image: linear-gradient(90deg, #00000000 0%, #00000030 100%); ;
+  background: linear-gradient(90deg, #00000000 0%, #00000030 100%); ;
 `
 
 const emptyBarAddButtonStyle = css`
-  font-family: 'Poppins';
   font-weight: bold;
   color: #ffffffaa;
   padding: 0px 15px;
