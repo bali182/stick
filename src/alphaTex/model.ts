@@ -1,18 +1,13 @@
 export type ATNote = {
-  type: 'note'
-  fret: number
-  string: number
+  fret?: number
+  string?: number
+  rest?: boolean
   duration: number
   chord?: string
 }
 
-export type ATRest = {
-  type: 'rest'
-  duration: number
-}
-
 export type ATBar = {
-  notes: (ATNote | ATRest)[]
+  notes: ATNote[]
 }
 
 export type ATTimeSignature = {

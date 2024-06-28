@@ -1,14 +1,8 @@
-import { ATBar, ATNote, ATRest, ATTrack } from './model'
+import { duration } from '@mui/material'
+import { ATBar, ATNote, ATTrack } from './model'
+import { isNil } from '../state/utils'
 
-// \title "Song Title"
-// \subtitle Subtitle
-// \artist Artist
-// \album 'My Album'
-// \words Daniel
-// \music alphaTab
-// \copyright Daniel
-// \tempo 200
-// \instrument 30
+// Reference: https://alphatab.net/docs/alphatex/introduction
 
 function getMetaData(model: ATTrack): string[] {
   return [
@@ -25,29 +19,24 @@ function getMetaData(model: ATTrack): string[] {
 }
 
 function getNote(note: ATNote): string {
-  // fret.string.duration
-  const base = `${note.fret}.${note.string}.${note.duration}`
-  return note.chord ? `{ch "${note.chord}"} ${base}` : base
-}
-
-function getRest(note: ATRest): string {
-  // r.duration
-  return `r.${note.duration}`
+  if (!note.rest) {
+    if (isNil(note.fret) || isNil(note.string)) {
+      throw new TypeError(
+        `string and fret properties are required in ${JSON.stringify(note)}`,
+      )
+    }
+  }
+  const parts = [
+    note.rest
+      ? `r.${duration}`
+      : `${note.fret}.${note.string}.${note.duration}`,
+    note.chord ? `{ch "${note.chord}"}` : undefined,
+  ].filter((part) => part !== undefined)
+  return parts.join(' ')
 }
 
 function getBar(bar: ATBar): string {
-  return bar.notes
-    .map((note) => {
-      switch (note.type) {
-        case 'note':
-          return getNote(note)
-        case 'rest':
-          return getRest(note)
-        default:
-          throw new TypeError(`Unexpected note type: ${(note as ATNote).type}`)
-      }
-    })
-    .join(' ')
+  return bar.notes.map((note) => getNote(note)).join(' ')
 }
 
 function getBars(model: ATTrack): string[] {

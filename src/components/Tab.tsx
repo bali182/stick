@@ -1,13 +1,14 @@
-import { useRef, useEffect, FC } from 'react'
+import { useRef, useEffect, FC, useState, useMemo } from 'react'
 import { AlphaTabApi } from '@coderline/alphatab'
 import { ATTrack } from '../alphaTex/model'
 import { toAlphaTex } from '../alphaTex/toAlphaTex'
+import { isNil } from '../state/utils'
 
 export type TabProps = {
   id: string
 }
 
-const model: ATTrack = {
+const modelA: ATTrack = {
   clef: 'Bass',
   instrument: 'AcousticBass',
   keySignature: 'Db',
@@ -16,73 +17,60 @@ const model: ATTrack = {
   bars: [
     {
       notes: [
-        { type: 'note', duration: 4, string: 4, fret: 3 },
-        { type: 'note', duration: 4, string: 2, fret: 1 },
-        { type: 'rest', duration: 4 },
-        { type: 'note', duration: 4, string: 4, fret: 2 },
-      ],
-    },
-    {
-      notes: [
-        { type: 'note', duration: 4, string: 3, fret: 3 },
-        { type: 'note', duration: 4, string: 3, fret: 1 },
-        { type: 'rest', duration: 4 },
-        { type: 'note', duration: 4, string: 4, fret: 3 },
+        { duration: 4, string: 3, fret: 6, chord: 'Am (R)' },
+        { duration: 4, string: 2, fret: 3, chord: '3' },
+        { duration: 4, string: 2, fret: 3, chord: '5' },
+        { duration: 4, string: 4, fret: 2, chord: 'C' },
       ],
     },
   ],
 }
 
-const content = toAlphaTex(model)
+const modelB: ATTrack = {
+  clef: 'Bass',
+  instrument: 'AcousticBass',
+  keySignature: 'Db',
+  timeSignature: { top: 4, bottom: 4 },
+  tempo: 140,
+  bars: [
+    {
+      notes: [
+        { duration: 4, string: 4, fret: 3 },
+        { duration: 4, string: 2, fret: 1 },
+        { duration: 4, rest: true },
+        { duration: 4, string: 4, fret: 2 },
+      ],
+    },
+    {
+      notes: [
+        { duration: 4, string: 3, fret: 3 },
+        { duration: 4, string: 3, fret: 1 },
+        { duration: 4, rest: true },
+        { duration: 4, string: 4, fret: 3 },
+      ],
+    },
+  ],
+}
 
-console.log(content)
-
-// const content = `
-// \\instrument "AcousticBass"
-// .
-// \\clef Bass \\ks D 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.4 {ch "Em"} 2.4.4 3.4.4 2.3.4
-//       | 0.3.4 {ch "Am"} 3.3.4 3.4.4 2.4.4
-//       | 0.4.1 {ch "Em"}
-// `
-// const x: RenderingResources = {
-//   copyrightFont: new Font(),
-//   titleFont: new Font(),
-//   subTitleFont: new Font(),
-//   wordsFont: new Font(),
-//   effectFont: new Font(),
-//   fretboardNumberFont: new Font(),
-//   tablatureFont: new Font(),
-//   graceFont: new Font(),
-//   staffLineColor: new Color(),
-//   barSeparatorColor: new Color(),
-//   barNumberFont: new Font(),
-//   barNumberColor: new Color(),
-//   fingeringFont: new Font(),
-//   markerFont: new Font(),
-//   mainGlyphColor: new Color(),
-//   secondaryGlyphColor: new Color(),
-//   scoreInfoColor: new Color(),
-// }
+console.log(toAlphaTex(modelA))
 
 export const Tab: FC<TabProps> = ({ id }) => {
   const containerDom = useRef<HTMLElement>(null)
   const apiRef = useRef<AlphaTabApi>()
+  const [a, setA] = useState(true)
+
+  const tex = useMemo(() => toAlphaTex(a ? modelA : modelB), [a])
+
   useEffect(() => {
-    apiRef.current = new AlphaTabApi(containerDom.current!, {
+    const { current: api } = apiRef
+    if (isNil(api)) {
+      return
+    }
+    api.tex(tex)
+  }, [tex])
+
+  useEffect(() => {
+    const api = new AlphaTabApi(containerDom.current!, {
       core: {
         tex: true,
         fontDirectory: '/font/',
@@ -111,12 +99,15 @@ export const Tab: FC<TabProps> = ({ id }) => {
         },
       },
     })
-    apiRef.current.render()
+    api.render()
+    api.tex(tex)
+    apiRef.current = api
   }, [id])
 
   return (
-    <div id={id} ref={containerDom as any}>
-      {content}
+    <div>
+      <button onClick={() => setA(!a)}>Swap</button>
+      <div id={id} ref={containerDom as any}></div>
     </div>
   )
 }
