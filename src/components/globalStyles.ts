@@ -17,7 +17,7 @@ export const globalStyles = css`
   body {
     -webkit-font-smoothing: antialiased;
     background-color: #000000;
-    background: linear-gradient(147deg, #000000 0%, #434343 74%);
+    /* background: linear-gradient(147deg, #000000 0%, #434343 74%); */
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -48,8 +48,12 @@ export const globalStyles = css`
   h6 {
     overflow-wrap: break-word;
   }
-  
+
   a:-webkit-any-link {
     text-decoration: none;
+  }
+
+  #tab > div > div:last-child > svg {
+    display: none;
   }
 `
