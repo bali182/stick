@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ChordProgression } from '../model/chartModel'
+import { ChordProgression } from '../model/types'
 import { removeByKey } from '../model/utils'
 
 export type ProgressionsState = Record<string, ChordProgression>

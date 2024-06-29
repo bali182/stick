@@ -4,13 +4,7 @@ import {
   NOTE_BY_INDEX,
   PITCHED_NOTE_MAP,
 } from './constants'
-import {
-  Accidental,
-  BaseNoteName,
-  NoteIndex,
-  NoteName,
-  PitchedNoteName,
-} from './types'
+import { Accidental, BaseNoteName, NoteIndex, Note, PitchedNote } from './types'
 
 export function removeByKey<T>(
   key: string,
@@ -34,40 +28,42 @@ export function isNil<T>(
   return input === null || input === undefined
 }
 
-export function getPossiblePitches(note: NoteName): PitchedNoteName[] {
-  return PITCHED_NOTE_MAP[note] ?? []
+export function getPossiblePitches(
+  note: Note,
+  range: PitchedNote[],
+): PitchedNote[] {
+  return range.filter((pitchedNote) => {
+    const [possibleNote] = getPitchedNoteParts(pitchedNote)
+    return possibleNote === note
+  })
 }
 
-export function getNoteIndex(note: NoteName): NoteIndex {
+export function getNoteIndex(note: Note): NoteIndex {
   return INDEX_BY_NOTE[note]!
 }
 
-export function getPitchedNoteIndex(note: PitchedNoteName): NoteIndex {
+export function getPitchedNoteIndex(note: PitchedNote): NoteIndex {
   const [noteBase] = getPitchedNoteParts(note)
   return getNoteIndex(noteBase)
 }
 
-export function getNotesAtIndex(index: NoteIndex): NoteName[] {
+export function getNotesAtIndex(index: NoteIndex): Note[] {
   return NOTE_BY_INDEX[index]
 }
 
-export function getNoteParts(note: NoteName): [BaseNoteName, Accidental?] {
+export function getNoteParts(note: Note): [BaseNoteName, Accidental?] {
   const base = note.slice(0, 1) as BaseNoteName
   const accidental = note.slice(1, 2) as Accidental
   return [base, accidental && accidental.length > 0 ? accidental : undefined]
 }
 
-export function getPitchedNoteParts(note: PitchedNoteName): [NoteName, number] {
-  const noteName = note.replace(/[0-9]+/g, '') as NoteName
+export function getPitchedNoteParts(note: PitchedNote): [Note, number] {
+  const noteName = note.replace(/[0-9]+/g, '') as Note
   const pitch = parseInt(note.replace(/[^0-9]+/g, ''))
   return [noteName, pitch]
 }
 
-export function transpose(
-  n: NoteName,
-  a: number,
-  ac: Accidental = '#',
-): NoteName {
+export function transpose(n: Note, a: number, ac: Accidental = '#'): Note {
   const [_, noteAcc] = getNoteParts(n)
   const accidental = noteAcc ?? ac
   const transposedNoteIndex = getNoteIndex(n) + a

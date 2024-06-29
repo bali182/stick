@@ -8,39 +8,23 @@ import { css } from '@emotion/css'
 import {
   ChordSymbol,
   ChordType,
-  NoteName,
-  PitchedNoteName,
+  Note,
+  PitchedNote,
   SelectItem,
-} from '../model/chartModel'
+} from '../model/types'
 import { getPossiblePitches } from '../model/utils'
+import { useSelector } from 'react-redux'
+import { getTuning } from '../state/config'
+import { getNoteRange } from '../model/getNoteRange'
+import { INDEX_BY_NOTE } from '../model/constants'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
   onChange: (chord: ChordSymbol) => void
 }
 
-const NOTE_MAP: Record<NoteName, boolean> = {
-  C: true,
-  'C#': true,
-  Db: true,
-  D: true,
-  'D#': true,
-  Eb: true,
-  E: true,
-  F: true,
-  'F#': true,
-  Gb: true,
-  G: true,
-  'G#': true,
-  Ab: true,
-  A: true,
-  'A#': true,
-  Bb: true,
-  B: true,
-}
-
-const NOTES = Object.keys(NOTE_MAP).map(
-  (note): SelectItem<NoteName> => ({ label: note, value: note as NoteName }),
+const NOTES = Object.keys(INDEX_BY_NOTE).map(
+  (note): SelectItem<Note> => ({ label: note, value: note as Note }),
 )
 
 const CHORD_TYPES_TO_NAMES: Record<ChordType, string> = {
@@ -122,7 +106,7 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
 }
 
 export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
-  const nameItem: SelectItem<NoteName> = {
+  const nameItem: SelectItem<Note> = {
     label: chord.name,
     value: chord.name,
   }
@@ -130,30 +114,33 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     label: CHORD_TYPES_TO_NAMES[chord.type],
     value: chord.type,
   }
-  const rootItem: SelectItem<PitchedNoteName> = {
+  const rootItem: SelectItem<PitchedNote> = {
     label: chord.root,
     value: chord.root,
   }
 
-  const possibleRoots = useMemo<SelectItem<PitchedNoteName>[]>(
+  const tuning = useSelector(getTuning)
+  const range = useMemo(() => getNoteRange(tuning), [tuning])
+
+  const possibleRoots = useMemo<SelectItem<PitchedNote>[]>(
     () =>
-      getPossiblePitches(chord.name).map(
-        (root): SelectItem<PitchedNoteName> => ({ label: root, value: root }),
+      getPossiblePitches(chord.name, range).map(
+        (root): SelectItem<PitchedNote> => ({ label: root, value: root }),
       ),
-    [chord.name],
+    [range, chord.name],
   )
 
-  const onNameChange = (data: SelectItem<NoteName>): void => {
+  const onNameChange = (data: SelectItem<Note>): void => {
     onChange({
       ...chord,
       name: data.value,
-      root: getPossiblePitches(data.value)[0]!,
+      root: getPossiblePitches(data.value, range)[0]!,
     })
   }
   const onTypeChange = (data: SelectItem<ChordType>): void => {
     onChange({ ...chord, type: data.value })
   }
-  const onRootChange = (data: SelectItem<PitchedNoteName>): void => {
+  const onRootChange = (data: SelectItem<PitchedNote>): void => {
     onChange({ ...chord, root: data?.value! })
   }
 

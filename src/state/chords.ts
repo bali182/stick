@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ChordSymbol, HasId } from '../model/chartModel'
+import { ChordSymbol, HasId } from '../model/types'
 import { removeByKey, removeByKeys } from '../model/utils'
 
 export type ChordSymbolsState = Record<string, ChordSymbol>

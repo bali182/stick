@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { BarModel } from '../model/chartModel'
+import { BarModel } from '../model/types'
 import { removeByKey } from '../model/utils'
 
 export type BarsState = Record<string, BarModel>

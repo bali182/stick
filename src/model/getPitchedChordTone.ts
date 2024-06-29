@@ -4,16 +4,16 @@ import {
   ChordSymbol,
   ChordTone,
   ChordToneDirection,
-  PitchedNoteName,
+  PitchedNote,
 } from './types'
 import { OCTAVE_DOWN, OCTAVE_UP } from './constants'
 
 function getPitchedChordToneBase(
   chord: ChordSymbol,
   tone: ChordTone,
-): PitchedNoteName {
+): PitchedNote {
   const shortType = getChordTypeSuffix(chord.type, false)
-  const notes = Chord.notes(shortType, chord.root) as PitchedNoteName[]
+  const notes = Chord.notes(shortType, chord.root) as PitchedNote[]
   switch (tone) {
     case 'ROOT':
       return notes[0]!
@@ -28,7 +28,7 @@ export function getPitchedChordTone(
   chord: ChordSymbol,
   tone: ChordTone,
   dir: ChordToneDirection,
-): PitchedNoteName {
+): PitchedNote {
   const note = getPitchedChordToneBase(chord, tone)
   switch (dir) {
     case 'NONE': {
@@ -39,11 +39,11 @@ export function getPitchedChordTone(
     }
     case 'UP': {
       const transposed = tone === 'ROOT' ? transpose(note, OCTAVE_UP) : note
-      return transposed as PitchedNoteName
+      return transposed as PitchedNote
     }
     case 'DOWN': {
       const transposed = transpose(note, OCTAVE_DOWN)
-      return transposed as PitchedNoteName
+      return transposed as PitchedNote
     }
   }
 }

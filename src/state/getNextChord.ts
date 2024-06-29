@@ -1,4 +1,4 @@
-import { ChordSymbol } from '../model/chartModel'
+import { ChordSymbol } from '../model/types'
 import { getBar } from './bars'
 import { getChord } from './chords'
 import { getProgression } from './progressions'
