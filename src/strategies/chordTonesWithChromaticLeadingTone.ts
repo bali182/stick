@@ -1,5 +1,5 @@
-import { durations, pitches, step } from '../dsl'
-import { Transition } from '../types'
+import { durations, pitches, step } from '../model/dsl'
+import { Transition } from '../model/types'
 
 export const toAnyAscLowerChrom: Transition = {
   id: 'cR_c3u_c5u_nR-1_nR',

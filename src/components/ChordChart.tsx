@@ -4,8 +4,8 @@ import { BarBlock } from './BarBlock'
 import { useSelector } from 'react-redux'
 import { getProgression } from '../state/progressions'
 import { AppState } from '../state/store'
-import { ChordProgression } from '../chartModel'
 import { AddBarBlock } from './AddBarBlock'
+import { ChordProgression } from '../model/chartModel'
 
 export type ChartProps = {
   progressionId: string

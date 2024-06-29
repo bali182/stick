@@ -1,7 +1,6 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { ChordChart } from './ChordChart'
-import { Toolbar } from './Toolbar'
 
 const editorStyle = css`
   height: 100%;

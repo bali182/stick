@@ -11,8 +11,8 @@ import {
   NoteName,
   PitchedNoteName,
   SelectItem,
-} from '../chartModel'
-import { PITCHED_NOTE_MAP } from '../utils'
+} from '../model/chartModel'
+import { PITCHED_NOTE_MAP } from '../model/utils'
 
 export type ChordEditorProps = {
   chord: ChordSymbol

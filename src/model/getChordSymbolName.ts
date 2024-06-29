@@ -1,6 +1,5 @@
 import { ChordSymbol, ChordType } from './chartModel'
-import { isNil } from './state/utils'
-import { PITCHED_NOTE_MAP } from './utils'
+import { PITCHED_NOTE_MAP, isNil } from './utils'
 
 function getChordTypeSuffix(type: ChordType): string {
   switch (type) {

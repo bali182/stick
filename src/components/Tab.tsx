@@ -1,15 +1,8 @@
 import { useRef, useEffect, FC, useState, useMemo } from 'react'
-import {
-  AlphaTabApi,
-  CoreSettings,
-  DisplaySettings,
-  PlayerSettings,
-  RenderingResources,
-  StaveProfile,
-} from '@coderline/alphatab'
+import { AlphaTabApi, CoreSettings, PlayerSettings } from '@coderline/alphatab'
 import { ATTrack } from '../alphaTex/model'
 import { toAlphaTex } from '../alphaTex/toAlphaTex'
-import { isNil } from '../state/utils'
+import { isNil } from '../model/utils'
 
 export type TabProps = {
   id: string
