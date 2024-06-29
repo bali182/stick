@@ -1,8 +1,10 @@
+import { Duration } from '../model/types'
+
 export type ATNote = {
   fret?: number
   string?: number
   rest?: boolean
-  duration: number
+  duration: Duration
   chord?: string
 }
 

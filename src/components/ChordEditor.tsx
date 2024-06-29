@@ -12,7 +12,7 @@ import {
   PitchedNoteName,
   SelectItem,
 } from '../model/chartModel'
-import { PITCHED_NOTE_MAP } from '../model/utils'
+import { getPossiblePitches } from '../model/utils'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
@@ -137,7 +137,7 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
 
   const possibleRoots = useMemo<SelectItem<PitchedNoteName>[]>(
     () =>
-      PITCHED_NOTE_MAP[chord.name].map(
+      getPossiblePitches(chord.name).map(
         (root): SelectItem<PitchedNoteName> => ({ label: root, value: root }),
       ),
     [chord.name],
@@ -147,7 +147,7 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     onChange({
       ...chord,
       name: data.value,
-      root: PITCHED_NOTE_MAP[data.value][0]!,
+      root: getPossiblePitches(data.value)[0]!,
     })
   }
   const onTypeChange = (data: SelectItem<ChordType>): void => {

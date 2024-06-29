@@ -3,6 +3,7 @@ import { AlphaTabApi, CoreSettings, PlayerSettings } from '@coderline/alphatab'
 import { ATTrack } from '../alphaTex/model'
 import { toAlphaTex } from '../alphaTex/toAlphaTex'
 import { isNil } from '../model/utils'
+import { Duration } from '../model/types'
 
 export type TabProps = {
   id: string
@@ -17,10 +18,10 @@ const modelA: ATTrack = {
   bars: [
     {
       notes: [
-        { duration: 4, string: 3, fret: 6, chord: 'Am (R)' },
-        { duration: 4, string: 2, fret: 3, chord: '3' },
-        { duration: 4, string: 2, fret: 3, chord: '5' },
-        { duration: 4, string: 4, fret: 2, chord: 'C' },
+        { duration: Duration.QUARTER, string: 3, fret: 6, chord: 'Am (R)' },
+        { duration: Duration.QUARTER, string: 2, fret: 3, chord: '3' },
+        { duration: Duration.QUARTER, string: 2, fret: 3, chord: '5' },
+        { duration: Duration.QUARTER, string: 4, fret: 2, chord: 'C' },
       ],
     },
   ],
@@ -35,18 +36,18 @@ const modelB: ATTrack = {
   bars: [
     {
       notes: [
-        { duration: 4, string: 4, fret: 3 },
-        { duration: 4, string: 2, fret: 1 },
-        { duration: 4, rest: true },
-        { duration: 4, string: 4, fret: 2 },
+        { duration: Duration.QUARTER, string: 4, fret: 3 },
+        { duration: Duration.QUARTER, string: 2, fret: 1 },
+        { duration: Duration.QUARTER, rest: true },
+        { duration: Duration.QUARTER, string: 4, fret: 2 },
       ],
     },
     {
       notes: [
-        { duration: 4, string: 3, fret: 3 },
-        { duration: 4, string: 3, fret: 1 },
-        { duration: 4, rest: true },
-        { duration: 4, string: 4, fret: 3 },
+        { duration: Duration.QUARTER, string: 3, fret: 3 },
+        { duration: Duration.QUARTER, string: 3, fret: 1 },
+        { duration: Duration.QUARTER, rest: true },
+        { duration: Duration.QUARTER, string: 4, fret: 3 },
       ],
     },
   ],

@@ -1,13 +1,5 @@
 import { Duration, Pitch, Step } from './types'
 
-export const durations = {
-  whole: (): Duration => 'WHOLE',
-  half: (): Duration => 'HALF',
-  quarter: (): Duration => 'QARTER',
-  eight: (): Duration => 'EIGHT',
-  sixteenth: (): Duration => 'SIXTEENTH',
-}
-
 export const pitches = {
   current: {
     root: (interval: number = 0): Pitch => ({
@@ -107,4 +99,7 @@ export const pitches = {
   },
 }
 
-export const step = (duration: Duration, pitch: Pitch): Step => ({ duration, pitch })
+export const step = (duration: Duration, pitch: Pitch): Step => ({
+  duration,
+  pitch,
+})

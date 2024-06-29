@@ -1,60 +1,16 @@
-import { NoteName, PitchedNoteName } from './chartModel'
-
-const ROOT_NOTES: Record<PitchedNoteName, boolean> = {
-  E1: true,
-  F1: true,
-  'F#1': true,
-  Gb1: true,
-  G1: true,
-  'G#1': true,
-  Ab1: true,
-  A1: true,
-  'A#1': true,
-  Bb1: true,
-  B1: true,
-  C2: true,
-  'C#2': true,
-  Db2: true,
-  D2: true,
-  'D#2': true,
-  Eb2: true,
-  E2: true,
-  F2: true,
-  'F#2': true,
-  Gb2: true,
-  G2: true,
-  'G#2': true,
-  Ab2: true,
-  A2: true,
-  'A#2': true,
-  Bb2: true,
-  B2: true,
-  C3: true,
-  'C#3': true,
-  Db3: true,
-  D3: true,
-  'D#3': true,
-  Eb3: true,
-  E3: true,
-  F3: true,
-  'F#3': true,
-  Gb3: true,
-  G3: true,
-}
-
-const NOTES = Object.keys(ROOT_NOTES) as PitchedNoteName[]
-
-export const PITCHED_NOTE_MAP = NOTES.reduce(
-  (map: Record<NoteName, PitchedNoteName[]>, rootNote: PitchedNoteName) => {
-    const note = rootNote.replace(/[0-9]+/g, '') as NoteName
-    if (!Array.isArray(map[note])) {
-      map[note] = []
-    }
-    map[note].push(rootNote)
-    return map
-  },
-  {} as Record<NoteName, PitchedNoteName[]>,
-)
+import {
+  CHORMATIC_SCALE_LENGTH,
+  INDEX_BY_NOTE,
+  NOTE_BY_INDEX,
+  PITCHED_NOTE_MAP,
+} from './constants'
+import {
+  Accidental,
+  BaseNoteName,
+  NoteIndex,
+  NoteName,
+  PitchedNoteName,
+} from './types'
 
 export function removeByKey<T>(
   key: string,
@@ -76,4 +32,56 @@ export function isNil<T>(
   input: T | null | undefined,
 ): input is null | undefined {
   return input === null || input === undefined
+}
+
+export function getPossiblePitches(note: NoteName): PitchedNoteName[] {
+  return PITCHED_NOTE_MAP[note] ?? []
+}
+
+export function getNoteIndex(note: NoteName): NoteIndex {
+  return INDEX_BY_NOTE[note]!
+}
+
+export function getPitchedNoteIndex(note: PitchedNoteName): NoteIndex {
+  const [noteBase] = getPitchedNoteParts(note)
+  return getNoteIndex(noteBase)
+}
+
+export function getNotesAtIndex(index: NoteIndex): NoteName[] {
+  return NOTE_BY_INDEX[index]
+}
+
+export function getNoteParts(note: NoteName): [BaseNoteName, Accidental?] {
+  const base = note.slice(0, 1) as BaseNoteName
+  const accidental = note.slice(1, 2) as Accidental
+  return [base, accidental && accidental.length > 0 ? accidental : undefined]
+}
+
+export function getPitchedNoteParts(note: PitchedNoteName): [NoteName, number] {
+  const noteName = note.replace(/[0-9]+/g, '') as NoteName
+  const pitch = parseInt(note.replace(/[^0-9]+/g, ''))
+  return [noteName, pitch]
+}
+
+export function transpose(
+  n: NoteName,
+  a: number,
+  ac: Accidental = '#',
+): NoteName {
+  const [_, noteAcc] = getNoteParts(n)
+  const accidental = noteAcc ?? ac
+  const transposedNoteIndex = getNoteIndex(n) + a
+  const newNoteIndex = (transposedNoteIndex %
+    CHORMATIC_SCALE_LENGTH) as NoteIndex
+  const notesByIndex = getNotesAtIndex(newNoteIndex)
+  switch (notesByIndex.length) {
+    case 1:
+      return notesByIndex[0]!
+    case 2:
+      return accidental === '#' ? notesByIndex[0]! : notesByIndex[1]!
+    default:
+      throw new TypeError(
+        `Unexpected notes at "${newNoteIndex}": ${notesByIndex}`,
+      )
+  }
 }

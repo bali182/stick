@@ -6,7 +6,7 @@ import Select, {
 } from 'react-select'
 import { css } from '@emotion/css'
 import { STRATEGIES } from '../strategies/strategies'
-import { SelectItem } from '../model/chartModel'
+import { SelectItem } from '../model/types'
 
 export type TransitionEditorProps = {
   transitionId: string | undefined
