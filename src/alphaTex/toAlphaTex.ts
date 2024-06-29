@@ -1,4 +1,3 @@
-import { duration } from '@mui/material'
 import { ATBar, ATNote, ATTrack } from './model'
 import { isNil } from '../state/utils'
 
@@ -28,7 +27,7 @@ function getNote(note: ATNote): string {
   }
   const parts = [
     note.rest
-      ? `r.${duration}`
+      ? `r.${note.duration}`
       : `${note.fret}.${note.string}.${note.duration}`,
     note.chord ? `{ch "${note.chord}"}` : undefined,
   ].filter((part) => part !== undefined)

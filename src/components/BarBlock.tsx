@@ -134,7 +134,12 @@ export const BarBlock: FC<BarBlockProps> = ({
     if (firstChord) {
       return
     }
-    const chord: ChordSymbol = { id: nanoid(), name: 'C', type: 'MAJOR' }
+    const chord: ChordSymbol = {
+      id: nanoid(),
+      name: 'C',
+      type: 'MAJOR',
+      root: 'C2',
+    }
     dispatch(createChord({ chord }))
     dispatch(addChords({ barId, chordIds: [chord.id] }))
   }
@@ -143,7 +148,11 @@ export const BarBlock: FC<BarBlockProps> = ({
     if (!firstChord) {
       return
     }
-    const clonedChord = { ...firstChord, id: nanoid() }
+    const clonedChord: ChordSymbol = {
+      ...firstChord,
+      id: nanoid(),
+      path: undefined,
+    }
     dispatch(createChord({ chord: clonedChord }))
     dispatch(addChords({ barId, chordIds: [clonedChord.id] }))
   }

@@ -1,5 +1,12 @@
 import { useRef, useEffect, FC, useState, useMemo } from 'react'
-import { AlphaTabApi } from '@coderline/alphatab'
+import {
+  AlphaTabApi,
+  CoreSettings,
+  DisplaySettings,
+  PlayerSettings,
+  RenderingResources,
+  StaveProfile,
+} from '@coderline/alphatab'
 import { ATTrack } from '../alphaTex/model'
 import { toAlphaTex } from '../alphaTex/toAlphaTex'
 import { isNil } from '../state/utils'
@@ -52,7 +59,37 @@ const modelB: ATTrack = {
   ],
 }
 
-console.log(toAlphaTex(modelA))
+const core: Partial<CoreSettings> = {
+  tex: true,
+  fontDirectory: '/font/',
+  engine: 'svg',
+}
+
+// Typings are unusable here
+const display = {
+  staveProfile: 'Default',
+  barsPerRow: 8,
+  scale: 1.4,
+  justifyLastSystem: true,
+  resources: {
+    staffLineColor: '#ffffff80',
+    barSeparatorColor: '#fff',
+    mainGlyphColor: '#fff',
+    secondaryGlyphColor: '#fff',
+    scoreInfoColor: '#fff',
+    barNumberColor: '#fff',
+  },
+}
+
+const player: Partial<PlayerSettings> = {
+  enableCursor: true,
+  enableAnimatedBeatCursor: true,
+  enableElementHighlighting: true,
+  enablePlayer: true,
+  enableUserInteraction: true,
+  soundFont:
+    'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
+}
 
 export const Tab: FC<TabProps> = ({ id }) => {
   const containerDom = useRef<HTMLElement>(null)
@@ -66,38 +103,15 @@ export const Tab: FC<TabProps> = ({ id }) => {
     if (isNil(api)) {
       return
     }
+    console.log(tex)
     api.tex(tex)
   }, [tex])
 
   useEffect(() => {
     const api = new AlphaTabApi(containerDom.current!, {
-      core: {
-        tex: true,
-        fontDirectory: '/font/',
-        engine: 'svg',
-      },
-      display: {
-        staveProfile: 'Default',
-        barsPerRow: 8,
-        scale: 1.4,
-        justifyLastSystem: true,
-        resources: {
-          staffLineColor: '#ffffff80',
-          barSeparatorColor: '#fff',
-          mainGlyphColor: '#fff',
-          secondaryGlyphColor: '#fff',
-          scoreInfoColor: '#fff',
-          barNumberColor: '#fff',
-        },
-      },
-      notation: {
-        elements: {
-          scoreTitle: 'Test',
-          scoreWordsAndMusic: 'Bobo',
-          effectTempo: 120,
-          guitarTuning: false,
-        },
-      },
+      core,
+      display,
+      player,
     })
     api.render()
     api.tex(tex)
@@ -106,6 +120,9 @@ export const Tab: FC<TabProps> = ({ id }) => {
 
   return (
     <div>
+      <button onClick={() => apiRef.current?.play()}>Play</button>
+      <button onClick={() => apiRef.current?.pause()}>Pause</button>
+      <button onClick={() => apiRef.current?.stop()}>Stop</button>
       <button onClick={() => setA(!a)}>Swap</button>
       <div id={id} ref={containerDom as any}></div>
     </div>

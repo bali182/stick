@@ -1,4 +1,6 @@
-import { ChordSymbol, ChordType } from './types'
+import { ChordSymbol, ChordType } from './chartModel'
+import { isNil } from './state/utils'
+import { PITCHED_NOTE_MAP } from './utils'
 
 function getChordTypeSuffix(type: ChordType): string {
   switch (type) {
@@ -30,7 +32,8 @@ export function getChordSymbolName(chord: ChordSymbol | undefined): string {
     return 'Missing'
   }
   const chordName = `${chord.name}${getChordTypeSuffix(chord.type)}`
-  return chord.root !== undefined && chord.root !== chord.name
+  const sameRoots = PITCHED_NOTE_MAP[chord.name]
+  return !isNil(chord.root) && !sameRoots.includes(chord.root)
     ? `${chordName}/${chord.root}`
     : chordName
 }

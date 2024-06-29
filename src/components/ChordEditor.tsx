@@ -1,11 +1,18 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import { ChordSymbol, ChordType, NoteName, SelectItem } from '../chartModel'
+import {
+  ChordSymbol,
+  ChordType,
+  NoteName,
+  PitchedNoteName,
+  SelectItem,
+} from '../chartModel'
+import { PITCHED_NOTE_MAP } from '../utils'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
@@ -123,21 +130,31 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     label: CHORD_TYPES_TO_NAMES[chord.type],
     value: chord.type,
   }
-  const rootItem: SelectItem<NoteName> | null = chord.root
-    ? {
-        label: chord.root,
-        value: chord.root,
-      }
-    : null
+  const rootItem: SelectItem<PitchedNoteName> = {
+    label: chord.root,
+    value: chord.root,
+  }
+
+  const possibleRoots = useMemo<SelectItem<PitchedNoteName>[]>(
+    () =>
+      PITCHED_NOTE_MAP[chord.name].map(
+        (root): SelectItem<PitchedNoteName> => ({ label: root, value: root }),
+      ),
+    [chord.name],
+  )
 
   const onNameChange = (data: SelectItem<NoteName>): void => {
-    onChange({ ...chord, name: data.value })
+    onChange({
+      ...chord,
+      name: data.value,
+      root: PITCHED_NOTE_MAP[data.value][0]!,
+    })
   }
   const onTypeChange = (data: SelectItem<ChordType>): void => {
     onChange({ ...chord, type: data.value })
   }
-  const onRootChange = (data: SelectItem<NoteName> | null): void => {
-    onChange({ ...chord, root: data ? data.value : undefined })
+  const onRootChange = (data: SelectItem<PitchedNoteName>): void => {
+    onChange({ ...chord, root: data?.value! })
   }
 
   return (
@@ -162,11 +179,10 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
       <Select
         value={rootItem}
         components={overrideComponents}
-        options={NOTES}
+        options={possibleRoots}
         placeholder="Root"
         styles={rightSelectStyles}
         onChange={onRootChange as any}
-        isClearable={true}
       />
     </div>
   )

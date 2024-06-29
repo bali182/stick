@@ -16,26 +16,31 @@ const initialState: ChordSymbolsState = {
     id: 'default-first-bar-dm',
     name: 'D',
     type: 'MINOR',
+    root: 'D2',
   },
   'default-second-bar-f': {
     id: 'default-second-bar-f',
     name: 'F',
     type: 'MAJOR',
+    root: 'F1',
   },
   'default-third-bar-bb': {
     id: 'default-third-bar-bb',
     name: 'Bb',
     type: 'MAJOR',
+    root: 'Bb1',
   },
   'default-fourth-bar-g': {
     id: 'default-fourth-bar-g',
     name: 'G',
     type: 'MAJOR',
+    root: 'G1',
   },
   'default-fourth-bar-a': {
     id: 'default-fourth-bar-a',
     name: 'A',
     type: 'DOMINANT-SEVENTH',
+    root: 'A1',
   },
 }
 
