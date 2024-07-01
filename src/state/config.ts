@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { PitchedNote } from '../model/types'
-import { getFretboardLocations } from './getFretboardLocations'
 
 export type ConfigState = { tuning: PitchedNote[] }
 

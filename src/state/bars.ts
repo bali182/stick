@@ -27,6 +27,10 @@ const initialState: BarsState = {
     id: 'default-fourth-bar',
     chords: ['default-fourth-bar-g', 'default-fourth-bar-a'],
   },
+  'default-fifth-bar': {
+    id: 'default-fifth-bar',
+    chords: ['default-fith-bar-dm'],
+  },
 }
 
 const barsSlice = createSlice({

@@ -18,6 +18,7 @@ const initialState: ProgressionsState = {
       'default-second-bar',
       'default-third-bar',
       'default-fourth-bar',
+      'default-fifth-bar',
     ],
   },
 }

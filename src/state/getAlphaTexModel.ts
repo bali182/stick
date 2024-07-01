@@ -31,5 +31,6 @@ export function getAlphaTexModel(
       return { notes }
     }),
   }
+  console.log(track)
   return track
 }

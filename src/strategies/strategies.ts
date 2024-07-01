@@ -1,4 +1,4 @@
-import { Transition } from '../types'
+import { Transition } from '../model/types'
 import {
   toAnyAscDescHigherChrom,
   toAnyAscDescLowerChrom,
