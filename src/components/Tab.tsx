@@ -4,53 +4,13 @@ import { ATTrack } from '../alphaTex/model'
 import { toAlphaTex } from '../alphaTex/toAlphaTex'
 import { isNil } from '../model/utils'
 import { Duration } from '../model/types'
+import { useSelector } from 'react-redux'
+import { getAlphaTexModel } from '../state/getAlphaTexModel'
+import { AppState } from '../state/store'
 
 export type TabProps = {
   id: string
-}
-
-const modelA: ATTrack = {
-  clef: 'Bass',
-  instrument: 'AcousticBass',
-  keySignature: 'Db',
-  timeSignature: { top: 4, bottom: 4 },
-  tempo: 140,
-  bars: [
-    {
-      notes: [
-        { duration: Duration.QUARTER, string: 3, fret: 6, chord: 'Am (R)' },
-        { duration: Duration.QUARTER, string: 2, fret: 3, chord: '3' },
-        { duration: Duration.QUARTER, string: 2, fret: 3, chord: '5' },
-        { duration: Duration.QUARTER, string: 4, fret: 2, chord: 'C' },
-      ],
-    },
-  ],
-}
-
-const modelB: ATTrack = {
-  clef: 'Bass',
-  instrument: 'AcousticBass',
-  keySignature: 'Db',
-  timeSignature: { top: 4, bottom: 4 },
-  tempo: 140,
-  bars: [
-    {
-      notes: [
-        { duration: Duration.QUARTER, string: 4, fret: 3 },
-        { duration: Duration.QUARTER, string: 2, fret: 1 },
-        { duration: Duration.QUARTER, rest: true },
-        { duration: Duration.QUARTER, string: 4, fret: 2 },
-      ],
-    },
-    {
-      notes: [
-        { duration: Duration.QUARTER, string: 3, fret: 3 },
-        { duration: Duration.QUARTER, string: 3, fret: 1 },
-        { duration: Duration.QUARTER, rest: true },
-        { duration: Duration.QUARTER, string: 4, fret: 3 },
-      ],
-    },
-  ],
+  progressionId: string
 }
 
 const core: Partial<CoreSettings> = {
@@ -85,12 +45,14 @@ const player: Partial<PlayerSettings> = {
     'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
 }
 
-export const Tab: FC<TabProps> = ({ id }) => {
+export const Tab: FC<TabProps> = ({ id, progressionId }) => {
   const containerDom = useRef<HTMLElement>(null)
   const apiRef = useRef<AlphaTabApi>()
-  const [a, setA] = useState(true)
+  const alphaTexModel = useSelector<AppState, ATTrack>((state) =>
+    getAlphaTexModel(state, progressionId),
+  )
 
-  const tex = useMemo(() => toAlphaTex(a ? modelA : modelB), [a])
+  const tex = useMemo(() => toAlphaTex(alphaTexModel), [alphaTexModel])
 
   useEffect(() => {
     const { current: api } = apiRef
@@ -117,7 +79,6 @@ export const Tab: FC<TabProps> = ({ id }) => {
       <button onClick={() => apiRef.current?.play()}>Play</button>
       <button onClick={() => apiRef.current?.pause()}>Pause</button>
       <button onClick={() => apiRef.current?.stop()}>Stop</button>
-      <button onClick={() => setA(!a)}>Swap</button>
       <div id={id} ref={containerDom as any}></div>
     </div>
   )

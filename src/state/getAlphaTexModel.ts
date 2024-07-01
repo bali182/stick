@@ -1,35 +1,35 @@
-import { ATNote, ATTrack } from '../alphaTex/model'
-import { BarModel, ChordSymbol } from '../model/types'
-import { isNil } from '../model/utils'
-import { getBar } from './bars'
-import { getChord } from './chords'
-import { getProgression } from './progressions'
+import { ATBar, ATNote, ATTrack } from '../alphaTex/model'
+import { getTuning } from './config'
+import { prepareAlphaTexModel } from './prepareAlphaTexModel'
 import { AppState } from './store'
-
-type IntermediateChord = {
-  notes: ATNote[]
-}
-
-type IntermediateBar = {
-  chords: IntermediateChord[]
-}
-
-function solve(bars: [BarModel, ChordSymbol[]][]) {
-  const iBars: IntermediateBar[] = []
-  for (let i = 0; i < bars.length; i += 1) {
-    const [, chords] = bars[i]!
-    const [, nextChords] = bars[i + 1] ?? []
-  }
-}
 
 export function getAlphaTexModel(
   state: AppState,
   progressionId: string,
-) /*: ATTrack*/ {
-  const progression = getProgression(state, progressionId)!
-  const bars = progression.bars.map((barId) => getBar(state, barId)!)
-  const barsWithChords = bars.map((bar): [BarModel, ChordSymbol[]] => [
-    bar,
-    bar.chords.map((chordId) => getChord(state, chordId)!),
-  ])
+): ATTrack {
+  const tuning = getTuning(state)
+  const bars = prepareAlphaTexModel(state, progressionId)
+  const track: ATTrack = {
+    clef: 'Bass',
+    instrument: 'AcousticBass',
+    keySignature: 'C',
+    timeSignature: { bottom: 4, top: 4 },
+    tuning,
+    bars: bars.map(({ chords }): ATBar => {
+      const notes = chords
+        .flatMap((chord) => chord.pitches)
+        .map(
+          ({ duration, fret, string, meta }): ATNote => ({
+            duration,
+            fret,
+            string,
+            chord: meta,
+            // TODO so far not possible to rest
+            rest: false,
+          }),
+        )
+      return { notes }
+    }),
+  }
+  return track
 }

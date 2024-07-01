@@ -10,8 +10,6 @@ const initialState: ConfigState = {
   tuning: ['E1', 'A1', 'D2', 'G2'],
 }
 
-console.log(getFretboardLocations('A2', initialState.tuning))
-
 const configSlice = createSlice({
   name: 'config',
   initialState,

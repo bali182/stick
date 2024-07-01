@@ -14,6 +14,7 @@ function getMetaData(model: ATTrack): string[] {
     model.copyright ? `\\copyright "${model.copyright}"` : undefined,
     model.tempo ? `\\tempo ${model.tempo}` : undefined,
     model.instrument ? `\\instrument "${model.instrument}"` : undefined,
+    model.tuning ? `\\tuning ${model.tuning.join(' ')}` : undefined,
   ].filter((data): data is string => data !== undefined)
 }
 

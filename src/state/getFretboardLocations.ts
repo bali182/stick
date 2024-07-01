@@ -5,8 +5,9 @@ import { isNil } from '../model/utils'
 export function getFretboardLocations(
   note: PitchedNote,
   tuning: PitchedNote[],
+  allowEmpty: boolean = true,
 ): FretboardLocation[] {
-  return tuning
+  const locations = tuning
     .filter((string) => {
       const noteHz = Note.freq(note)
       const stringHz = Note.freq(string)
@@ -21,4 +22,8 @@ export function getFretboardLocations(
       }
     })
     .filter(({ fret }) => fret <= 24)
+  if (!allowEmpty && locations.length === 0) {
+    throw new TypeError(`Can't place ${note} in tuning: ${tuning.join(', ')}`)
+  }
+  return locations
 }

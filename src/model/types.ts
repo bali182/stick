@@ -93,3 +93,25 @@ export type FretboardLocation = {
   fret: number
   string: number
 }
+
+export type _Pitch = {
+  id: string
+  progressionId: string
+  barId: string
+  chordId: string
+  note: PitchedNote
+  duration: number
+  meta?: string
+  fret: number
+  string: number
+}
+
+export type _BarPitches = {
+  barId: string
+  chords: _ChordPitches[]
+}
+
+export type _ChordPitches = {
+  chordId: string
+  pitches: _Pitch[]
+}

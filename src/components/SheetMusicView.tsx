@@ -1,6 +1,9 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { Tab } from './Tab'
+import { useSelector } from 'react-redux'
+import { canSolve } from '../state/canSolve'
+import { AppState } from '../state/store'
 
 const sheetMusicViewStyle = css`
   height: 100%;
@@ -10,9 +13,13 @@ const sheetMusicViewStyle = css`
 `
 
 export const SheetMusicView: FC = () => {
+  const canRender = useSelector<AppState, boolean>((state) =>
+    canSolve(state, 'default'),
+  )
   return (
     <div className={sheetMusicViewStyle}>
-      <Tab id="tab"></Tab>
+      {!canRender ? <span>Please fill the progression!</span> : null}
+      {canRender ? <Tab id="tab" progressionId="default"></Tab> : null}
     </div>
   )
 }

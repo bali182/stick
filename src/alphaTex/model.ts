@@ -39,6 +39,7 @@ export type ATClef = 'Bass' | 'Treble' | 'Tenor' | 'Alto' | 'Neutral'
 export type ATTrack = {
   instrument: 'AcousticBass' | 'AcousticGuitarSteel'
   clef: ATClef
+  tuning: string[]
   keySignature: ATKeySignature
   timeSignature: ATTimeSignature
   bars: ATBar[]
