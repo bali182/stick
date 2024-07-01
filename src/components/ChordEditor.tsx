@@ -132,13 +132,10 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
 
   const onNameChange = (data: SelectItem<Note>): void => {
     const possiblePitches = getPossiblePitches(data.value, range)
-    if (possiblePitches.length === 0) {
-      debugger
-    }
     onChange({
       ...chord,
       name: data.value,
-      root: possiblePitches[0]!,
+      root: possiblePitches[possiblePitches.length - 1]!,
     })
   }
   const onTypeChange = (data: SelectItem<ChordType>): void => {

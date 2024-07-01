@@ -7,7 +7,7 @@ export type ConfigState = { tuning: PitchedNote[] }
 export type UpdateConfigPayload = Partial<ConfigState>
 
 const initialState: ConfigState = {
-  tuning: ['E1', 'A1', 'D2', 'G2'],
+  tuning: ['G2', 'D2', 'A1', 'E1'],
 }
 
 const configSlice = createSlice({
