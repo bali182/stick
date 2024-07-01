@@ -8,7 +8,7 @@ import {
 } from './types'
 import { OCTAVE_DOWN, OCTAVE_UP } from './constants'
 
-function getPitchedChordToneBase(
+function getPitchedChordToneUp(
   chord: ChordSymbol,
   tone: ChordTone,
 ): PitchedNote {
@@ -29,7 +29,7 @@ export function getPitchedChordTone(
   tone: ChordTone,
   dir: ChordToneDirection,
 ): PitchedNote {
-  const note = getPitchedChordToneBase(chord, tone)
+  const note = getPitchedChordToneUp(chord, tone)
   switch (dir) {
     case 'NONE': {
       if (tone !== 'ROOT') {

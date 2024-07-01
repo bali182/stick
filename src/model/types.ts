@@ -87,3 +87,9 @@ export type SelectItem<T> = {
   label: string
   value: T
 }
+
+export type FretboardLocation = {
+  note: PitchedNote
+  fret: number
+  string: number
+}

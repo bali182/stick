@@ -58,6 +58,9 @@ export function getNoteParts(note: Note): [BaseNoteName, Accidental?] {
 }
 
 export function getPitchedNoteParts(note: PitchedNote): [Note, number] {
+  if (isNil(note)) {
+    debugger
+  }
   const noteName = note.replace(/[0-9]+/g, '') as Note
   const pitch = parseInt(note.replace(/[^0-9]+/g, ''))
   return [noteName, pitch]
