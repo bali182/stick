@@ -3,15 +3,16 @@ import { AlphaTabApi, synth } from '@coderline/alphatab'
 import { ATTrack } from '../../alphaTex/model'
 import { toAlphaTex } from '../../alphaTex/toAlphaTex'
 import { isNil } from '../../model/utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAlphaTexModel } from '../../state/getAlphaTexModel'
-import { AppState } from '../../state/store'
+import { AppDispatch, AppState } from '../../state/store'
 import { alphaTabConfig } from './alphaTabConfig'
 import { css } from '@emotion/css'
 import { AlphaTabLogo } from './AlphaTabLogo'
 import { LoopButton, PlayButton, StopButton } from './ScoreControls'
 import { ScoreOverlay } from './ScoreOverlay'
 import { VolumeSlider } from './VolumeSlider'
+import { ConfigState, updateConfig } from '../../state/config'
 
 export type ScoreProps = {
   progressionId: string
@@ -36,12 +37,15 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
 
   const [isLoading, setLoading] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
-  const [isLooping, setLooping] = useState(false)
-  const [volume, setVolume] = useState(0.75)
 
   const alphaTexModel = useSelector<AppState, ATTrack>((state) =>
     getAlphaTexModel(state, progressionId),
   )
+  const { isLooping, volume } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const tex = useMemo(() => toAlphaTex(alphaTexModel), [alphaTexModel])
 
@@ -75,14 +79,17 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
 
     api.render()
     api.tex(tex)
+    api.masterVolume = volume
+    api.isLooping = isLooping
     apiRef.current = api
 
     return () => api.destroy()
   }, [])
 
   const onPlayPause = () => apiRef.current?.playPause()
-  const onLoop = () => setLooping(!isLooping)
+  const onLoop = () => dispatch(updateConfig({ isLooping: !isLooping }))
   const onStop = () => apiRef.current?.stop()
+  const onVolumeChange = (volume: number) => dispatch(updateConfig({ volume }))
 
   return (
     <div className="at-wrap" ref={wrapperRef as any}>
@@ -93,7 +100,7 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
         </div>
       </div>
       <div className={bottomBarStyle}>
-        <VolumeSlider value={volume} onChange={setVolume} />
+        <VolumeSlider value={volume} onChange={onVolumeChange} />
         <StopButton onClick={onStop} />
         <PlayButton onClick={onPlayPause} isToggled={isPlaying} />
         <LoopButton onClick={onLoop} isToggled={isLooping} />

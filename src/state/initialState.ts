@@ -9,6 +9,8 @@ import { AppState } from './store'
 export const initialState: AppState = {
   config: {
     tuning: ['G2', 'D2', 'A1', 'E1'],
+    isLooping: false,
+    volume: 0.5,
   },
   progressions: {
     default: {
