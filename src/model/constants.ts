@@ -76,7 +76,7 @@ export const CHORMATIC_SCALE_LENGTH = 12
 
 export const OCTAVE_UP = Interval.fromSemitones(CHORMATIC_SCALE_LENGTH)
 
-export const OCTAVE_DOWN = Interval.fromSemitones(CHORMATIC_SCALE_LENGTH)
+export const OCTAVE_DOWN = Interval.fromSemitones(-CHORMATIC_SCALE_LENGTH)
 
 export const INTERVALS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
   Interval.fromSemitones,

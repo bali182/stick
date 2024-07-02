@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { BarModel } from '../model/types'
 import { removeByKey } from '../model/utils'
+import { initialState } from './initialState'
 
 export type BarsState = Record<string, BarModel>
 
@@ -10,32 +11,9 @@ export type UpdateBarPayload = { bar: BarModel }
 export type AddChordsPayload = { barId: string; chordIds: string[] }
 export type RemoveChordsPayload = { barId: string; chordIds: string[] }
 
-const initialState: BarsState = {
-  'default-first-bar': {
-    id: 'default-first-bar',
-    chords: ['default-first-bar-dm'],
-  },
-  'default-second-bar': {
-    id: 'default-second-bar',
-    chords: ['default-second-bar-f'],
-  },
-  'default-third-bar': {
-    id: 'default-third-bar',
-    chords: ['default-third-bar-bb'],
-  },
-  'default-fourth-bar': {
-    id: 'default-fourth-bar',
-    chords: ['default-fourth-bar-g', 'default-fourth-bar-a'],
-  },
-  'default-fifth-bar': {
-    id: 'default-fifth-bar',
-    chords: ['default-fith-bar-dm'],
-  },
-}
-
 const barsSlice = createSlice({
   name: 'bars',
-  initialState,
+  initialState: initialState.bars,
   reducers: {
     createBar: (state, { payload }: PayloadAction<CrateBarPayload>) => ({
       ...state,

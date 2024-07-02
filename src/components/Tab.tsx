@@ -59,7 +59,6 @@ export const Tab: FC<TabProps> = ({ id, progressionId }) => {
     if (isNil(api)) {
       return
     }
-    console.log(tex)
     api.tex(tex)
   }, [tex])
 

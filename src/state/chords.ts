@@ -1,12 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { ChordSymbol, HasId } from '../model/types'
 import { removeByKey, removeByKeys } from '../model/utils'
-import {
-  toAnyAscHigherChrom,
-  toAnyAscLowerChrom,
-  toAnyDescAscLowerChrom,
-  toAnyHigherChrom,
-} from '../strategies/chordTonesWithChromaticLeadingTone'
+import { initialState } from './initialState'
 
 export type ChordSymbolsState = Record<string, ChordSymbol>
 
@@ -17,53 +12,9 @@ export type UpdateChordPayload = {
 export type DeleteChordPayload = { chordId: string }
 export type DeleteChordsPayload = { chordIds: string[] }
 
-const initialState: ChordSymbolsState = {
-  'default-first-bar-dm': {
-    id: 'default-first-bar-dm',
-    name: 'D',
-    type: 'MINOR',
-    root: 'D2',
-    path: toAnyAscLowerChrom.id,
-  },
-  'default-second-bar-f': {
-    id: 'default-second-bar-f',
-    name: 'F',
-    type: 'MAJOR',
-    root: 'F1',
-    path: toAnyAscHigherChrom.id,
-  },
-  'default-third-bar-bb': {
-    id: 'default-third-bar-bb',
-    name: 'Bb',
-    type: 'MAJOR',
-    root: 'Bb1',
-    path: toAnyDescAscLowerChrom.id,
-  },
-  'default-fourth-bar-g': {
-    id: 'default-fourth-bar-g',
-    name: 'G',
-    type: 'MAJOR',
-    root: 'G1',
-    path: toAnyHigherChrom.id,
-  },
-  'default-fourth-bar-a': {
-    id: 'default-fourth-bar-a',
-    name: 'A',
-    type: 'DOMINANT-SEVENTH',
-    root: 'A1',
-    path: toAnyHigherChrom.id,
-  },
-  'default-fith-bar-dm': {
-    id: 'default-fith-bar-dm',
-    name: 'D',
-    type: 'MINOR',
-    root: 'D2',
-  },
-}
-
 const chordsSlice = createSlice({
   name: 'chords',
-  initialState,
+  initialState: initialState.chords,
   reducers: {
     createChord: (state, { payload }: PayloadAction<CreateChordPayload>) => ({
       ...state,

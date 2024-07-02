@@ -10,11 +10,13 @@ export function canSolve(state: AppState, progressionId: string): boolean {
 
   // No or missing bars, no solution
   if (bars.length === 0 || bars.some(isNil)) {
+    debugger
     return false
   }
 
   // Empty bars, no solution
   if (bars.some((bar) => bar.chords.length === 0)) {
+    debugger
     return false
   }
 
@@ -24,6 +26,7 @@ export function canSolve(state: AppState, progressionId: string): boolean {
 
   // Missing chords, no solution
   if (chords.some(isNil)) {
+    debugger
     return false
   }
 
@@ -32,9 +35,15 @@ export function canSolve(state: AppState, progressionId: string): boolean {
 
   // Any chords (except the last) that has no path, no solution
   if (initial.some((chord) => isNil(chord.path))) {
+    debugger
     return false
   }
 
   // Last path should not be set, there is no next chord.
-  return last.path === undefined
+  if (!isNil(last.path)) {
+    debugger
+    return false
+  }
+
+  return true
 }
