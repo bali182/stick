@@ -15,11 +15,6 @@ export type ToggleButtonProps = BasicButtonProps & {
   isToggled: boolean
 }
 
-export type SliderProps = {
-  value: number
-  onChange: (value: number) => void
-}
-
 const playButtonStyle = css`
   border-radius: 50%;
   width: 100px;
@@ -70,58 +65,6 @@ const toogledButtonStyle = css`
   }
 `
 
-const volumeSliderStyle = css`
-  appearance: none;
-  background-color: transparent;
-  width: 180px;
-  position: absolute;
-  left: 40px;
-
-  &::-webkit-slider-runnable-track {
-    position: relative;
-    height: 8px;
-    background-color: green;
-    border-radius: 8px;
-  }
-
-  &::-moz-range-track {
-    position: relative;
-    height: 8px;
-    background-color: green;
-    border-radius: 8px;
-  }
-
-  &::-webkit-slider-thumb {
-    box-sizing: border-box;
-    appearance: none;
-    position: relative;
-    background-color: purple;
-    border: 2px solid white;
-    border-radius: 8px;
-    width: 24px;
-    height: 24px;
-    top: 50%;
-    translate: 0 -50%;
-  }
-
-  &::-moz-range-thumb {
-    box-sizing: border-box;
-    appearance: none;
-    position: relative;
-    background-color: purple;
-    border: 2px solid white;
-    border-radius: 8px;
-    width: 24px;
-    height: 24px;
-  }
-
-  &::-moz-range-progress {
-    height: 8px;
-    background-color: orangered;
-    border-radius: 8px;
-  }
-`
-
 export const PlayButton: FC<ToggleButtonProps> = ({ onClick, isToggled }) => {
   return (
     <button className={playButtonStyle} onClick={onClick}>
@@ -147,19 +90,5 @@ export const StopButton: FC<BasicButtonProps> = ({ onClick }) => {
     <button className={secondaryButtonStyle} onClick={onClick}>
       <RiStopLargeFill />
     </button>
-  )
-}
-
-export const VolumeSlider: FC<SliderProps> = ({ value, onChange }) => {
-  return (
-    <input
-      type="range"
-      className={volumeSliderStyle}
-      min={0}
-      max={1}
-      step={0.02}
-      value={value}
-      onChange={(event) => onChange(event.target.valueAsNumber)}
-    />
   )
 }

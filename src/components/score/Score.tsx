@@ -9,13 +9,9 @@ import { AppState } from '../../state/store'
 import { alphaTabConfig } from './alphaTabConfig'
 import { css } from '@emotion/css'
 import { AlphaTabLogo } from './AlphaTabLogo'
-import {
-  LoopButton,
-  PlayButton,
-  StopButton,
-  VolumeSlider,
-} from './ScoreControls'
+import { LoopButton, PlayButton, StopButton } from './ScoreControls'
 import { ScoreOverlay } from './ScoreOverlay'
+import { VolumeSlider } from './VolumeSlider'
 
 export type ScoreProps = {
   progressionId: string
