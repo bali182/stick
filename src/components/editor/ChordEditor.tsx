@@ -11,12 +11,12 @@ import {
   Note,
   PitchedNote,
   SelectItem,
-} from '../model/types'
-import { getPossiblePitches } from '../model/utils'
+} from '../../model/types'
+import { getPossiblePitches } from '../../model/utils'
 import { useSelector } from 'react-redux'
-import { getTuning } from '../state/config'
-import { getNoteRange } from '../model/getNoteRange'
-import { INDEX_BY_NOTE } from '../model/constants'
+import { getTuning } from '../../state/config'
+import { getNoteRange } from '../../model/getNoteRange'
+import { INDEX_BY_NOTE } from '../../model/constants'
 
 export type ChordEditorProps = {
   chord: ChordSymbol

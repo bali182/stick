@@ -5,8 +5,8 @@ import Select, {
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import { STRATEGIES } from '../strategies/strategies'
-import { SelectItem } from '../model/types'
+import { STRATEGIES } from '../../strategies/strategies'
+import { SelectItem } from '../../model/types'
 
 export type TransitionEditorProps = {
   transitionId: string | undefined

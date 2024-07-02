@@ -35,17 +35,16 @@ const alphaStyle = css`
 `
 const tabStyle = css`
   font-size: 2em;
-  color: #ffffff88;
+  color: #ffffff99;
 `
 
 const renderedByStyle = css`
   font-size: 0.85em;
-  color: #ffffff66;
+  color: #ffffff99;
 `
-
 export const AlphaTabLogo: FC = () => {
   return (
-    <a href="https://alphatab.net">
+    <a href="https://alphatab.net" target="_blank">
       <span className={wrapperStyle}>
         <span className={renderedByStyle}>Tabs & score rendered by:</span>
         <span className={alphaTabLogoStyle}>

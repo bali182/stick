@@ -2,8 +2,8 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { Route, Routes } from 'react-router'
 import { Toolbar } from './Toolbar'
-import { Editor } from './Editor'
-import { SheetMusicView } from './SheetMusicView'
+import { Editor } from './editor/Editor'
+import { ScoreView } from './score/ScoreView'
 
 const appStyle = css`
   height: 100%;
@@ -26,7 +26,7 @@ export const App: FC = () => {
           <Route>
             <Route path="/" Component={Editor} />
             <Route path="/editor" Component={Editor} />
-            <Route path="/sheet-music" Component={SheetMusicView} />
+            <Route path="/score" Component={ScoreView} />
           </Route>
         </Routes>
       </div>

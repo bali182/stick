@@ -74,9 +74,9 @@ const TABS: TabDescriptor[] = [
   },
   {
     icon: PiMusicNoteSimple,
-    label: 'Tab & Sheet music',
-    matches: ['/sheet-music'],
-    path: '/sheet-music',
+    label: 'Score',
+    matches: ['/score'],
+    path: '/score',
   },
 ]
 

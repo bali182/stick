@@ -1,11 +1,11 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { createBar } from '../state/bars'
-import { AppDispatch } from '../state/store'
-import { BarModel } from '../model/types'
+import { createBar } from '../../state/bars'
+import { AppDispatch } from '../../state/store'
+import { BarModel } from '../../model/types'
 import { FiPlusSquare } from 'react-icons/fi'
-import { addBars } from '../state/progressions'
+import { addBars } from '../../state/progressions'
 import { nanoid } from 'nanoid'
 
 export type BarBlockProps = {

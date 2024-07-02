@@ -31,7 +31,7 @@ const player: Partial<PlayerSettings> = {
     'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
 }
 
-export const tabConfig = {
+export const alphaTabConfig = {
   core,
   display,
   player,
