@@ -1,10 +1,9 @@
 import { css, cx } from '@emotion/css'
 import { FC } from 'react'
-import { RiFootprintFill } from 'react-icons/ri'
-import { PiPencilLine } from 'react-icons/pi'
-import { RiMusicLine } from 'react-icons/ri'
+import { PiMusicNoteSimple, PiPencilLine } from 'react-icons/pi'
 import { IconType } from 'react-icons'
 import { useLocation } from 'react-router'
+import { StickLogo } from './StickLogo'
 
 const toolbarStyle = css`
   display: flex;
@@ -13,46 +12,6 @@ const toolbarStyle = css`
   height: 100px;
   width: 100%;
   padding: 14px 50px;
-`
-
-const logoBlockStyle = css`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  margin-right: 60px;
-  &:hover,
-  &:active,
-  &:visited {
-    text-decoration: none;
-  }
-`
-
-const logoTextStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-`
-
-const titleIconStyle = css`
-  color: #fff;
-  font-size: 3.4em;
-`
-
-const titleStyle = css`
-  color: #fff;
-  font-size: 2.4em;
-  font-weight: bold;
-  line-height: 90%;
-  margin: 0px;
-`
-
-const subTitleStyle = css`
-  color: #ffffff99;
-  font-size: 0.8em;
-  line-height: 90%;
-  font-weight: bold;
 `
 
 const tabContainerStyle = css`
@@ -114,7 +73,7 @@ const TABS: TabDescriptor[] = [
     path: '/editor',
   },
   {
-    icon: RiMusicLine,
+    icon: PiMusicNoteSimple,
     label: 'Tab & Sheet music',
     matches: ['/sheet-music'],
     path: '/sheet-music',
@@ -125,17 +84,7 @@ export const Toolbar: FC = () => {
   const { pathname } = useLocation()
   return (
     <div className={toolbarStyle}>
-      <a className={logoBlockStyle} href="#/">
-        <RiFootprintFill className={titleIconStyle} />
-        <span className={logoTextStyle}>
-          <h1 className={titleStyle}>Stick</h1>
-          <h2 className={subTitleStyle}>helps you walk.</h2>
-        </span>
-      </a>
-
-      {/* <div className={titleStyle}>
-        <span>Stick</span>
-      </div> */}
+      <StickLogo />
       <div className={tabContainerStyle}>
         {TABS.map(({ matches, path, icon: Icon, label }) => {
           const className = matches.includes(pathname)

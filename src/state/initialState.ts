@@ -8,7 +8,7 @@ import { AppState } from './store'
 
 export const initialState: AppState = {
   config: {
-    tuning: ['G2', 'D2', 'A1', 'E1', 'B0'],
+    tuning: ['G2', 'D2', 'A1', 'E1'],
   },
   progressions: {
     default: {
