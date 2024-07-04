@@ -4,7 +4,7 @@ grammar wbp;
 chordReference: 'C' | 'N';
 direction: 'U' | 'D';
 sign: '+' | '-';
-chordTone: 'R' | 'T' | 'F' | 'S';
+chordTone: 'R' | 'T' | 'F';
 chordType:
 	'?'
 	| 'M'

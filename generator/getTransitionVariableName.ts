@@ -2,8 +2,8 @@ import {
   ChordTone,
   ChordToneDirection,
   Transition,
-} from '../../src/model/types'
-import camelCase from './camelCase'
+} from '../src/model/types'
+import { camelCase } from './camelCase'
 
 function getChordToneName(tone: ChordTone): string {
   switch (tone) {
@@ -13,8 +13,6 @@ function getChordToneName(tone: ChordTone): string {
       return 'Third'
     case 'FIFTH':
       return 'Fifth'
-    case 'SEVENTH':
-      return 'Seventh'
   }
 }
 

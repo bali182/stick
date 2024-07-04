@@ -1,5 +1,5 @@
 import { factory, NodeFlags, Statement, SyntaxKind } from 'typescript'
-import { Transition } from '../../src/model/types'
+import { Transition } from '../src/model/types'
 import { getLiteralAst } from './getLiteralAst'
 import { getTransitionVariableName } from './getTransitionVariableName'
 

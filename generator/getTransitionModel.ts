@@ -1,5 +1,5 @@
-import { TransitionContext } from '../../generated/wbp/wbpParser'
-import { Transition } from '../../src/model/types'
+import { TransitionContext } from '../generated/wbp/wbpParser'
+import { Transition } from '../src/model/types'
 import { getTransitionName } from './getTransitionName'
 import { getTransitionStep } from './getTransitionStep'
 

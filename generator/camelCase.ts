@@ -85,7 +85,7 @@ const postProcess = (
     )
 }
 
-export default function camelCase(
+export function camelCase(
   input: string,
   options: {
     pascalCase?: boolean

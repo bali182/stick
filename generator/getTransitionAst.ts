@@ -1,6 +1,6 @@
 import { CharStream, CommonTokenStream } from 'antlr4'
-import wbpParser, { TransitionContext } from '../../generated/wbp/wbpParser'
-import wbpLexer from '../../generated/wbp/wbpLexer'
+import wbpLexer from '../generated/wbp/wbpLexer'
+import wbpParser, { TransitionContext } from '../generated/wbp/wbpParser'
 
 export function getTransitionAst(input: string): TransitionContext {
   const stream = new CharStream(input)

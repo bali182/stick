@@ -2,7 +2,7 @@ import {
   ChordTone,
   ChordToneDirection,
   Transition,
-} from '../../src/model/types'
+} from '../src/model/types'
 
 function getChordToneName(tone: ChordTone): string {
   switch (tone) {
@@ -12,8 +12,6 @@ function getChordToneName(tone: ChordTone): string {
       return '3rd'
     case 'FIFTH':
       return '5th'
-    case 'SEVENTH':
-      return '7th'
   }
 }
 

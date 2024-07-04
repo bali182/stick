@@ -1,11 +1,11 @@
-import { StepContext } from '../../generated/wbp/wbpParser'
-import { isNil } from '../../src/model/isNil'
+import { StepContext } from '../generated/wbp/wbpParser'
+import { isNil } from '../src/model/isNil'
 import {
   ChordReference,
   ChordToneDirection,
   ChordTone,
   Step,
-} from '../../src/model/types'
+} from '../src/model/types'
 
 function getChordReference(ast: StepContext): ChordReference {
   return ast.chordReference().getText() === 'N' ? 'NEXT' : 'CURRENT'
@@ -38,8 +38,6 @@ function getChordTone(ast: StepContext): ChordTone {
       return 'THIRD'
     case 'F':
       return 'FIFTH'
-    case 'S':
-      return 'SEVENTH'
     default:
       throw new TypeError(`Unexpected chord tone: '${chordTone}'`)
   }

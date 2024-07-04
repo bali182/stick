@@ -19,7 +19,7 @@ export const enum Duration {
   SIXTEENTH = 16,
 }
 
-export type ChordTone = 'ROOT' | 'THIRD' | 'FIFTH' | 'SEVENTH'
+export type ChordTone = 'ROOT' | 'THIRD' | 'FIFTH'
 export type ChordToneDirection = 'UP' | 'DOWN' | 'NONE'
 export type ChordReference = 'CURRENT' | 'NEXT'
 

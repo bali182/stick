@@ -1,10 +1,10 @@
 import { join, resolve } from 'path'
-import { chordTonesWithChromaticPassingNotes } from './chordTonesWithChromaticLeadingTone'
-import { getTransitionAst } from './utils/getTransitionAst'
-import { getTransitionModel } from './utils/getTransitionModel'
-import { getTransitionTypescriptAst } from './utils/getTransitionTypescriptAst'
-import { printFile } from './utils/printFile'
-import { writeSync } from './utils/writeSync'
+import { chordTonesWithChromaticPassingNotes } from '../transitions/chordTonesWithChromaticLeadingTone'
+import { getTransitionAst } from './getTransitionAst'
+import { getTransitionModel } from './getTransitionModel'
+import { getTransitionTypescriptAst } from './getTransitionTypescriptAst'
+import { printFile } from './printFile'
+import { writeSync } from './writeSync'
 import { factory } from 'typescript'
 
 const outputPath = resolve(join('generated', 'transitions', 'index.ts'))

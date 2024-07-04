@@ -60,13 +60,13 @@ export default class wbpParser extends Parser {
                                                             "'D'", "'+'", 
                                                             "'-'", "'R'", 
                                                             "'T'", "'F'", 
-                                                            "'S'", "'?'", 
-                                                            "'M'", "'m'", 
-                                                            "'dom7'", "'maj7'", 
-                                                            "'m7'", "'dim'", 
-                                                            "'m7b5'", "'dim7'", 
-                                                            "'aug'", "'aug7'", 
-                                                            "','", "'->'", 
+                                                            "'?'", "'M'", 
+                                                            "'m'", "'dom7'", 
+                                                            "'maj7'", "'m7'", 
+                                                            "'dim'", "'m7b5'", 
+                                                            "'dim7'", "'aug'", 
+                                                            "'aug7'", "','", 
+                                                            "'->'", "'S'", 
                                                             "';'" ];
 	public static readonly symbolicNames: (string | null)[] = [ null, null, 
                                                              null, null, 
@@ -210,7 +210,7 @@ export default class wbpParser extends Parser {
 			{
 			this.state = 30;
 			_la = this._input.LA(1);
-			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 1920) !== 0))) {
+			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 896) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -243,7 +243,7 @@ export default class wbpParser extends Parser {
 			{
 			this.state = 32;
 			_la = this._input.LA(1);
-			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 4192256) !== 0))) {
+			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 2096128) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -340,16 +340,16 @@ export default class wbpParser extends Parser {
 			this.state = 41;
 			this.chordReference();
 			this.state = 42;
-			this.match(wbpParser.T__21);
+			this.match(wbpParser.T__20);
 			this.state = 43;
 			this.chordToneReference();
 			this.state = 46;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===22) {
+			if (_la===21) {
 				{
 				this.state = 44;
-				this.match(wbpParser.T__21);
+				this.match(wbpParser.T__20);
 				this.state = 45;
 				this.direction();
 				}
@@ -388,7 +388,7 @@ export default class wbpParser extends Parser {
 				{
 				{
 				this.state = 49;
-				this.match(wbpParser.T__22);
+				this.match(wbpParser.T__21);
 				this.state = 50;
 				this.step();
 				}
@@ -396,7 +396,7 @@ export default class wbpParser extends Parser {
 				this.state = 53;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (_la===23);
+			} while (_la===22);
 			}
 		}
 		catch (re) {
@@ -422,17 +422,17 @@ export default class wbpParser extends Parser {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 55;
-			this.match(wbpParser.T__9);
+			this.match(wbpParser.T__22);
 			this.state = 56;
 			this.chordType();
 			this.state = 61;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===22) {
+			while (_la===21) {
 				{
 				{
 				this.state = 57;
-				this.match(wbpParser.T__21);
+				this.match(wbpParser.T__20);
 				this.state = 58;
 				this.chordType();
 				}
@@ -476,10 +476,10 @@ export default class wbpParser extends Parser {
 				this.signedInt();
 				}
 				break;
-			case 11:
+			case 10:
 				{
 				this.state = 66;
-				this.match(wbpParser.T__10);
+				this.match(wbpParser.T__9);
 				}
 				break;
 			default:
@@ -543,19 +543,19 @@ export default class wbpParser extends Parser {
 	6,1,6,3,6,40,8,6,1,7,1,7,1,7,1,7,1,7,3,7,47,8,7,1,8,1,8,1,8,4,8,52,8,8,
 	11,8,12,8,53,1,9,1,9,1,9,1,9,5,9,60,8,9,10,9,12,9,63,9,9,1,10,1,10,1,10,
 	3,10,68,8,10,1,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,0,0,12,0,2,4,6,8,10,
-	12,14,16,18,20,22,0,5,1,0,1,2,1,0,3,4,1,0,5,6,1,0,7,10,1,0,11,21,69,0,24,
+	12,14,16,18,20,22,0,5,1,0,1,2,1,0,3,4,1,0,5,6,1,0,7,9,1,0,10,20,69,0,24,
 	1,0,0,0,2,26,1,0,0,0,4,28,1,0,0,0,6,30,1,0,0,0,8,32,1,0,0,0,10,34,1,0,0,
 	0,12,37,1,0,0,0,14,41,1,0,0,0,16,48,1,0,0,0,18,55,1,0,0,0,20,64,1,0,0,0,
 	22,69,1,0,0,0,24,25,7,0,0,0,25,1,1,0,0,0,26,27,7,1,0,0,27,3,1,0,0,0,28,
 	29,7,2,0,0,29,5,1,0,0,0,30,31,7,3,0,0,31,7,1,0,0,0,32,33,7,4,0,0,33,9,1,
 	0,0,0,34,35,3,4,2,0,35,36,5,25,0,0,36,11,1,0,0,0,37,39,3,6,3,0,38,40,3,
 	10,5,0,39,38,1,0,0,0,39,40,1,0,0,0,40,13,1,0,0,0,41,42,3,0,0,0,42,43,5,
-	22,0,0,43,46,3,12,6,0,44,45,5,22,0,0,45,47,3,2,1,0,46,44,1,0,0,0,46,47,
-	1,0,0,0,47,15,1,0,0,0,48,51,3,14,7,0,49,50,5,23,0,0,50,52,3,14,7,0,51,49,
+	21,0,0,43,46,3,12,6,0,44,45,5,21,0,0,45,47,3,2,1,0,46,44,1,0,0,0,46,47,
+	1,0,0,0,47,15,1,0,0,0,48,51,3,14,7,0,49,50,5,22,0,0,50,52,3,14,7,0,51,49,
 	1,0,0,0,52,53,1,0,0,0,53,51,1,0,0,0,53,54,1,0,0,0,54,17,1,0,0,0,55,56,5,
-	10,0,0,56,61,3,8,4,0,57,58,5,22,0,0,58,60,3,8,4,0,59,57,1,0,0,0,60,63,1,
+	23,0,0,56,61,3,8,4,0,57,58,5,21,0,0,58,60,3,8,4,0,59,57,1,0,0,0,60,63,1,
 	0,0,0,61,59,1,0,0,0,61,62,1,0,0,0,62,19,1,0,0,0,63,61,1,0,0,0,64,67,5,8,
-	0,0,65,68,3,10,5,0,66,68,5,11,0,0,67,65,1,0,0,0,67,66,1,0,0,0,68,21,1,0,
+	0,0,65,68,3,10,5,0,66,68,5,10,0,0,67,65,1,0,0,0,67,66,1,0,0,0,68,21,1,0,
 	0,0,69,70,3,18,9,0,70,71,5,24,0,0,71,72,3,20,10,0,72,73,5,24,0,0,73,74,
 	3,16,8,0,74,75,5,24,0,0,75,23,1,0,0,0,5,39,46,53,61,67];
 
