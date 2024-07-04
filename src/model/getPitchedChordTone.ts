@@ -21,6 +21,8 @@ function getPitchedChordToneUp(
       return notes[1]!
     case 'FIFTH':
       return notes[2]!
+    case 'SEVENTH':
+      return notes[3]!
   }
 }
 

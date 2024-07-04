@@ -2,8 +2,8 @@ import {
   CHORMATIC_SCALE_LENGTH,
   INDEX_BY_NOTE,
   NOTE_BY_INDEX,
-  PITCHED_NOTE_MAP,
 } from './constants'
+import { getPitchedNoteParts } from './getPitchedNoteParts'
 import { Accidental, BaseNoteName, NoteIndex, Note, PitchedNote } from './types'
 
 export function removeByKey<T>(
@@ -20,12 +20,6 @@ export function removeByKeys<T>(
   return Object.entries(data ?? {})
     .filter(([key]) => !keys.includes(key))
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
-}
-
-export function isNil<T>(
-  input: T | null | undefined,
-): input is null | undefined {
-  return input === null || input === undefined
 }
 
 export function getPossiblePitches(
@@ -55,15 +49,6 @@ export function getNoteParts(note: Note): [BaseNoteName, Accidental?] {
   const base = note.slice(0, 1) as BaseNoteName
   const accidental = note.slice(1, 2) as Accidental
   return [base, accidental && accidental.length > 0 ? accidental : undefined]
-}
-
-export function getPitchedNoteParts(note: PitchedNote): [Note, number] {
-  if (isNil(note)) {
-    debugger
-  }
-  const noteName = note.replace(/[0-9]+/g, '') as Note
-  const pitch = parseInt(note.replace(/[^0-9]+/g, ''))
-  return [noteName, pitch]
 }
 
 export function transpose(n: Note, a: number, ac: Accidental = '#'): Note {

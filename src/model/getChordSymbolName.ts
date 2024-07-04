@@ -1,6 +1,6 @@
 import { getChordTypeSuffix } from './getChordTypeSuffix'
+import { getPitchedNoteParts } from './getPitchedNoteParts'
 import { ChordSymbol } from './types'
-import { getPitchedNoteParts } from './utils'
 
 export function getChordSymbolName(chord: ChordSymbol | undefined): string {
   if (!chord) {

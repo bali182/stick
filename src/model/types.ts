@@ -12,16 +12,11 @@ export const enum Duration {
   SIXTEENTH = 16,
 }
 
-export type ChordTone = 'ROOT' | 'THIRD' | 'FIFTH'
+export type ChordTone = 'ROOT' | 'THIRD' | 'FIFTH' | 'SEVENTH'
 export type ChordToneDirection = 'UP' | 'DOWN' | 'NONE'
 export type ChordReference = 'CURRENT' | 'NEXT'
 
 export type Step = {
-  duration: Duration
-  pitch?: Pitch
-}
-
-export type Pitch = {
   interval: number
   reference: ChordReference
   chordTone: ChordTone
@@ -92,6 +87,12 @@ export type FretboardLocation = {
   note: PitchedNote
   fret: number
   string: number
+}
+
+export type RawTransitionCategory = {
+  id: string
+  name: string
+  transitions: string[]
 }
 
 export type _Pitch = {

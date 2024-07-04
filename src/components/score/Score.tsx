@@ -2,7 +2,6 @@ import { useRef, useEffect, FC, useState, useMemo } from 'react'
 import { AlphaTabApi, synth } from '@coderline/alphatab'
 import { ATTrack } from '../../alphaTex/model'
 import { toAlphaTex } from '../../alphaTex/toAlphaTex'
-import { isNil } from '../../model/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAlphaTexModel } from '../../state/getAlphaTexModel'
 import { AppDispatch, AppState } from '../../state/store'
@@ -13,6 +12,7 @@ import { LoopButton, PlayButton, StopButton } from './ScoreControls'
 import { ScoreOverlay } from './ScoreOverlay'
 import { VolumeSlider } from './VolumeSlider'
 import { ConfigState, updateConfig } from '../../state/config'
+import { isNil } from '../../model/isNil'
 
 export type ScoreProps = {
   progressionId: string

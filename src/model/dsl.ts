@@ -1,27 +1,27 @@
-import { Duration, Pitch, Step } from './types'
+import { Duration, Step } from './types'
 
-export const pitches = {
+export const steps = {
   current: {
-    root: (interval: number = 0): Pitch => ({
+    root: (interval: number = 0): Step => ({
       reference: 'CURRENT',
       chordTone: 'ROOT',
       interval,
       direction: 'NONE',
     }),
     up: {
-      root: (interval: number = 0): Pitch => ({
+      root: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'ROOT',
         direction: 'UP',
         interval,
       }),
-      third: (interval: number = 0): Pitch => ({
+      third: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'THIRD',
         direction: 'UP',
         interval,
       }),
-      fifth: (interval: number = 0): Pitch => ({
+      fifth: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'FIFTH',
         direction: 'UP',
@@ -29,19 +29,19 @@ export const pitches = {
       }),
     },
     down: {
-      root: (interval: number = 0): Pitch => ({
+      root: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'ROOT',
         direction: 'DOWN',
         interval,
       }),
-      third: (interval: number = 0): Pitch => ({
+      third: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'THIRD',
         direction: 'DOWN',
         interval,
       }),
-      fifth: (interval: number = 0): Pitch => ({
+      fifth: (interval: number = 0): Step => ({
         reference: 'CURRENT',
         chordTone: 'FIFTH',
         direction: 'DOWN',
@@ -50,26 +50,26 @@ export const pitches = {
     },
   },
   next: {
-    root: (interval: number = 0): Pitch => ({
+    root: (interval: number = 0): Step => ({
       reference: 'NEXT',
       chordTone: 'ROOT',
       interval,
       direction: 'NONE',
     }),
     up: {
-      root: (interval: number = 0): Pitch => ({
+      root: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'ROOT',
         direction: 'UP',
         interval,
       }),
-      third: (interval: number = 0): Pitch => ({
+      third: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'THIRD',
         direction: 'UP',
         interval,
       }),
-      fifth: (interval: number = 0): Pitch => ({
+      fifth: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'FIFTH',
         direction: 'UP',
@@ -77,19 +77,19 @@ export const pitches = {
       }),
     },
     down: {
-      root: (interval: number = 0): Pitch => ({
+      root: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'ROOT',
         direction: 'DOWN',
         interval,
       }),
-      third: (interval: number = 0): Pitch => ({
+      third: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'THIRD',
         direction: 'DOWN',
         interval,
       }),
-      fifth: (interval: number = 0): Pitch => ({
+      fifth: (interval: number = 0): Step => ({
         reference: 'NEXT',
         chordTone: 'FIFTH',
         direction: 'DOWN',
@@ -98,8 +98,3 @@ export const pitches = {
     },
   },
 }
-
-export const step = (duration: Duration, pitch: Pitch): Step => ({
-  duration,
-  pitch,
-})

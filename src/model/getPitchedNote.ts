@@ -1,14 +1,14 @@
-import { ChordSymbol, Pitch, PitchedNote } from './types'
+import { ChordSymbol, Step, PitchedNote } from './types'
 import { getPitchedChordTone } from './getPitchedChordTone'
 import { Interval, transpose } from 'tonal'
 
 export function getPitchedNote(
   current: ChordSymbol,
   next: ChordSymbol,
-  pitch: Pitch,
+  step: Step,
 ): PitchedNote {
-  const chord = pitch.reference === 'CURRENT' ? current : next
-  const chordTone = getPitchedChordTone(chord, pitch.chordTone, pitch.direction)
-  const interval = Interval.fromSemitones(pitch.interval)
+  const chord = step.reference === 'CURRENT' ? current : next
+  const chordTone = getPitchedChordTone(chord, step.chordTone, step.direction)
+  const interval = Interval.fromSemitones(step.interval)
   return transpose(chordTone, interval) as PitchedNote
 }

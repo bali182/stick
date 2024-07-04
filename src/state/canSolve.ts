@@ -1,4 +1,4 @@
-import { isNil } from '../model/utils'
+import { isNil } from '../model/isNil'
 import { getBar } from './bars'
 import { getChord } from './chords'
 import { getProgression } from './progressions'

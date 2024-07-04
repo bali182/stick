@@ -1,4 +1,4 @@
-// This grammar is meant to describe a chord transition. W = Walking B = Bass P = Path.
+// This grammar is meant to describe a chord transition.
 grammar wbp;
 
 chordReference: 'C' | 'N';
@@ -22,7 +22,7 @@ chordToneReference: chordTone signedInt?;
 step: chordReference ',' chordToneReference (',' direction)?;
 steps: step ('->' step)+;
 sourceChord: 'S' chordType (',' chordType)*;
-targetChord: 'T' signedInt | '?';
+targetChord: 'T' (signedInt | '?');
 transition: sourceChord ';' targetChord ';' steps ';';
 
 INTEGER: [0-9]+;

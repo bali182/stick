@@ -1,6 +1,6 @@
+import { isNil } from '../model/isNil'
 import { FretboardLocation, PitchedNote } from '../model/types'
 import { Note, distance, Interval } from 'tonal'
-import { isNil } from '../model/utils'
 
 export function getFretboardLocations(
   note: PitchedNote,

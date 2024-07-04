@@ -1,4 +1,4 @@
-import { isNil } from '../model/utils'
+import { isNil } from '../model/isNil'
 import { ATBar, ATNote, ATTrack } from './model'
 
 // Reference: https://alphatab.net/docs/alphatex/introduction

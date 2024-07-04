@@ -1,9 +1,9 @@
+import { isNil } from '../model/isNil'
 import { ChordSymbol } from '../model/types'
 import { getBar } from './bars'
 import { getChord } from './chords'
 import { getProgression } from './progressions'
 import { AppState } from './store'
-import { isNil } from '../model/utils'
 
 export function getNextChord(
   state: AppState,

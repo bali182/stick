@@ -1,6 +1,6 @@
 import { Interval } from 'tonal'
 import { ChordType, NoteIndex, Note, OctaveIndex, PitchedNote } from './types'
-import { getPitchedNoteParts } from './utils'
+import { getPitchedNoteParts } from './getPitchedNoteParts'
 
 export const INDEX_BY_NOTE: Record<Note, NoteIndex> = {
   C: 0,
