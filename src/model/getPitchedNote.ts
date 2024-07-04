@@ -7,8 +7,8 @@ export function getPitchedNote(
   next: ChordSymbol,
   step: Step,
 ): PitchedNote {
-  const chord = step.reference === 'CURRENT' ? current : next
-  const chordTone = getPitchedChordTone(chord, step.chordTone, step.direction)
+  const chord = step.chordRef === 'CURRENT' ? current : next
+  const chordTone = getPitchedChordTone(chord, step.tone, step.dir)
   const interval = Interval.fromSemitones(step.interval)
   return transpose(chordTone, interval) as PitchedNote
 }

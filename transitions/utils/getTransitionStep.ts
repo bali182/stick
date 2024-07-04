@@ -12,7 +12,7 @@ function getChordReference(ast: StepContext): ChordReference {
 }
 
 function getChordToneDirection(ast: StepContext): ChordToneDirection {
-  if (isNil(ast.direction()) && getChordReference(ast) === 'CURRENT') {
+  if (isNil(ast.direction())) {
     const chordTone = ast.chordToneReference().chordTone().getText()
     return chordTone === 'R' ? 'NONE' : 'UP'
   }
@@ -51,9 +51,9 @@ export function getTransitionStep(ast: StepContext): Step {
   const interval = getInterval(ast)
   const chordTone = getChordTone(ast)
   return {
-    reference,
-    direction,
+    chordRef: reference,
+    dir: direction,
     interval,
-    chordTone,
+    tone: chordTone,
   }
 }

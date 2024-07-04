@@ -38,10 +38,10 @@ function getIntervalName(interval: number): string {
 export function getTransitionName(ast: Transition): string {
   return ast.steps
     .map((step) => {
-      const name = getChordToneName(step.chordTone)
-      const direction = getChordToneDirectionName(step.direction)
+      const name = getChordToneName(step.tone)
+      const direction = getChordToneDirectionName(step.dir)
       const intervalName = getIntervalName(step.interval)
-      const prefix = step.reference === 'CURRENT' ? '' : 'Next '
+      const prefix = step.chordRef === 'CURRENT' ? '' : 'Next '
       return `${prefix}${name}${intervalName}${direction}`
     })
     .join(' ')

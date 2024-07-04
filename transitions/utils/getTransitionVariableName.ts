@@ -40,9 +40,9 @@ export function getTransitionVariableName(ast: Transition): string {
   return camelCase(
     ast.steps
       .map((step) => {
-        const name = getChordToneName(step.chordTone)
-        const direction = getChordToneDirectionName(step.direction)
-        const prefix = step.reference === 'CURRENT' ? '' : 'Next'
+        const name = getChordToneName(step.tone)
+        const direction = getChordToneDirectionName(step.dir)
+        const prefix = step.chordRef === 'CURRENT' ? '' : 'Next'
         const intervalName = getIntervalName(step.interval)
         return `${prefix}${name}${intervalName}${direction}`
       })

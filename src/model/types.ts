@@ -4,6 +4,13 @@ export type Transition = {
   steps: Step[]
 }
 
+export type Step = {
+  interval: number
+  chordRef: ChordReference
+  tone: ChordTone
+  dir: ChordToneDirection
+}
+
 export const enum Duration {
   WHOLE = 1,
   HALF = 2,
@@ -16,12 +23,6 @@ export type ChordTone = 'ROOT' | 'THIRD' | 'FIFTH' | 'SEVENTH'
 export type ChordToneDirection = 'UP' | 'DOWN' | 'NONE'
 export type ChordReference = 'CURRENT' | 'NEXT'
 
-export type Step = {
-  interval: number
-  reference: ChordReference
-  chordTone: ChordTone
-  direction: ChordToneDirection
-}
 export type NoteIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
 export type OctaveIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 export type BaseNoteName = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B'
