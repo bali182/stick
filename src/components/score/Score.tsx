@@ -73,8 +73,8 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
 
     api.renderStarted.on(() => setLoading(true))
     api.renderFinished.on(() => setLoading(false))
-    api.playerStateChanged.on((e) =>
-      setPlaying(e.state === synth.PlayerState.Playing),
+    api.playerStateChanged.on(({ state }) =>
+      setPlaying(state === synth.PlayerState.Playing),
     )
 
     api.render()

@@ -11,8 +11,6 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "strictBindCallApply": true,
-    // "noUnusedLocals": true,
-    "noImplicitOverride": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -23,5 +21,5 @@
     "resolveJsonModule": true,
     "lib": ["ES2022", "DOM"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "generated/**/*"]
 }

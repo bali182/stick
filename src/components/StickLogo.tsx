@@ -39,7 +39,7 @@ const subTitleStyle = css`
   color: #ffffff99;
   font-size: 0.8em;
   line-height: 90%;
-  font-weight: bold;
+  font-weight: normal;
 `
 
 export const StickLogo: FC = () => {
