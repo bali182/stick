@@ -7,7 +7,7 @@ import {
 function getChordToneName(tone: ChordTone): string {
   switch (tone) {
     case 'ROOT':
-      return 'R'
+      return 'Root'
     case 'THIRD':
       return '3rd'
     case 'FIFTH':
@@ -28,13 +28,21 @@ function getChordToneDirectionName(dir: ChordToneDirection): string {
   }
 }
 
+function getIntervalName(interval: number): string {
+  if (interval === 0) {
+    return ''
+  }
+  return `${interval > 0 ? '+' : '-'}${Math.abs(interval)}`
+}
+
 export function getTransitionName(ast: Transition): string {
   return ast.steps
     .map((step) => {
       const name = getChordToneName(step.chordTone)
       const direction = getChordToneDirectionName(step.direction)
-      const prefix = step.reference === 'CURRENT' ? '' : 'N '
-      return `${prefix}${name}${direction}`
+      const intervalName = getIntervalName(step.interval)
+      const prefix = step.reference === 'CURRENT' ? '' : 'Next '
+      return `${prefix}${name}${intervalName}${direction}`
     })
     .join(' ')
 }

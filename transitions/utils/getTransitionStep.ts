@@ -12,11 +12,11 @@ function getChordReference(ast: StepContext): ChordReference {
 }
 
 function getChordToneDirection(ast: StepContext): ChordToneDirection {
-  if (isNil(ast.direction())) {
+  if (isNil(ast.direction()) && getChordReference(ast) === 'CURRENT') {
     const chordTone = ast.chordToneReference().chordTone().getText()
     return chordTone === 'R' ? 'NONE' : 'UP'
   }
-  return ast.direction().getText() === 'D' ? 'DOWN' : 'UP'
+  return ast.direction()?.getText?.() === 'D' ? 'DOWN' : 'UP'
 }
 
 function getInterval(ast: StepContext): number {
