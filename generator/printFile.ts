@@ -9,6 +9,7 @@ import {
 } from 'typescript'
 import typescriptParser from 'prettier/parser-typescript'
 import prettier from 'prettier/standalone'
+import config from '../.prettierrc.json'
 
 export function printFile(imp: ImportDeclaration[], stmt: Statement[]): string {
   const contents: Statement[][] = [imp, stmt]
@@ -28,9 +29,12 @@ export function printFile(imp: ImportDeclaration[], stmt: Statement[]): string {
     removeComments: false,
   })
 
+  const { overrides, ...cfg } = config
+
   return prettier.format(
     sourceFiles.map((file) => printer.printFile(file)).join('\n\n'),
     {
+      ...(cfg as any),
       parser: 'typescript',
       plugins: [typescriptParser],
     },
