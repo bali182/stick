@@ -1,11 +1,17 @@
-import { Expression, factory, SyntaxKind } from 'typescript'
+import { Expression, factory, SyntaxKind, isExpression } from 'typescript'
 
 export function getLiteralAst(value: any): Expression {
+  // null, undefined, or an expression anywhere in the tree taken care of
   if (value === null) {
     return factory.createNull()
   } else if (value === undefined) {
     return factory.createIdentifier('undefined')
-  } else if (typeof value === 'string') {
+  } else if (isExpression(value)) {
+    return value
+  }
+
+  // Rest of the type tree
+  if (typeof value === 'string') {
     return factory.createStringLiteral(value)
   } else if (typeof value === 'number') {
     const numLiteral = factory.createNumericLiteral(Math.abs(value))

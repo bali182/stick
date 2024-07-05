@@ -60,6 +60,12 @@ export type ChordType =
   | 'AUGMENTED'
   | 'AUGMENTED-SEVENTH'
 
+export type Tag =
+  | 'TWO_NOTES'
+  | 'FOUR_NOTES'
+  | 'EIGHT_NOTES'
+  | 'CHROMATIC_APPROACH'
+
 export type BarModel = HasId & {
   chords: string[]
 }
@@ -91,9 +97,18 @@ export type FretboardLocation = {
 }
 
 export type RawTransitionCategory = {
+  name: string
+  description: string
+  tags: Tag[]
+  transitions: string[]
+}
+
+export type TransitionCategory = {
   id: string
   name: string
-  transitions: string[]
+  description: string
+  tags: Tag[]
+  transitions: Transition[]
 }
 
 export type _Pitch = {

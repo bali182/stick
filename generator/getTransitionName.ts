@@ -1,8 +1,5 @@
-import {
-  ChordTone,
-  ChordToneDirection,
-  Transition,
-} from '../src/model/types'
+import { Interval } from 'tonal'
+import { ChordTone, ChordToneDirection, Transition } from '../src/model/types'
 
 function getChordToneName(tone: ChordTone): string {
   switch (tone) {
@@ -30,7 +27,8 @@ function getIntervalName(interval: number): string {
   if (interval === 0) {
     return ''
   }
-  return `${interval > 0 ? '+' : '-'}${Math.abs(interval)}`
+  const name = Interval.fromSemitones(Math.abs(interval))
+  return `${interval > 0 ? '+' : '-'}${name}`
 }
 
 export function getTransitionName(ast: Transition): string {

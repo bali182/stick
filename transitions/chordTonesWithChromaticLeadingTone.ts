@@ -11,9 +11,11 @@ const x = [
   'cR_nR-1',
 ]
 
-export const chordTonesWithChromaticPassingNotes: RawTransitionCategory = {
-  id: 'chord-tones-with-chromatic-passing-notes',
-  name: 'Chord tones + Chromatic',
+const chordTonesWithChromaticPassingNotes: RawTransitionCategory = {
+  name: 'Chord tones + chromatic',
+  description:
+    'Universal transitions between any 2 chords, using mostly chord tones and a chromatic passing note before the change',
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
   transitions: [
     'S ?; T ?; C,R -> C,T,U -> C,F,U -> N,R-1;',
     'S ?; T ?; C,R -> C,T,U -> C,F,U -> N,R+1;',
@@ -21,3 +23,5 @@ export const chordTonesWithChromaticPassingNotes: RawTransitionCategory = {
     'S ?; T ?; C,R -> C,T,D -> C,F,D -> N,R+1;',
   ],
 }
+
+export default chordTonesWithChromaticPassingNotes

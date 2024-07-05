@@ -12,7 +12,7 @@ import prettier from 'prettier/standalone'
 import config from '../.prettierrc.json'
 
 export function printFile(imp: ImportDeclaration[], stmt: Statement[]): string {
-  const contents: Statement[][] = [imp, stmt]
+  const contents: Statement[][] = [imp, ...stmt.map((s) => [s])]
 
   const sourceFiles = contents
     .filter((statements) => statements.length > 0)

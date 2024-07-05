@@ -10,7 +10,7 @@ function exists(dir: string): boolean {
   }
 }
 
-export function writeSync(path: string, content: string): void {
+export function writeSourceFile(path: string, content: string): void {
   const directory = dirname(path)
   if (!exists(directory)) {
     mkdirSync(directory, { recursive: true })
