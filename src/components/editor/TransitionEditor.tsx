@@ -1,15 +1,24 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import { STRATEGIES } from '../../strategies/strategies'
-import { SelectItem } from '../../model/types'
+import {
+  ChordSymbol,
+  PitchedNote,
+  SelectItem,
+  Transition,
+} from '../../model/types'
+import { TRANSITIONS } from '../../model/constants'
+import { canTransition } from '../../model/canTransition'
 
 export type TransitionEditorProps = {
   transitionId: string | undefined
+  from: ChordSymbol
+  to: ChordSymbol
+  tuning: PitchedNote[]
   onChange: (transitionId: string) => void
 }
 
@@ -48,17 +57,26 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
   IndicatorSeparator: () => null,
 }
 
-const TRANSITIONS: SelectItem<string>[] = STRATEGIES.map(
-  ({ id, name }): SelectItem<string> => ({ label: name, value: id }),
+const TRANSITION_ITEMS: SelectItem<Transition>[] = TRANSITIONS.map(
+  (value): SelectItem<Transition> => ({ label: value.name, value }),
 )
 
 export const TransitionEditor: FC<TransitionEditorProps> = ({
   transitionId,
+  from,
+  to,
+  tuning,
   onChange,
 }) => {
   const nameItem = transitionId
-    ? TRANSITIONS.find(({ value }) => value === transitionId)
+    ? TRANSITION_ITEMS.find(({ value }) => value.id === transitionId)
     : undefined
+
+  const availableItems = useMemo<SelectItem<Transition>[]>(() => {
+    return TRANSITION_ITEMS.filter(({ value }) =>
+      canTransition(from, to, tuning, value),
+    )
+  }, [from, to, tuning])
 
   const onTransitionChange = (data: SelectItem<string>): void => {
     onChange(data.value)
@@ -68,7 +86,7 @@ export const TransitionEditor: FC<TransitionEditorProps> = ({
     <div className={chordEditorStyle}>
       <Select
         value={nameItem}
-        options={TRANSITIONS}
+        options={availableItems}
         placeholder="Transition"
         styles={leftSelectStyles}
         components={overrideComponents}

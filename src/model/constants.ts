@@ -1,6 +1,14 @@
 import { Interval } from 'tonal'
-import { ChordType, NoteIndex, Note, OctaveIndex, PitchedNote } from './types'
+import {
+  ChordType,
+  NoteIndex,
+  Note,
+  OctaveIndex,
+  PitchedNote,
+  Transition,
+} from './types'
 import { getPitchedNoteParts } from './getPitchedNoteParts'
+import { TRANSITION_CATEGORIES } from '../../generated/transitions'
 
 export const INDEX_BY_NOTE: Record<Note, NoteIndex> = {
   C: 0,
@@ -75,9 +83,22 @@ export const CHORD_TYPES = Object.keys(CHORD_TYPES_MAP) as ChordType[]
 export const CHORMATIC_SCALE_LENGTH = 12
 
 export const OCTAVE_UP = Interval.fromSemitones(CHORMATIC_SCALE_LENGTH)
-
+export const DOUBLE_OCTAVE_UP = Interval.fromSemitones(
+  CHORMATIC_SCALE_LENGTH * 2,
+)
 export const OCTAVE_DOWN = Interval.fromSemitones(-CHORMATIC_SCALE_LENGTH)
+export const DOUBLE_OCTAVE_DOWN = Interval.fromSemitones(
+  -CHORMATIC_SCALE_LENGTH * 2,
+)
 
 export const INTERVALS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
   Interval.fromSemitones,
 )
+
+export const TRANSITION_MAP: Record<string, Transition> =
+  TRANSITION_CATEGORIES.flatMap(({ transitions }) => transitions).reduce(
+    (data, transition) => Object.assign(data, { [transition.id]: transition }),
+    {},
+  )
+
+export const TRANSITIONS: Transition[] = Object.values(TRANSITION_MAP)

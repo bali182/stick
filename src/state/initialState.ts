@@ -1,9 +1,4 @@
-import {
-  toAnyAscHigherChrom,
-  toAnyAscLowerChrom,
-  toAnyDescAscLowerChrom,
-  toAnyHigherChrom,
-} from '../strategies/chordTonesWithChromaticLeadingTone'
+import { TRANSITIONS } from '../model/constants'
 import { AppState } from './store'
 
 export const initialState: AppState = {
@@ -52,35 +47,35 @@ export const initialState: AppState = {
       name: 'D',
       type: 'MINOR',
       root: 'D2',
-      path: toAnyAscLowerChrom.id,
+      transitionId: TRANSITIONS[0]!.id,
     },
     'default-second-bar-f': {
       id: 'default-second-bar-f',
       name: 'F',
       type: 'MAJOR',
       root: 'F1',
-      path: toAnyAscHigherChrom.id,
+      transitionId: TRANSITIONS[0]!.id,
     },
     'default-third-bar-bb': {
       id: 'default-third-bar-bb',
       name: 'Bb',
       type: 'MAJOR',
       root: 'Bb2',
-      path: toAnyDescAscLowerChrom.id,
+      transitionId: TRANSITIONS[0]!.id,
     },
     'default-fourth-bar-g': {
       id: 'default-fourth-bar-g',
       name: 'G',
       type: 'MAJOR',
       root: 'G1',
-      path: toAnyHigherChrom.id,
+      transitionId: TRANSITIONS[0]!.id,
     },
     'default-fourth-bar-a': {
       id: 'default-fourth-bar-a',
       name: 'A',
       type: 'DOMINANT-SEVENTH',
       root: 'A1',
-      path: toAnyHigherChrom.id,
+      transitionId: TRANSITIONS[0]!.id,
     },
     'default-fith-bar-dm': {
       id: 'default-fith-bar-dm',

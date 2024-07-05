@@ -10,7 +10,7 @@ export function getIndexTypescriptAst(
     factory.createVariableDeclarationList(
       [
         factory.createVariableDeclaration(
-          factory.createIdentifier('transitions'),
+          factory.createIdentifier('TRANSITION_CATEGORIES'),
           undefined,
           factory.createArrayTypeNode(
             factory.createTypeReferenceNode(

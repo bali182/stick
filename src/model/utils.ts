@@ -2,9 +2,17 @@ import {
   CHORMATIC_SCALE_LENGTH,
   INDEX_BY_NOTE,
   NOTE_BY_INDEX,
+  TRANSITIONS,
 } from './constants'
 import { getPitchedNoteParts } from './getPitchedNoteParts'
-import { Accidental, BaseNoteName, NoteIndex, Note, PitchedNote } from './types'
+import {
+  Accidental,
+  BaseNoteName,
+  NoteIndex,
+  Note,
+  PitchedNote,
+  Transition,
+} from './types'
 
 export function removeByKey<T>(
   key: string,

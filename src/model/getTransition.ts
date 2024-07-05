@@ -1,6 +1,6 @@
-import { STRATEGY_MAP } from '../strategies/strategies'
+import { TRANSITION_MAP } from './constants'
 import { Transition } from './types'
 
 export function getTransition(id: string): Transition {
-  return STRATEGY_MAP[id]!
+  return TRANSITION_MAP[id]!
 }

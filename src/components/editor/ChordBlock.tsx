@@ -5,8 +5,7 @@ import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { Popover } from 'react-tiny-popover'
 import { PopoverContent } from './PopoverContent'
 import { ChordEditor } from './ChordEditor'
-import { STRATEGY_MAP } from '../../strategies/strategies'
-import { ChordSymbol } from '../../model/types'
+import { ChordSymbol, PitchedNote, Transition } from '../../model/types'
 import { TransitionEditor } from './TransitionEditor'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../../state/store'
@@ -15,6 +14,8 @@ import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { removeChords } from '../../state/bars'
 import { getNextChord } from '../../state/getNextChord'
+import { TRANSITION_MAP } from '../../model/constants'
+import { getTuning } from '../../state/config'
 
 export type BarBlockProps = {
   progressionId: string
@@ -93,11 +94,14 @@ export const ChordBlock: FC<BarBlockProps> = ({
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getChord(state, chordId),
   )
+  const tuning = useSelector<AppState, PitchedNote[]>(getTuning)
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getNextChord(state, progressionId, barId, chordId),
   )
   const dispatch = useDispatch<AppDispatch>()
-  const transition = chord?.path ? STRATEGY_MAP[chord.path] : undefined
+  const transition = chord?.transitionId
+    ? TRANSITION_MAP[chord.transitionId]
+    : undefined
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
   const [isTransitionPickerOpen, setTransitionPickerOpen] = useState(false)
   const [isHovered, setHovered] = useState(false)
@@ -112,8 +116,8 @@ export const ChordBlock: FC<BarBlockProps> = ({
   const onChordChange = (chord: ChordSymbol) => {
     dispatch(updateChord({ chord }))
   }
-  const onTransitionChange = (transitionId: string) => {
-    dispatch(updateChord({ chord: { id: chordId, path: transitionId } }))
+  const onTransitionChange = (t: Transition) => {
+    dispatch(updateChord({ chord: { id: chordId, transitionId: t.id } }))
     closeTransitionPicker()
   }
   const onChordDeleted = () => {
@@ -175,8 +179,11 @@ export const ChordBlock: FC<BarBlockProps> = ({
           content={(props) => (
             <PopoverContent {...props}>
               <TransitionEditor
-                transitionId={chord.path}
-                onChange={onTransitionChange}
+                from={chord}
+                to={nextChord}
+                tuning={tuning}
+                transitionId={chord.transitionId}
+                onChange={onTransitionChange as any}
               />
             </PopoverContent>
           )}

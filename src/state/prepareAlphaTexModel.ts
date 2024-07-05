@@ -15,6 +15,7 @@ import { AppState } from './store'
 import { getTuning } from './config'
 import { getFretboardLocations } from './getFretboardLocations'
 import { getChordSymbolName } from '../model/getChordSymbolName'
+import { getTransition } from '../model/getTransition'
 
 const lowestFret = (a: { fret: number }, b: { fret: number }) => a.fret - b.fret
 
@@ -50,7 +51,8 @@ function getPitches(
       return
     }
     // Get the next chord, and collect the pitches using the first chords path
-    getPitchedNotes(chord, chords[index + 1]!).forEach((note, i) => {
+    const trns = getTransition(chord.transitionId!)
+    getPitchedNotes(chord, chords[index + 1]!, trns).forEach((note, i) => {
       pitches.push({
         id: nanoid(),
         progressionId,

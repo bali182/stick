@@ -151,7 +151,7 @@ export const BarBlock: FC<BarBlockProps> = ({
     const clonedChord: ChordSymbol = {
       ...firstChord,
       id: nanoid(),
-      path: undefined,
+      transitionId: undefined,
     }
     dispatch(createChord({ chord: clonedChord }))
     dispatch(addChords({ barId, chordIds: [clonedChord.id] }))

@@ -31,12 +31,12 @@ export function canSolve(state: AppState, progressionId: string): boolean {
   const last = chords[chords.length - 1]!
 
   // Any chords (except the last) that has no path, no solution
-  if (initial.some((chord) => isNil(chord.path))) {
+  if (initial.some((chord) => isNil(chord.transitionId))) {
     return false
   }
 
   // Last path should not be set, there is no next chord.
-  if (!isNil(last.path)) {
+  if (!isNil(last.transitionId)) {
     return false
   }
 

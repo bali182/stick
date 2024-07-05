@@ -82,7 +82,7 @@ export type ChordSymbol = HasId & {
   root: PitchedNote
   name: Note
   type: ChordType
-  path?: string
+  transitionId?: string
 }
 
 export type SelectItem<T> = {

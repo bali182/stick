@@ -6,8 +6,8 @@
   "scripts": {
     "test": "",
     "start": "vite",
-    "generate-wbp-grammar": "rm -rf generated/wbp && antlr4 -Dlanguage=TypeScript  -no-visitor -no-listener -o generated/wbp wbp.g4",
-    "generate-transitions": "rm -rf generated/transitions && ts-node generator/generate.ts",
+    "gg": "rm -rf generated/wbp && antlr4 -Dlanguage=TypeScript  -no-visitor -no-listener -o generated/wbp wbp.g4",
+    "gt": "rm -rf generated/transitions && ts-node generator/generate.ts",
     "_build": "vite build",
     "_start": "webpack-dev-server --config webpack.config.js"
   },
