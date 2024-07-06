@@ -26,7 +26,6 @@ const transitionButtonStyle = css`
   color: #ffffffdd;
   border-radius: 6px;
   cursor: pointer;
-  background-color: #ffffff30;
   transition: box-shadow 0.2s ease, background-color 0.2s ease;
   user-select: none;
   overflow: hidden;
@@ -34,9 +33,15 @@ const transitionButtonStyle = css`
   flex-direction: row;
   align-items: stretch;
   justify-content: center;
+  border: none;
+  background-color: #ffffff30;
   &:hover {
     background-color: #ffffff40;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  &:focus {
+    outline: none;
+    background-color: #ffffff40;
   }
 `
 
@@ -48,7 +53,7 @@ const addTransitionIconStyle = css`
   top: 3px;
 `
 
-const transitionNameStyle = css`
+const transitionNameBtnStyle = css`
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   padding: 4px 10px;
@@ -59,7 +64,15 @@ const transitionNameStyle = css`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  cursor: pointer;
   &:hover {
+    background-color: #ffffff40;
+  }
+  &:focus {
+    outline: none;
     background-color: #ffffff40;
   }
 `
@@ -70,8 +83,16 @@ const removeBtnStyle = css`
   padding: 4px 10px;
   display: flex;
   flex-direction: row;
+  border: none;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    background-color: #ffffff40;
+  }
   &:hover {
     background-color: #ffffff40;
   }
@@ -141,20 +162,20 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
     >
       <div>
         {isNil(transition) && (
-          <div className={transitionButtonStyle} onClick={toggle}>
+          <button className={transitionButtonStyle} onClick={toggle}>
             <div className={walkStyle}>
               <RiFootprintFill className={addTransitionIconStyle} /> Walk
             </div>
-          </div>
+          </button>
         )}
         {!isNil(transition) && (
           <div className={transitionButtonStyle}>
-            <div className={transitionNameStyle} onClick={toggle}>
+            <button className={transitionNameBtnStyle} onClick={toggle}>
               {transition.name}
-            </div>
-            <div className={removeBtnStyle} onClick={onTransitionDeleted}>
+            </button>
+            <button className={removeBtnStyle} onClick={onTransitionDeleted}>
               <FiTrash2 className={binIconStyle} />
-            </div>
+            </button>
           </div>
         )}
       </div>

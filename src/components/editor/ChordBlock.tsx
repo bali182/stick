@@ -48,11 +48,14 @@ const chordNameStyle = css`
   }
 `
 const trashIconStyle = css`
-  color: #fff;
   cursor: pointer;
   position: absolute;
   top: 10px;
   left: 10px;
+  color: #ffffffbb;
+  &:hover {
+    color: #ffffff;
+  }
 `
 
 export const ChordBlock: FC<ChordBlockProps> = ({

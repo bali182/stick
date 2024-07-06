@@ -99,8 +99,11 @@ const addChordCloneStyle = css`
 const addFirstChordStyle = css``
 
 const trashIconStyle = css`
-  color: #fff;
+  color: #ffffffbb;
   cursor: pointer;
+  &:hover {
+    color: #ffffff;
+  }
 `
 
 export const BarBlock: FC<BarBlockProps> = ({
