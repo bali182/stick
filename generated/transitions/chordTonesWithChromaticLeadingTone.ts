@@ -2,7 +2,7 @@ import { Transition, TransitionCategory } from '../../src/model/types'
 
 export const rootThirdUpFifthUpNextRootMinus1: Transition = {
   id: 'S?;T?;C,R->C,T,U->C,F,U->N,R-1;',
-  name: 'Root 3rd\u2191 5th\u2191 Next Root-2m',
+  name: 'R 3\u2191 5\u2191 NR-1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'THIRD' },
@@ -13,7 +13,7 @@ export const rootThirdUpFifthUpNextRootMinus1: Transition = {
 
 export const rootThirdUpFifthUpNextRootPlus1: Transition = {
   id: 'S?;T?;C,R->C,T,U->C,F,U->N,R+1;',
-  name: 'Root 3rd\u2191 5th\u2191 Next Root+2m',
+  name: 'R 3\u2191 5\u2191 NR+1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'THIRD' },
@@ -24,7 +24,7 @@ export const rootThirdUpFifthUpNextRootPlus1: Transition = {
 
 export const rootThirdDownFifthDownNextRootMinus1: Transition = {
   id: 'S?;T?;C,R->C,T,D->C,F,D->N,R-1;',
-  name: 'Root 3rd\u2193 5th\u2193 Next Root-2m',
+  name: 'R 3\u2193 5\u2193 NR-1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'THIRD' },
@@ -35,7 +35,7 @@ export const rootThirdDownFifthDownNextRootMinus1: Transition = {
 
 export const rootThirdDownFifthDownNextRootPlus1: Transition = {
   id: 'S?;T?;C,R->C,T,D->C,F,D->N,R+1;',
-  name: 'Root 3rd\u2193 5th\u2193 Next Root+2m',
+  name: 'R 3\u2193 5\u2193 NR+1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'THIRD' },
@@ -46,7 +46,7 @@ export const rootThirdDownFifthDownNextRootPlus1: Transition = {
 
 export const rootThirdUpFifthDownNextRootMinus1: Transition = {
   id: 'S?;T?;C,R->C,T,U->C,F,D->N,R-1;',
-  name: 'Root 3rd\u2191 5th\u2193 Next Root-2m',
+  name: 'R 3\u2191 5\u2193 NR-1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'THIRD' },
@@ -57,7 +57,7 @@ export const rootThirdUpFifthDownNextRootMinus1: Transition = {
 
 export const rootThirdUpFifthDownNextRootPlus1: Transition = {
   id: 'S?;T?;C,R->C,T,U->C,F,D->N,R+1;',
-  name: 'Root 3rd\u2191 5th\u2193 Next Root+2m',
+  name: 'R 3\u2191 5\u2193 NR+1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'THIRD' },
@@ -68,7 +68,7 @@ export const rootThirdUpFifthDownNextRootPlus1: Transition = {
 
 export const rootThirdDownFifthUpNextRootMinus1: Transition = {
   id: 'S?;T?;C,R->C,T,D->C,F,U->N,R-1;',
-  name: 'Root 3rd\u2193 5th\u2191 Next Root-2m',
+  name: 'R 3\u2193 5\u2191 NR-1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'THIRD' },
@@ -79,7 +79,7 @@ export const rootThirdDownFifthUpNextRootMinus1: Transition = {
 
 export const rootThirdDownFifthUpNextRootPlus1: Transition = {
   id: 'S?;T?;C,R->C,T,D->C,F,U->N,R+1;',
-  name: 'Root 3rd\u2193 5th\u2191 Next Root+2m',
+  name: 'R 3\u2193 5\u2191 NR+1',
   steps: [
     { chordRef: 'CURRENT', dir: 'NONE', interval: 0, tone: 'ROOT' },
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'THIRD' },
