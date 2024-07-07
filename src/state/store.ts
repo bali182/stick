@@ -1,23 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { BarsState, barsReducer } from './bars'
-import { ProgressionsState, progressionsReducer } from './progressions'
-import { ChordSymbolsState, chordsReducer } from './chords'
-import { ConfigState, configReducer } from './config'
+import { reducer } from './reducer'
 
 export const store = configureStore({
-  reducer: {
-    bars: barsReducer,
-    progressions: progressionsReducer,
-    chords: chordsReducer,
-    config: configReducer,
-  },
+  reducer: reducer as any,
 })
-
-export type AppState = {
-  bars: BarsState
-  progressions: ProgressionsState
-  chords: ChordSymbolsState
-  config: ConfigState
-}
 
 export type AppDispatch = typeof store.dispatch

@@ -1,13 +1,13 @@
-import { ATBar, ATNote, ATTrack } from '../alphaTex/model'
-import { getTuning } from './config'
+import { ATBar, ATNote, ATTrack } from '../../alphaTex/model'
+import { configSlice } from '../config'
+import { AppState } from '../types'
 import { prepareAlphaTexModel } from './prepareAlphaTexModel'
-import { AppState } from './store'
 
 export function getAlphaTexModel(
   state: AppState,
   progressionId: string,
 ): ATTrack {
-  const tuning = getTuning(state)
+  const tuning = configSlice.selectors.getTuning(state)
   const bars = prepareAlphaTexModel(state, progressionId)
   const track: ATTrack = {
     clef: 'Bass',

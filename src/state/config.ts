@@ -1,16 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { PitchedNote } from '../model/types'
 import { initialState } from './initialState'
-
-export type ConfigState = {
-  tuning: PitchedNote[]
-  volume: number
-  isLooping: boolean
-}
+import { ConfigState } from './types'
 
 export type UpdateConfigPayload = Partial<ConfigState>
 
-const configSlice = createSlice({
+export const configSlice = createSlice({
   name: 'config',
   initialState: initialState.config,
   reducers: {
@@ -23,7 +17,3 @@ const configSlice = createSlice({
     getTuning: (state) => state.tuning,
   },
 })
-
-export const { updateConfig } = configSlice.actions
-export const { reducer: configReducer } = configSlice
-export const { getTuning } = configSlice.selectors

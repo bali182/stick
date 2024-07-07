@@ -2,9 +2,9 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { Score } from './Score'
 import { useSelector } from 'react-redux'
-import { canSolve } from '../../state/canSolve'
-import { AppState } from '../../state/store'
+import { canSolve } from '../../state/selectors/canSolve'
 import { NoScoreView } from './NoScoreView'
+import { AppState } from '../../state/types'
 
 const scoreViewStyle = css`
   height: 100%;

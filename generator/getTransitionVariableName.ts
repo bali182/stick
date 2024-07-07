@@ -1,8 +1,4 @@
-import {
-  ChordTone,
-  ChordToneDirection,
-  Transition,
-} from '../src/model/types'
+import { ChordTone, ChordToneDirection, Transition } from '../src/model/types'
 import { camelCase } from './camelCase'
 
 function getChordToneName(tone: ChordTone): string {

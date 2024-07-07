@@ -3,15 +3,13 @@ import { BarModel } from '../model/types'
 import { removeByKey } from '../model/utils'
 import { initialState } from './initialState'
 
-export type BarsState = Record<string, BarModel>
-
 export type CrateBarPayload = { bar: BarModel }
 export type DeleteBarPayload = { barId: string }
 export type UpdateBarPayload = { bar: BarModel }
 export type AddChordsPayload = { barId: string; chordIds: string[] }
 export type RemoveChordsPayload = { barId: string; chordIds: string[] }
 
-const barsSlice = createSlice({
+export const barsSlice = createSlice({
   name: 'bars',
   initialState: initialState.bars,
   reducers: {
@@ -59,8 +57,3 @@ const barsSlice = createSlice({
     },
   },
 })
-
-export const { addChords, removeChords, createBar, updateBar, deleteBar } =
-  barsSlice.actions
-export const { reducer: barsReducer } = barsSlice
-export const { getBar } = barsSlice.selectors

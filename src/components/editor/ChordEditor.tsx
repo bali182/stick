@@ -14,9 +14,9 @@ import {
 } from '../../model/types'
 import { getPossiblePitches } from '../../model/utils'
 import { useSelector } from 'react-redux'
-import { getTuning } from '../../state/config'
 import { getNoteRange } from '../../model/getNoteRange'
 import { INDEX_BY_NOTE } from '../../model/constants'
+import { configSlice } from '../../state/config'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
@@ -119,7 +119,7 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     value: chord.root,
   }
 
-  const tuning = useSelector(getTuning)
+  const tuning = useSelector(configSlice.selectors.getTuning)
   const range = useMemo(() => getNoteRange(tuning), [tuning])
 
   const possibleRoots = useMemo<SelectItem<PitchedNote>[]>(

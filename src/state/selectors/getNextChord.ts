@@ -1,9 +1,9 @@
-import { isNil } from '../model/isNil'
-import { ChordSymbol } from '../model/types'
-import { getBar } from './bars'
-import { getChord } from './chords'
-import { getProgression } from './progressions'
-import { AppState } from './store'
+import { isNil } from '../../model/isNil'
+import { ChordSymbol } from '../../model/types'
+import { barsSlice } from '../bars'
+import { chordsSlice } from '../chords'
+import { progressionsSlice } from '../progressions'
+import { AppState } from '../types'
 
 export function getNextChord(
   state: AppState,
@@ -11,9 +11,12 @@ export function getNextChord(
   barId: string,
   chordId: string,
 ): ChordSymbol | undefined {
-  const progression = getProgression(state, progressionId)
-  const bar = getBar(state, barId)
-  const chord = getChord(state, chordId)
+  const progression = progressionsSlice.selectors.getProgression(
+    state,
+    progressionId,
+  )
+  const bar = barsSlice.selectors.getBar(state, barId)
+  const chord = chordsSlice.selectors.getChord(state, chordId)
 
   if (isNil(progression) || isNil(bar) || isNil(chord)) {
     return undefined
@@ -26,7 +29,7 @@ export function getNextChord(
   }
   const nextChordInBarId = bar.chords[chordInBarIndex + 1]
   if (!isNil(nextChordInBarId)) {
-    return getChord(state, nextChordInBarId)
+    return chordsSlice.selectors.getChord(state, nextChordInBarId)
   }
 
   // Is there another bar in the progression that has a chord?
@@ -38,9 +41,12 @@ export function getNextChord(
   if (isNil(nextInProgressionId)) {
     return undefined
   }
-  const nextInProgression = getBar(state, nextInProgressionId)
+  const nextInProgression = barsSlice.selectors.getBar(
+    state,
+    nextInProgressionId,
+  )
   if (isNil(nextInProgression) || nextInProgression.chords.length === 0) {
     return undefined
   }
-  return getChord(state, nextInProgression.chords[0]!)
+  return chordsSlice.selectors.getChord(state, nextInProgression.chords[0]!)
 }

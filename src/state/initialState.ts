@@ -1,5 +1,5 @@
 import { TRANSITIONS } from '../model/constants'
-import { AppState } from './store'
+import { AppState } from './types'
 
 export const initialState: AppState = {
   config: {

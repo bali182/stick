@@ -1,12 +1,17 @@
-import { isNil } from '../model/isNil'
-import { getBar } from './bars'
-import { getChord } from './chords'
-import { getProgression } from './progressions'
-import { AppState } from './store'
+import { isNil } from '../../model/isNil'
+import { barsSlice } from '../bars'
+import { chordsSlice } from '../chords'
+import { progressionsSlice } from '../progressions'
+import { AppState } from '../types'
 
 export function canSolve(state: AppState, progressionId: string): boolean {
-  const progression = getProgression(state, progressionId)!
-  const bars = progression.bars.map((barId) => getBar(state, barId)!)
+  const progression = progressionsSlice.selectors.getProgression(
+    state,
+    progressionId,
+  )!
+  const bars = progression.bars.map(
+    (barId) => barsSlice.selectors.getBar(state, barId)!,
+  )
 
   // No or missing bars, no solution
   if (bars.length === 0 || bars.some(isNil)) {
@@ -20,7 +25,7 @@ export function canSolve(state: AppState, progressionId: string): boolean {
 
   const chords = bars
     .flatMap((bar) => bar.chords)
-    .map((chordId) => getChord(state, chordId)!)
+    .map((chordId) => chordsSlice.selectors.getChord(state, chordId)!)
 
   // Missing chords, no solution
   if (chords.some(isNil)) {

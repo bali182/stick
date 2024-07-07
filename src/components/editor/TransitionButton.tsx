@@ -5,12 +5,13 @@ import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { css } from '@emotion/css'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, AppState } from '../../state/store'
+import { AppDispatch } from '../../state/store'
 import { ChordSymbol } from '../../model/types'
-import { getChord, updateChord } from '../../state/chords'
+import { chordsSlice } from '../../state/chords'
 import { TRANSITION_MAP } from '../../model/constants'
 import { isNil } from '../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
+import { AppState } from '../../state/types'
 
 export type TransitionButtonProps = {
   progressionId: string
@@ -76,6 +77,7 @@ const transitionNameBtnStyle = css`
 const removeBtnStyle = css`
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
+  flex-shrink: 0;
   padding: 4px 10px;
   display: flex;
   flex-direction: row;
@@ -98,6 +100,7 @@ const binIconStyle = css`
   position: relative;
   top: -1px;
   font-size: 1em;
+  flex-shrink: 0;
 `
 
 const walkStyle = css`
@@ -114,7 +117,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
 }) => {
   const [isOpen, setOpen] = useState(false)
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getChord(state, chordId),
+    chordsSlice.selectors.getChord(state, chordId),
   )!
   const transition = chord?.transitionId
     ? TRANSITION_MAP[chord.transitionId]
@@ -124,7 +127,11 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
   const close = () => setOpen(false)
   const toggle = () => setOpen(!isOpen)
   const onTransitionDeleted = () => {
-    dispatch(updateChord({ chord: { id: chordId, transitionId: undefined } }))
+    dispatch(
+      chordsSlice.actions.updateChord({
+        chord: { id: chordId, transitionId: undefined },
+      }),
+    )
     close()
   }
 

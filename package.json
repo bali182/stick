@@ -33,6 +33,7 @@
     "react-tiny-popover": "8.0.4",
     "tonal": "6.0.1",
     "ts-node": "^10.9.2",
+    "typesafe-actions": "^5.1.0",
     "uniqolor": "1.1.1",
     "vextab": "3.0.6"
   },

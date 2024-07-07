@@ -3,16 +3,17 @@ import { AlphaTabApi, synth } from '@coderline/alphatab'
 import { ATTrack } from '../../alphaTex/model'
 import { toAlphaTex } from '../../alphaTex/toAlphaTex'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlphaTexModel } from '../../state/getAlphaTexModel'
-import { AppDispatch, AppState } from '../../state/store'
+import { getAlphaTexModel } from '../../state/selectors/getAlphaTexModel'
+import { AppDispatch } from '../../state/store'
 import { alphaTabConfig } from './alphaTabConfig'
 import { css } from '@emotion/css'
 import { AlphaTabLogo } from './AlphaTabLogo'
 import { LoopButton, PlayButton, StopButton } from './ScoreControls'
 import { ScoreOverlay } from './ScoreOverlay'
 import { VolumeSlider } from './VolumeSlider'
-import { ConfigState, updateConfig } from '../../state/config'
 import { isNil } from '../../model/isNil'
+import { AppState, ConfigState } from '../../state/types'
+import { configSlice } from '../../state/config'
 
 export type ScoreProps = {
   progressionId: string
@@ -117,9 +118,11 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
   }, [])
 
   const onPlayPause = () => apiRef.current?.playPause()
-  const onLoop = () => dispatch(updateConfig({ isLooping: !isLooping }))
+  const onLoop = () =>
+    dispatch(configSlice.actions.updateConfig({ isLooping: !isLooping }))
   const onStop = () => apiRef.current?.stop()
-  const onVolumeChange = (volume: number) => dispatch(updateConfig({ volume }))
+  const onVolumeChange = (volume: number) =>
+    dispatch(configSlice.actions.updateConfig({ volume }))
 
   return (
     <div className={wrapStyle} ref={wrapperRef as any}>

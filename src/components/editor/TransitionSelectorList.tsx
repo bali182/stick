@@ -1,7 +1,7 @@
-import { css, cx } from '@emotion/css'
-import { ChangeEvent, FC, Fragment, useEffect, useMemo, useState } from 'react'
+import { css } from '@emotion/css'
+import { ChangeEvent, FC, Fragment, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, AppState } from '../../state/store'
+import { AppDispatch } from '../../state/store'
 import { RiSearchLine } from 'react-icons/ri'
 import {
   ChordSymbol,
@@ -9,12 +9,13 @@ import {
   Transition,
   TransitionCategory,
 } from '../../model/types'
-import { getChord, updateChord } from '../../state/chords'
-import { getTuning } from '../../state/config'
-import { getNextChord } from '../../state/getNextChord'
+import { chordsSlice } from '../../state/chords'
+import { configSlice } from '../../state/config'
+import { getNextChord } from '../../state/selectors/getNextChord'
 import { TRANSITION_CATEGORIES } from '../../../generated/transitions'
 import { canTransition } from '../../model/canTransition'
 import { filterCategoriesByTransitions } from '../../model/filterCategoriesByTransitions'
+import { AppState } from '../../state/types'
 
 export type TransitionSelectorListProps = {
   isOpen: boolean
@@ -99,9 +100,11 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
 }) => {
   const [search, setSearch] = useState('')
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getChord(state, chordId),
+    chordsSlice.selectors.getChord(state, chordId),
   )!
-  const tuning = useSelector<AppState, PitchedNote[]>(getTuning)
+  const tuning = useSelector<AppState, PitchedNote[]>(
+    configSlice.selectors.getTuning,
+  )
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getNextChord(state, progressionId, barId, chordId),
   )!
@@ -125,7 +128,11 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   const onItemClick =
     ({ id }: Transition) =>
     () => {
-      dispatch(updateChord({ chord: { id: chordId, transitionId: id } }))
+      dispatch(
+        chordsSlice.actions.updateChord({
+          chord: { id: chordId, transitionId: id },
+        }),
+      )
       setOpen(false)
     }
 

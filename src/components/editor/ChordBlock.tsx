@@ -1,19 +1,20 @@
 import { FC, useMemo, useState } from 'react'
 import { css } from '@emotion/css'
 import uniqolor from 'uniqolor'
-import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { Popover } from 'react-tiny-popover'
 import { PopoverContent } from './PopoverContent'
 import { ChordEditor } from './ChordEditor'
 import { ChordSymbol } from '../../model/types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, AppState } from '../../state/store'
-import { deleteChord, getChord, updateChord } from '../../state/chords'
+import { AppDispatch } from '../../state/store'
 import { FiTrash2 } from 'react-icons/fi'
-import { removeChords } from '../../state/bars'
-import { getNextChord } from '../../state/getNextChord'
+import { getNextChord } from '../../state/selectors/getNextChord'
 import { TransitionButton } from './TransitionButton'
 import { isNil } from '../../model/isNil'
+import { AppState } from '../../state/types'
+import { chordsSlice } from '../../state/chords'
+import { barsSlice } from '../../state/bars'
+import { getChordSymbolName } from '../../model/getChordSymbolName'
 
 export type ChordBlockProps = {
   progressionId: string
@@ -64,7 +65,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({
   chordId,
 }) => {
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getChord(state, chordId),
+    chordsSlice.selectors.getChord(state, chordId),
   )
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getNextChord(state, progressionId, barId, chordId),
@@ -77,11 +78,11 @@ export const ChordBlock: FC<ChordBlockProps> = ({
   const closeChordPicker = () => setChordPickerOpen(false)
 
   const onChordChange = (chord: ChordSymbol) => {
-    dispatch(updateChord({ chord }))
+    dispatch(chordsSlice.actions.updateChord({ chord }))
   }
   const onChordDeleted = () => {
-    dispatch(removeChords({ barId, chordIds: [chordId] }))
-    dispatch(deleteChord({ chordId }))
+    dispatch(barsSlice.actions.removeChords({ barId, chordIds: [chordId] }))
+    dispatch(chordsSlice.actions.deleteChord({ chordId }))
   }
 
   const onMouseEnter = () => setHovered(true)

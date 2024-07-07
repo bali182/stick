@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { getPitchedNotes } from '../model/getPitchedNotes'
+import { getPitchedNotes } from '../../model/getPitchedNotes'
 import {
   BarModel,
   ChordSymbol,
@@ -7,15 +7,15 @@ import {
   _BarPitches,
   _ChordPitches,
   _Pitch,
-} from '../model/types'
-import { getBar } from './bars'
-import { getChord } from './chords'
-import { getProgression } from './progressions'
-import { AppState } from './store'
-import { getTuning } from './config'
+} from '../../model/types'
 import { getFretboardLocations } from './getFretboardLocations'
-import { getChordSymbolName } from '../model/getChordSymbolName'
-import { getTransition } from '../model/getTransition'
+import { getChordSymbolName } from '../../model/getChordSymbolName'
+import { getTransition } from '../../model/getTransition'
+import { AppState } from '../types'
+import { chordsSlice } from '../chords'
+import { configSlice } from '../config'
+import { progressionsSlice } from '../progressions'
+import { barsSlice } from '../bars'
 
 const lowestFret = (a: { fret: number }, b: { fret: number }) => a.fret - b.fret
 
@@ -141,12 +141,19 @@ export function prepareAlphaTexModel(
   state: AppState,
   progressionId: string,
 ): _BarPitches[] {
-  const tuning = getTuning(state)
-  const progression = getProgression(state, progressionId)!
-  const bars = progression.bars.map((barId) => getBar(state, barId)!)
+  const tuning = configSlice.selectors.getTuning(state)
+  const progression = progressionsSlice.selectors.getProgression(
+    state,
+    progressionId,
+  )!
+  const bars = progression.bars.map(
+    (barId) => barsSlice.selectors.getBar(state, barId)!,
+  )
   const chordsToBarsMapping = mapChordsToBars(bars)
   const chords = bars.flatMap((bar) =>
-    bar.chords.map((chordId) => getChord(state, chordId)!),
+    bar.chords.map(
+      (chordId) => chordsSlice.selectors.getChord(state, chordId)!,
+    ),
   )
   const pitches = getPitches(chords, chordsToBarsMapping, progressionId)
   // All these are mutating the Pitches array!!!

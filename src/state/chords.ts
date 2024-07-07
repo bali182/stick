@@ -3,8 +3,6 @@ import { ChordSymbol, HasId } from '../model/types'
 import { removeByKey, removeByKeys } from '../model/utils'
 import { initialState } from './initialState'
 
-export type ChordSymbolsState = Record<string, ChordSymbol>
-
 export type CreateChordPayload = { chord: ChordSymbol }
 export type UpdateChordPayload = {
   chord: HasId & Partial<ChordSymbol>
@@ -12,7 +10,7 @@ export type UpdateChordPayload = {
 export type DeleteChordPayload = { chordId: string }
 export type DeleteChordsPayload = { chordIds: string[] }
 
-const chordsSlice = createSlice({
+export const chordsSlice = createSlice({
   name: 'chords',
   initialState: initialState.chords,
   reducers: {
@@ -42,8 +40,3 @@ const chordsSlice = createSlice({
     },
   },
 })
-
-export const { createChord, deleteChord, deleteChords, updateChord } =
-  chordsSlice.actions
-export const { reducer: chordsReducer } = chordsSlice
-export const { getChord } = chordsSlice.selectors

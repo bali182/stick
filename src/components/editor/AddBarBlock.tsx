@@ -1,12 +1,12 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { createBar } from '../../state/bars'
 import { AppDispatch } from '../../state/store'
 import { BarModel } from '../../model/types'
 import { FiPlusSquare } from 'react-icons/fi'
-import { addBars } from '../../state/progressions'
 import { nanoid } from 'nanoid'
+import { barsSlice } from '../../state/bars'
+import { progressionsSlice } from '../../state/progressions'
 
 export type BarBlockProps = {
   progressionId: string
@@ -59,8 +59,10 @@ export const AddBarBlock: FC<BarBlockProps> = ({ progressionId }) => {
 
   const onAddBar = () => {
     const bar: BarModel = { id: nanoid(), chords: [] }
-    dispatch(createBar({ bar }))
-    dispatch(addBars({ progressionId, barIds: [bar.id] }))
+    dispatch(barsSlice.actions.createBar({ bar }))
+    dispatch(
+      progressionsSlice.actions.addBars({ progressionId, barIds: [bar.id] }),
+    )
   }
 
   return (

@@ -2,14 +2,15 @@ import { css } from '@emotion/css'
 import { FC, useState } from 'react'
 import { ChordBlock } from './ChordBlock'
 import { useDispatch, useSelector } from 'react-redux'
-import { addChords, deleteBar, getBar } from '../../state/bars'
-import { AppDispatch, AppState } from '../../state/store'
 import { BarModel, ChordSymbol } from '../../model/types'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
-import { createChord, deleteChords, getChord } from '../../state/chords'
-import { removeBars } from '../../state/progressions'
 import { nanoid } from 'nanoid'
+import { AppState } from '../../state/types'
+import { barsSlice } from '../../state/bars'
+import { progressionsSlice } from '../../state/progressions'
+import { chordsSlice } from '../../state/chords'
+import { AppDispatch } from '../../state/store'
 
 export type BarBlockProps = {
   progressionId: string
@@ -114,23 +115,25 @@ export const BarBlock: FC<BarBlockProps> = ({
   const [isHovered, setHovered] = useState(false)
   const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
   const bar = useSelector<AppState, BarModel | undefined>((state) =>
-    getBar(state, barId),
+    barsSlice.selectors.getBar(state, barId),
   )
   const firstChord = useSelector<AppState, ChordSymbol | undefined>((state) => {
     if (bar?.chords?.length !== 1) {
       return undefined
     }
     const chordId = bar?.chords[0]!
-    return getChord(state, chordId)
+    return chordsSlice.selectors.getChord(state, chordId)
   })
 
   const dispatch = useDispatch<AppDispatch>()
 
   const onDeleteBar = () => {
     const chordIds = bar?.chords ?? []
-    dispatch(removeBars({ progressionId, barIds: [barId] }))
-    dispatch(deleteBar({ barId }))
-    dispatch(deleteChords({ chordIds }))
+    dispatch(
+      progressionsSlice.actions.removeBars({ progressionId, barIds: [barId] }),
+    )
+    dispatch(barsSlice.actions.deleteBar({ barId }))
+    dispatch(chordsSlice.actions.deleteChords({ chordIds }))
   }
 
   const onAddFirstChord = () => {
@@ -143,8 +146,8 @@ export const BarBlock: FC<BarBlockProps> = ({
       type: 'MAJOR',
       root: 'C2',
     }
-    dispatch(createChord({ chord }))
-    dispatch(addChords({ barId, chordIds: [chord.id] }))
+    dispatch(chordsSlice.actions.createChord({ chord }))
+    dispatch(barsSlice.actions.addChords({ barId, chordIds: [chord.id] }))
   }
 
   const onAddSecondChord = () => {
@@ -156,8 +159,8 @@ export const BarBlock: FC<BarBlockProps> = ({
       id: nanoid(),
       transitionId: undefined,
     }
-    dispatch(createChord({ chord: clonedChord }))
-    dispatch(addChords({ barId, chordIds: [clonedChord.id] }))
+    dispatch(chordsSlice.actions.createChord({ chord: clonedChord }))
+    dispatch(barsSlice.actions.addChords({ barId, chordIds: [clonedChord.id] }))
   }
 
   const onMouseEnter = () => setHovered(true)
