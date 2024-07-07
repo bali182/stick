@@ -71,7 +71,6 @@ export const ChordBlock: FC<ChordBlockProps> = ({
   )
   const dispatch = useDispatch<AppDispatch>()
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
-  const [isTransitionPickerOpen, setTransitionPickerOpen] = useState(false)
   const [isHovered, setHovered] = useState(false)
 
   const toggleChordPicker = () => setChordPickerOpen(!isChordPickerOpen)
@@ -135,8 +134,6 @@ export const ChordBlock: FC<ChordBlockProps> = ({
           barId={barId}
           chordId={chordId}
           progressionId={progressionId}
-          isOpen={isTransitionPickerOpen}
-          setOpen={setTransitionPickerOpen}
         />
       ) : null}
     </div>

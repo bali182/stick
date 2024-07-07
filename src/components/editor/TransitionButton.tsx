@@ -1,22 +1,18 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Popover } from 'react-tiny-popover'
 import { PopoverContent } from './PopoverContent'
-import { TransitionEditor } from './TransitionEditor'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { css } from '@emotion/css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNextChord } from '../../state/getNextChord'
 import { AppDispatch, AppState } from '../../state/store'
-import { ChordSymbol, PitchedNote, Transition } from '../../model/types'
+import { ChordSymbol } from '../../model/types'
 import { getChord, updateChord } from '../../state/chords'
-import { getTuning } from '../../state/config'
 import { TRANSITION_MAP } from '../../model/constants'
 import { isNil } from '../../model/isNil'
+import { TransitionSelectorList } from './TransitionSelectorList'
 
 export type TransitionButtonProps = {
-  isOpen: boolean
-  setOpen: (open: boolean) => void
   progressionId: string
   barId: string
   chordId: string
@@ -112,31 +108,21 @@ const walkStyle = css`
 `
 
 export const TransitionButton: FC<TransitionButtonProps> = ({
-  isOpen,
-  setOpen,
   chordId,
   progressionId,
   barId,
 }) => {
+  const [isOpen, setOpen] = useState(false)
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     getChord(state, chordId),
-  )!
-  const tuning = useSelector<AppState, PitchedNote[]>(getTuning)
-  const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progressionId, barId, chordId),
   )!
   const transition = chord?.transitionId
     ? TRANSITION_MAP[chord.transitionId]
     : undefined
 
   const dispatch = useDispatch<AppDispatch>()
-
   const close = () => setOpen(false)
   const toggle = () => setOpen(!isOpen)
-  const onTransitionChange = ({ id }: Transition) => {
-    dispatch(updateChord({ chord: { id: chordId, transitionId: id } }))
-    close()
-  }
   const onTransitionDeleted = () => {
     dispatch(updateChord({ chord: { id: chordId, transitionId: undefined } }))
     close()
@@ -150,12 +136,12 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
       positions={['bottom', 'right', 'left']}
       content={(props) => (
         <PopoverContent {...props}>
-          <TransitionEditor
-            from={chord}
-            to={nextChord}
-            tuning={tuning}
-            transitionId={chord.transitionId}
-            onChange={onTransitionChange as any}
+          <TransitionSelectorList
+            isOpen={isOpen}
+            setOpen={setOpen}
+            barId={barId}
+            chordId={chordId}
+            progressionId={progressionId}
           />
         </PopoverContent>
       )}

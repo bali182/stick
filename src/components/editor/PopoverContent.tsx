@@ -7,9 +7,11 @@ export type PopoverContentProps = PopoverState & {
 }
 
 const popoverStyle = css`
-  padding: 18px;
-  background-color: #fff;
+  background-color: #181818;
   border-radius: 12px;
+  width: 280px;
+  height: 340px;
+  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
 
@@ -24,7 +26,7 @@ export const PopoverContent: FC<PopoverContentProps> = ({
       position={position}
       childRect={childRect}
       popoverRect={popoverRect}
-      arrowColor="#ffffff"
+      arrowColor="#181818"
       arrowSize={10}
     >
       <div className={popoverStyle}>{children}</div>

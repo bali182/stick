@@ -53,31 +53,34 @@ export const globalStyles = css`
     text-decoration: none;
   }
 
+  // Custom scrollbar
+  * {
+    --sb-track-color: #ffffff20;
+    --sb-thumb-color: #ffffff60;
+    --sb-size: 8px;
+  }
+
+  *::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 4px;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+  }
+
   /** Alphatab stuff */
-  .at-wrap {
-    width: 100vw;
-    height: calc(100vh - 100px);
-    margin: 0 auto;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-  }
-  .at-content {
-    position: relative;
-    overflow: hidden;
-    flex: 1 1 auto;
-  }
-  .at-viewport {
-    overflow-y: auto;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    padding: 20px;
-  }
   .at-footer {
     flex: 0 0 auto;
     background: #436d9d;

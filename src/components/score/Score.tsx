@@ -30,6 +30,36 @@ const bottomBarStyle = css`
   background-color: #ffffff15;
 `
 
+const wrapStyle = css`
+  //.at-wrap
+  width: 100vw;
+  height: calc(100vh - 100px);
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+`
+
+const contentStyle = css`
+  // .at-content
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+`
+
+const viewportStyle = css`
+  // .at-viewport
+  overflow-y: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 20px;
+`
+
 export const Score: FC<ScoreProps> = ({ progressionId }) => {
   const wrapperRef = useRef<HTMLElement>(null)
   const mainRef = useRef<HTMLElement>(null)
@@ -92,10 +122,10 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
   const onVolumeChange = (volume: number) => dispatch(updateConfig({ volume }))
 
   return (
-    <div className="at-wrap" ref={wrapperRef as any}>
+    <div className={wrapStyle} ref={wrapperRef as any}>
       <ScoreOverlay isVisible={isLoading} />
-      <div className="at-content">
-        <div className="at-viewport">
+      <div className={contentStyle}>
+        <div className={viewportStyle}>
           <div className="at-main" ref={mainRef as any}></div>
         </div>
       </div>
