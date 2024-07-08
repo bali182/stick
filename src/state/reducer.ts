@@ -5,6 +5,8 @@ import { AppState } from './types'
 import { chordsSlice } from './chords'
 import { configSlice } from './config'
 import { progressionsSlice } from './progressions'
+import { fillTransitionsReducer } from './reducers/fillTransitions'
+import { clearTransitionsReducer } from './reducers/clearTransitions'
 
 const slicesReducer = combineReducers({
   bars: barsSlice.reducer,
@@ -16,7 +18,9 @@ const slicesReducer = combineReducers({
 export function reducer(state: AppState, action: AppActions): AppState {
   switch (action.type) {
     case 'global/fillTransitions':
-      return state // TODO
+      return fillTransitionsReducer(state, action)
+    case 'global/clearTransitions':
+      return clearTransitionsReducer(state, action)
     default:
       return slicesReducer(state, action)
   }

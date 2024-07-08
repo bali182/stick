@@ -11,7 +11,7 @@ const editorStyle = css`
 export const Editor: FC = () => {
   return (
     <div className={editorStyle}>
-      <ProjectToolBar />
+      <ProjectToolBar progressionId="default" />
       <ChordChart progressionId="default" />
     </div>
   )

@@ -132,3 +132,9 @@ export type _ChordPitches = {
   chordId: string
   pitches: _Pitch[]
 }
+
+export type ProgressionsStatus = {
+  canAutoFillTransitions: boolean
+  canGenerateScore: boolean
+  canClearTransitions: boolean
+}

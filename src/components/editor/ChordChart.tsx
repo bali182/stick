@@ -17,7 +17,7 @@ const chordChartStyle = css`
   grid-auto-rows: 1fr;
   gap: 16px;
   flex-grow: 1;
-  padding: 14px 50px;
+  padding: 22px 50px;
 `
 
 export const ChordChart: FC<ChartProps> = ({ progressionId }) => {

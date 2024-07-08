@@ -2,9 +2,10 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { Score } from './Score'
 import { useSelector } from 'react-redux'
-import { canSolve } from '../../state/selectors/canSolve'
 import { NoScoreView } from './NoScoreView'
 import { AppState } from '../../state/types'
+import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
+import { ProgressionsStatus } from '../../model/types'
 
 const scoreViewStyle = css`
   height: 100%;
@@ -14,13 +15,13 @@ const scoreViewStyle = css`
 `
 
 export const ScoreView: FC = () => {
-  const canRender = useSelector<AppState, boolean>((state) =>
-    canSolve(state, 'default'),
+  const { canGenerateScore } = useSelector<AppState, ProgressionsStatus>(
+    (state) => getProgressionStatus(state, 'default'),
   )
   return (
     <div className={scoreViewStyle}>
-      {!canRender ? <NoScoreView /> : null}
-      {canRender ? <Score progressionId="default"></Score> : null}
+      {!canGenerateScore ? <NoScoreView /> : null}
+      {canGenerateScore ? <Score progressionId="default"></Score> : null}
     </div>
   )
 }
