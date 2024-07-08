@@ -8,10 +8,7 @@ const wrapperStyle = css`
   align-items: center;
   justify-content: center;
   opacity: 0.9;
-  position: absolute;
   height: 100%;
-  top: 0px;
-  right: 40px;
   cursor: pointer;
   &:hover {
     opacity: 1;

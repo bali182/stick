@@ -11,7 +11,10 @@ export type ProgressionsState = Record<string, ChordProgression>
 
 export type ConfigState = {
   tuning: PitchedNote[]
-  volume: number
+  masterVolume: number
+  metronomeVolume: number
+  bassVolume: number
+  chordsVolume: number
   isLooping: boolean
 }
 

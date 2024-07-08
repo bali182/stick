@@ -1,10 +1,9 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
+import { IconType } from 'react-icons'
 import { RiVolumeMuteFill, RiVolumeUpFill } from 'react-icons/ri'
 
 const containerStyle = css`
-  position: absolute;
-  left: 40px;
   display: flex;
   flex-direction: row;
   gap: 14px;
@@ -66,7 +65,7 @@ const volumeSliderStyle = css`
   }
 `
 
-const iconStyle = css`
+const controlIconStyle = css`
   font-size: 1.6em;
   color: #ffffffdd;
   cursor: pointer;
@@ -75,15 +74,30 @@ const iconStyle = css`
   }
 `
 
+const iconStyle = css`
+  font-size: 1.8em;
+  margin-right: 10px;
+  color: #ffffff;
+`
+
 export type VolumeSliderProps = {
   value: number
+  Icon: IconType
   onChange: (value: number) => void
 }
 
-export const VolumeSlider: FC<VolumeSliderProps> = ({ value, onChange }) => {
+export const VolumeSlider: FC<VolumeSliderProps> = ({
+  value,
+  onChange,
+  Icon,
+}) => {
   return (
     <div className={containerStyle}>
-      <RiVolumeMuteFill className={iconStyle} onClick={() => onChange(0)} />
+      <Icon className={iconStyle} />
+      <RiVolumeMuteFill
+        className={controlIconStyle}
+        onClick={() => onChange(0)}
+      />
       <input
         type="range"
         className={volumeSliderStyle}
@@ -93,7 +107,10 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({ value, onChange }) => {
         value={value}
         onChange={(event) => onChange(event.target.valueAsNumber)}
       />
-      <RiVolumeUpFill className={iconStyle} onClick={() => onChange(1)} />
+      <RiVolumeUpFill
+        className={controlIconStyle}
+        onClick={() => onChange(1)}
+      />
     </div>
   )
 }

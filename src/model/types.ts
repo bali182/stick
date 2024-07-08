@@ -133,6 +133,17 @@ export type _ChordPitches = {
   pitches: _Pitch[]
 }
 
+export type _AccompanimentBar = {
+  barId: string
+  chords: _AccompanimentChord[]
+}
+
+export type _AccompanimentChord = {
+  chordId: string
+  duration: number
+  pitches: FretboardLocation[]
+}
+
 export type ProgressionsStatus = {
   canAutoFillTransitions: boolean
   canGenerateScore: boolean

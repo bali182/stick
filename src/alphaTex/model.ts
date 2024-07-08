@@ -1,15 +1,35 @@
 import { Duration } from '../model/types'
 
+export type ATItem = ATNote | ATRest | ATChord
+
+export type ATChordNote = {
+  fret: number
+  string: number
+}
+
 export type ATNote = {
-  fret?: number
-  string?: number
-  rest?: boolean
+  type: 'note'
+  fret: number
+  string: number
   duration: Duration
-  chord?: string
+  label?: string
+}
+
+export type ATRest = {
+  type: 'rest'
+  duration: Duration
+  label?: string
+}
+
+export type ATChord = {
+  type: 'chord'
+  notes: ATChordNote[]
+  duration: Duration
+  label?: string
 }
 
 export type ATBar = {
-  notes: ATNote[]
+  items: ATItem[]
 }
 
 export type ATTimeSignature = {
@@ -37,18 +57,12 @@ export type ATKeySignature =
 export type ATClef = 'Bass' | 'Treble' | 'Tenor' | 'Alto' | 'Neutral'
 
 export type ATTrack = {
-  instrument: 'AcousticBass' | 'AcousticGuitarSteel'
+  instrument: 'AcousticBass' | 'AcousticGuitarSteel' | 'AcousticGrandPiano'
+  name: string
+  shortName: string
   clef: ATClef
   tuning: string[]
   keySignature: ATKeySignature
   timeSignature: ATTimeSignature
   bars: ATBar[]
-  title?: string
-  subtitle?: string
-  artist?: string
-  album?: string
-  words?: string
-  music?: string
-  copyright?: string
-  tempo?: number
 }

@@ -5,7 +5,10 @@ export const initialState: AppState = {
   config: {
     tuning: ['G2', 'D2', 'A1', 'E1'],
     isLooping: false,
-    volume: 0.5,
+    masterVolume: 1,
+    bassVolume: 0.5,
+    metronomeVolume: 0,
+    chordsVolume: 0,
   },
   progressions: {
     default: {

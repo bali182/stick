@@ -1,9 +1,6 @@
 import { useRef, useEffect, FC, useState, useMemo } from 'react'
 import { AlphaTabApi, synth } from '@coderline/alphatab'
-import { ATTrack } from '../../alphaTex/model'
-import { toAlphaTex } from '../../alphaTex/toAlphaTex'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlphaTexModel } from '../../state/selectors/getAlphaTexModel'
 import { AppDispatch } from '../../state/store'
 import { alphaTabConfig } from './alphaTabConfig'
 import { css } from '@emotion/css'
@@ -14,18 +11,27 @@ import { VolumeSlider } from './VolumeSlider'
 import { isNil } from '../../model/isNil'
 import { AppState, ConfigState } from '../../state/types'
 import { configSlice } from '../../state/config'
+import { getAlphaTex } from '../../state/selectors/getAlphaTex'
+import {
+  setTrackVolume,
+  useMetronomeVolume,
+  useTrackVolume,
+} from './volumeHooks'
+import { TbPiano } from 'react-icons/tb'
+import { GiGuitarBassHead } from 'react-icons/gi'
+import { PiMetronomeBold } from 'react-icons/pi'
 
 export type ScoreProps = {
   progressionId: string
 }
 
 const bottomBarStyle = css`
+  padding: 0px 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
-  gap: 10px;
   height: 160px;
   width: 100%;
   background-color: #ffffff15;
@@ -61,6 +67,20 @@ const viewportStyle = css`
   padding: 20px;
 `
 
+const volumeContainerStyle = css`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const controlsContainerStyle = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`
+
 export const Score: FC<ScoreProps> = ({ progressionId }) => {
   const wrapperRef = useRef<HTMLElement>(null)
   const mainRef = useRef<HTMLElement>(null)
@@ -69,16 +89,15 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
   const [isLoading, setLoading] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
 
-  const alphaTexModel = useSelector<AppState, ATTrack>((state) =>
-    getAlphaTexModel(state, progressionId),
+  const tex = useSelector<AppState, string>((state) =>
+    getAlphaTex(state, progressionId),
   )
-  const { isLooping, volume } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
+  const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useSelector<
+    AppState,
+    ConfigState
+  >((state) => state.config)
 
   const dispatch = useDispatch<AppDispatch>()
-
-  const tex = useMemo(() => toAlphaTex(alphaTexModel), [alphaTexModel])
 
   useEffect(() => {
     const { current: api } = apiRef
@@ -92,12 +111,9 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
     }
   }, [isLooping])
 
-  useEffect(() => {
-    const { current: api } = apiRef
-    if (!isNil(api)) {
-      api.masterVolume = volume
-    }
-  }, [volume])
+  useTrackVolume(apiRef, 0, bassVolume)
+  useTrackVolume(apiRef, 1, chordsVolume)
+  useMetronomeVolume(apiRef, metronomeVolume)
 
   useEffect(() => {
     const api = new AlphaTabApi(mainRef.current!, alphaTabConfig)
@@ -109,9 +125,11 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
     )
 
     api.render()
-    api.tex(tex)
-    api.masterVolume = volume
+    api.tex(tex, [0])
     api.isLooping = isLooping
+    api.metronomeVolume = metronomeVolume
+    setTrackVolume(api, 0, bassVolume)
+    setTrackVolume(api, 1, chordsVolume)
     apiRef.current = api
 
     return () => api.destroy()
@@ -121,8 +139,12 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
   const onLoop = () =>
     dispatch(configSlice.actions.updateConfig({ isLooping: !isLooping }))
   const onStop = () => apiRef.current?.stop()
-  const onVolumeChange = (volume: number) =>
-    dispatch(configSlice.actions.updateConfig({ volume }))
+  const onBassVolumeChange = (bassVolume: number) =>
+    dispatch(configSlice.actions.updateConfig({ bassVolume }))
+  const onChordsVolumeChange = (chordsVolume: number) =>
+    dispatch(configSlice.actions.updateConfig({ chordsVolume }))
+  const onMetronomeVolumeChange = (metronomeVolume: number) =>
+    dispatch(configSlice.actions.updateConfig({ metronomeVolume }))
 
   return (
     <div className={wrapStyle} ref={wrapperRef as any}>
@@ -133,10 +155,28 @@ export const Score: FC<ScoreProps> = ({ progressionId }) => {
         </div>
       </div>
       <div className={bottomBarStyle}>
-        <VolumeSlider value={volume} onChange={onVolumeChange} />
-        <StopButton onClick={onStop} />
-        <PlayButton onClick={onPlayPause} isToggled={isPlaying} />
-        <LoopButton onClick={onLoop} isToggled={isLooping} />
+        <div className={volumeContainerStyle}>
+          <VolumeSlider
+            Icon={PiMetronomeBold}
+            value={metronomeVolume}
+            onChange={onMetronomeVolumeChange}
+          />
+          <VolumeSlider
+            Icon={GiGuitarBassHead}
+            value={bassVolume}
+            onChange={onBassVolumeChange}
+          />
+          <VolumeSlider
+            Icon={TbPiano}
+            value={chordsVolume}
+            onChange={onChordsVolumeChange}
+          />
+        </div>
+        <div className={controlsContainerStyle}>
+          <StopButton onClick={onStop} />
+          <PlayButton onClick={onPlayPause} isToggled={isPlaying} />
+          <LoopButton onClick={onLoop} isToggled={isLooping} />
+        </div>
         <AlphaTabLogo />
       </div>
     </div>

@@ -1,42 +1,53 @@
 import { isNil } from '../model/isNil'
-import { ATBar, ATNote, ATTrack } from './model'
+import { ATBar, ATChord, ATItem, ATNote, ATRest, ATTrack } from './model'
 
 // Reference: https://alphatab.net/docs/alphatex/introduction
 
 function getMetaData(model: ATTrack): string[] {
   return [
-    model.title ? `\\title "${model.title}"` : undefined,
-    model.subtitle ? `\\subtitle "${model.subtitle}"` : undefined,
-    model.artist ? `\\artist "${model.artist}"` : undefined,
-    model.album ? `\\album "${model.album}"` : undefined,
-    model.words ? `\\words "${model.words}"` : undefined,
-    model.music ? `\\music "${model.music}"` : undefined,
-    model.copyright ? `\\copyright "${model.copyright}"` : undefined,
-    model.tempo ? `\\tempo ${model.tempo}` : undefined,
+    `\\track "${model.name}" "${model.shortName}"`,
     model.instrument ? `\\instrument "${model.instrument}"` : undefined,
     model.tuning ? `\\tuning ${model.tuning.join(' ')}` : undefined,
   ].filter((data): data is string => data !== undefined)
 }
 
+function withLabel(content: string, label: string | undefined): string {
+  const parts = [content, isNil(label) ? undefined : `{ch "${label}"}`]
+  return parts.filter((part) => part !== undefined).join(' ')
+}
+
+function withBrush(content: string): string {
+  return `${content} {bd 120}`
+}
+
 function getNote(note: ATNote): string {
-  if (!note.rest) {
-    if (isNil(note.fret) || isNil(note.string)) {
-      throw new TypeError(
-        `string and fret properties are required in ${JSON.stringify(note)}`,
-      )
-    }
+  return withLabel(`${note.fret}.${note.string}.${note.duration}`, note.label)
+}
+
+function getChord(chord: ATChord): string {
+  const notes = chord.notes.map((note) => `${note.fret}.${note.string}`)
+  return withBrush(
+    withLabel(`(${notes.join(' ')}).${chord.duration}`, chord.label),
+  )
+}
+
+function getRest(rest: ATRest): string {
+  return withLabel(`r.${rest.duration}`, rest.label)
+}
+
+function getItem(note: ATItem): string {
+  switch (note.type) {
+    case 'note':
+      return getNote(note)
+    case 'chord':
+      return getChord(note)
+    case 'rest':
+      return getRest(note)
   }
-  const parts = [
-    note.rest
-      ? `r.${note.duration}`
-      : `${note.fret}.${note.string}.${note.duration}`,
-    note.chord ? `{ch "${note.chord}"}` : undefined,
-  ].filter((part) => part !== undefined)
-  return parts.join(' ')
 }
 
 function getBar(bar: ATBar): string {
-  return bar.notes.map((note) => getNote(note)).join(' ')
+  return bar.items.map((note) => getItem(note)).join(' ')
 }
 
 function getBars(model: ATTrack): string[] {
@@ -57,10 +68,10 @@ function getBars(model: ATTrack): string[] {
 }
 
 export function toAlphaTex(model: ATTrack): string {
-  const metadata = getMetaData(model)
+  const metadata = getMetaData(model).join(' ')
   const lines = [
-    ...metadata,
-    metadata.length > 0 && model.bars.length > 0 ? '.' : undefined,
+    metadata,
+    // metadata.length > 0 && model.bars.length > 0 ? '.' : undefined,
     getBars(model).join('\n|'),
   ]
   return lines.join('\n')

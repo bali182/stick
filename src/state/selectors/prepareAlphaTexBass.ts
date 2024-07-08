@@ -5,7 +5,7 @@ import {
   ChordSymbol,
   PitchedNote,
   _BarPitches,
-  _ChordPitches,
+  _ChordChord,
   _Pitch,
 } from '../../model/types'
 import { getFretboardLocations } from './getFretboardLocations'
@@ -103,7 +103,7 @@ function addFretboardLocations(pitches: _Pitch[], tuning: PitchedNote[]): void {
 function groupPitches(pitches: _Pitch[], bars: BarModel[]): _BarPitches[] {
   return bars.map((bar): _BarPitches => {
     const chords = bar.chords.map(
-      (chordId): _ChordPitches => ({
+      (chordId): _ChordChord => ({
         chordId,
         pitches: pitches.filter((pitch) => pitch.chordId === chordId),
       }),
@@ -137,7 +137,7 @@ function mapChordsToBars(bars: BarModel[]): Record<string, string> {
   }, {} as Record<string, string>)
 }
 
-export function prepareAlphaTexModel(
+export function prepareAlphaTexBass(
   state: AppState,
   progressionId: string,
 ): _BarPitches[] {
