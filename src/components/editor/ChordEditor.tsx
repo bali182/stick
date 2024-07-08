@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import Select, {
   CSSObjectWithLabel,
   StylesConfig,
@@ -55,17 +55,33 @@ const chordEditorStyle = css`
 const fontChangeProps = (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
   ...provided,
   fontSize: '1.2em',
+  color: '#ffffff',
 })
 
 const baseProps: StylesConfig = {
   input: fontChangeProps,
   singleValue: fontChangeProps,
-  menuList: fontChangeProps,
+  menuList: (provided): CSSObjectWithLabel => ({
+    ...fontChangeProps(provided),
+    backgroundColor: '#181818',
+  }),
   placeholder: fontChangeProps,
   control: (provided): CSSObjectWithLabel => ({
     ...provided,
     borderWidth: '0px',
     boxShadow: 'none',
+    backgroundColor: 'transparent',
+  }),
+  option: (provided, { isSelected, isFocused }) => ({
+    ...provided,
+    backgroundColor: isSelected
+      ? '#ffffff40'
+      : isFocused
+      ? '#ffffff30'
+      : 'transparent',
+    ':active': {
+      backgroundColor: '#ffffff30',
+    },
   }),
 }
 
@@ -106,6 +122,8 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
 }
 
 export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
+  const inputId = `${chord.id}-input`
+
   const nameItem: SelectItem<Note> = {
     label: chord.name,
     value: chord.name,
@@ -118,15 +136,13 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     label: chord.root,
     value: chord.root,
   }
-
   const tuning = useSelector(configSlice.selectors.getTuning)
   const range = useMemo(() => getNoteRange(tuning), [tuning])
-
   const possibleRoots = useMemo<SelectItem<PitchedNote>[]>(
     () =>
-      getPossiblePitches(chord.name, range).map(
-        (root): SelectItem<PitchedNote> => ({ label: root, value: root }),
-      ),
+      getPossiblePitches(chord.name, range)
+        .sort()
+        .map((root): SelectItem<PitchedNote> => ({ label: root, value: root })),
     [range, chord.name],
   )
 
@@ -145,9 +161,14 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     onChange({ ...chord, root: data?.value! })
   }
 
+  useEffect(() => {
+    document.getElementById(inputId)?.focus()
+  }, [])
+
   return (
     <div className={chordEditorStyle}>
       <Select
+        inputId={inputId}
         value={nameItem}
         options={NOTES}
         placeholder="Note"

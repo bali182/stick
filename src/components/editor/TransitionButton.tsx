@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
-import { Popover } from 'react-tiny-popover'
-import { PopoverContent } from './PopoverContent'
+import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { css } from '@emotion/css'
@@ -12,6 +11,7 @@ import { TRANSITION_MAP } from '../../model/constants'
 import { isNil } from '../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
 import { AppState } from '../../state/types'
+import { useOnEscape } from './useOnEscape'
 
 export type TransitionButtonProps = {
   progressionId: string
@@ -110,6 +110,15 @@ const walkStyle = css`
   font-size: 1.2em;
 `
 
+const popoverStyle = css`
+  background-color: #181818;
+  border-radius: 12px;
+  width: 280px;
+  height: 340px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
+`
+
 export const TransitionButton: FC<TransitionButtonProps> = ({
   chordId,
   progressionId,
@@ -135,22 +144,32 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
     close()
   }
 
+  useOnEscape(close, isOpen)
+
   return (
     <Popover
       isOpen={isOpen}
       onClickOutside={close}
       clickOutsideCapture={true}
       positions={['bottom', 'right', 'left']}
-      content={(props) => (
-        <PopoverContent {...props}>
-          <TransitionSelectorList
-            isOpen={isOpen}
-            setOpen={setOpen}
-            barId={barId}
-            chordId={chordId}
-            progressionId={progressionId}
-          />
-        </PopoverContent>
+      content={({ position, childRect, popoverRect }) => (
+        <ArrowContainer
+          position={position}
+          childRect={childRect}
+          popoverRect={popoverRect}
+          arrowColor="#181818"
+          arrowSize={10}
+        >
+          <div className={popoverStyle}>
+            <TransitionSelectorList
+              isOpen={isOpen}
+              setOpen={setOpen}
+              barId={barId}
+              chordId={chordId}
+              progressionId={progressionId}
+            />
+          </div>
+        </ArrowContainer>
       )}
     >
       <div>

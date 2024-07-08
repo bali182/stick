@@ -1,8 +1,7 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { css } from '@emotion/css'
 import uniqolor from 'uniqolor'
-import { Popover } from 'react-tiny-popover'
-import { PopoverContent } from './PopoverContent'
+import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { ChordEditor } from './ChordEditor'
 import { ChordSymbol } from '../../model/types'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +14,7 @@ import { AppState } from '../../state/types'
 import { chordsSlice } from '../../state/chords'
 import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
+import { useOnEscape } from './useOnEscape'
 
 export type ChordBlockProps = {
   progressionId: string
@@ -39,13 +39,13 @@ const chordNameStyle = css`
   padding: 0px 15px;
   font-size: 2em;
   text-align: center;
-  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0px 0px 0px transparent;
   transition: text-shadow 0.2s ease, color 0.2s ease;
   user-select: none;
   cursor: pointer;
   &:hover {
     color: #ffffffff;
-    text-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 0px 6px 8px #00000040;
   }
 `
 const trashIconStyle = css`
@@ -57,6 +57,13 @@ const trashIconStyle = css`
   &:hover {
     color: #ffffff;
   }
+`
+
+const popoverStyle = css`
+  background-color: #181818;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
 
 export const ChordBlock: FC<ChordBlockProps> = ({
@@ -97,6 +104,8 @@ export const ChordBlock: FC<ChordBlockProps> = ({
     [chord],
   )
 
+  useOnEscape(closeChordPicker, isChordPickerOpen)
+
   if (isNil(chord)) {
     return (
       <div className={chordBlockStyle} style={{ background }}>
@@ -120,10 +129,18 @@ export const ChordBlock: FC<ChordBlockProps> = ({
         onClickOutside={closeChordPicker}
         clickOutsideCapture={true}
         positions={['bottom', 'top', 'right', 'left']}
-        content={(props) => (
-          <PopoverContent {...props}>
-            <ChordEditor chord={chord} onChange={onChordChange} />
-          </PopoverContent>
+        content={({ position, childRect, popoverRect }) => (
+          <ArrowContainer
+            position={position}
+            childRect={childRect}
+            popoverRect={popoverRect}
+            arrowColor="#181818"
+            arrowSize={10}
+          >
+            <div className={popoverStyle}>
+              <ChordEditor chord={chord} onChange={onChordChange} />
+            </div>
+          </ArrowContainer>
         )}
       >
         <div onClick={toggleChordPicker} className={chordNameStyle}>
