@@ -1,4 +1,4 @@
-import { useRef, useEffect, FC, useState, useMemo } from 'react'
+import { useRef, useEffect, FC, useState } from 'react'
 import { AlphaTabApi, synth } from '@coderline/alphatab'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
@@ -81,16 +81,18 @@ const controlsContainerStyle = css`
   gap: 10px;
 `
 
-export const Score: FC<ScoreProps> = ({ progressionId }) => {
+export const Score: FC = () => {
   const wrapperRef = useRef<HTMLElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   const apiRef = useRef<AlphaTabApi>()
 
   const [isLoading, setLoading] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
-
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
   const tex = useSelector<AppState, string>((state) =>
-    getAlphaTex(state, progressionId),
+    getAlphaTex(state, progressionId!),
   )
   const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useSelector<
     AppState,

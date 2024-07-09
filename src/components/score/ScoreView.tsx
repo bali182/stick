@@ -16,12 +16,12 @@ const scoreViewStyle = css`
 
 export const ScoreView: FC = () => {
   const { canGenerateScore } = useSelector<AppState, ProgressionsStatus>(
-    (state) => getProgressionStatus(state, 'default'),
+    (state) => getProgressionStatus(state),
   )
   return (
     <div className={scoreViewStyle}>
       {!canGenerateScore ? <NoScoreView /> : null}
-      {canGenerateScore ? <Score progressionId="default"></Score> : null}
+      {canGenerateScore ? <Score /> : null}
     </div>
   )
 }

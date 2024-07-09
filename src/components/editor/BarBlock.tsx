@@ -6,14 +6,13 @@ import { BarModel, ChordSymbol } from '../../model/types'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { nanoid } from 'nanoid'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
 import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
 import { AppDispatch } from '../../state/store'
 
 export type BarBlockProps = {
-  progressionId: string
   barId: string
   count: number
 }
@@ -107,15 +106,14 @@ const trashIconStyle = css`
   }
 `
 
-export const BarBlock: FC<BarBlockProps> = ({
-  barId,
-  progressionId,
-  count,
-}) => {
+export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   const [isHovered, setHovered] = useState(false)
   const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
   const bar = useSelector<AppState, BarModel | undefined>((state) =>
     barsSlice.selectors.getBar(state, barId),
+  )
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
   )
   const firstChord = useSelector<AppState, ChordSymbol | undefined>((state) => {
     if (bar?.chords?.length !== 1) {
@@ -130,7 +128,10 @@ export const BarBlock: FC<BarBlockProps> = ({
   const onDeleteBar = () => {
     const chordIds = bar?.chords ?? []
     dispatch(
-      progressionsSlice.actions.removeBars({ progressionId, barIds: [barId] }),
+      progressionsSlice.actions.removeBars({
+        progressionId: progressionId!,
+        barIds: [barId],
+      }),
     )
     dispatch(barsSlice.actions.deleteBar({ barId }))
     dispatch(chordsSlice.actions.deleteChords({ chordIds }))
@@ -189,12 +190,7 @@ export const BarBlock: FC<BarBlockProps> = ({
         onMouseLeave={onChordsAreaMouseLeave}
       >
         {bar.chords.map((chordId, i) => (
-          <ChordBlock
-            progressionId={progressionId}
-            barId={barId}
-            chordId={chordId}
-            key={i}
-          />
+          <ChordBlock barId={barId} chordId={chordId} key={i} />
         ))}
         {bar.chords.length === 1 && isChordsAreaHovered ? (
           <div className={addChordOverlayStyle} onClick={onAddSecondChord}>

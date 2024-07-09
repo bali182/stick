@@ -1,16 +1,13 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
 import { BarModel } from '../../model/types'
 import { FiPlusSquare } from 'react-icons/fi'
 import { nanoid } from 'nanoid'
 import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
-
-export type BarBlockProps = {
-  progressionId: string
-}
+import { AppState, ConfigState } from '../../state/types'
 
 const barBlockStyle = css`
   display: flex;
@@ -54,14 +51,20 @@ const addButtonStyle = css`
 
 const addBarIconStyle = css``
 
-export const AddBarBlock: FC<BarBlockProps> = ({ progressionId }) => {
+export const AddBarBlock: FC = () => {
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
   const dispatch = useDispatch<AppDispatch>()
 
   const onAddBar = () => {
     const bar: BarModel = { id: nanoid(), chords: [] }
     dispatch(barsSlice.actions.createBar({ bar }))
     dispatch(
-      progressionsSlice.actions.addBars({ progressionId, barIds: [bar.id] }),
+      progressionsSlice.actions.addBars({
+        progressionId: progressionId!,
+        barIds: [bar.id],
+      }),
     )
   }
 

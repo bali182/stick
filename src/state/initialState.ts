@@ -3,7 +3,7 @@ import { AppState } from './types'
 
 export const initialState: AppState = {
   config: {
-    tuning: ['G2', 'D2', 'A1', 'E1'],
+    progressionId: undefined,
     isLooping: false,
     masterVolume: 1,
     bassVolume: 0.5,
@@ -13,6 +13,7 @@ export const initialState: AppState = {
   progressions: {
     default: {
       id: 'default',
+      tuning: ['G2', 'D2', 'A1', 'E1'],
       bars: [
         'default-first-bar',
         'default-second-bar',

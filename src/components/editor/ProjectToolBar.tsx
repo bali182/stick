@@ -4,7 +4,7 @@ import { FiTrash2 } from 'react-icons/fi'
 import { RiBrushLine } from 'react-icons/ri'
 import { PiGear } from 'react-icons/pi'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
 import {
   ClearTransitionsAction,
   FillTransitionsAction,
@@ -12,6 +12,7 @@ import {
 import { ProgressionsStatus } from '../../model/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { SettingsModal } from '../settings/SettingsModal'
+import { isNil } from '../../model/isNil'
 
 const toolbarStyle = css`
   display: flex;
@@ -60,24 +61,23 @@ const buttonIconStyle = css`
   font-size: 1.2em;
 `
 
-export type ProjectToolBarProps = {
-  progressionId: string
-}
-
-export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
+export const ProjectToolBar: FC = () => {
   const [isSettingsOpen, setSettingsOpen] = useState(false)
 
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
   const { canAutoFillTransitions, canClearTransitions } = useSelector<
     AppState,
     ProgressionsStatus
-  >((state) => getProgressionStatus(state, progressionId))
+  >((state) => getProgressionStatus(state))
 
   const dispatch = useDispatch()
 
   const onAutoAddTransitions = () => {
     const action: FillTransitionsAction = {
       type: 'global/fillTransitions',
-      payload: { progressionId },
+      payload: { progressionId: progressionId! },
     }
     dispatch(action)
   }
@@ -85,7 +85,7 @@ export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
   const onClearTransitions = () => {
     const action: ClearTransitionsAction = {
       type: 'global/clearTransitions',
-      payload: { progressionId },
+      payload: { progressionId: progressionId! },
     }
     dispatch(action)
   }
@@ -95,9 +95,7 @@ export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
 
   return (
     <>
-      {isSettingsOpen && (
-        <SettingsModal onBackdropClick={onCloseSettings} onClose={onCloseSettings} />
-      )}
+      {isSettingsOpen && <SettingsModal onClose={onCloseSettings} />}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>
           <button
@@ -119,7 +117,11 @@ export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
           </button>
         </div>
         <div className={buttonContainerStyle}>
-          <button className={buttonStyle} onClick={onOpenSettings}>
+          <button
+            disabled={isNil(progressionId)}
+            className={buttonStyle}
+            onClick={onOpenSettings}
+          >
             <PiGear className={buttonIconStyle} />
             Settings
           </button>

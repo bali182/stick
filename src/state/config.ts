@@ -13,7 +13,4 @@ export const configSlice = createSlice({
       ...payload,
     }),
   },
-  selectors: {
-    getTuning: (state) => state.tuning,
-  },
 })

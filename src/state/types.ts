@@ -1,16 +1,11 @@
-import {
-  BarModel,
-  ChordProgression,
-  ChordSymbol,
-  PitchedNote,
-} from '../model/types'
+import { BarModel, ChordProgression, ChordSymbol } from '../model/types'
 
 export type BarsState = Record<string, BarModel>
 export type ChordSymbolsState = Record<string, ChordSymbol>
 export type ProgressionsState = Record<string, ChordProgression>
 
 export type ConfigState = {
-  tuning: PitchedNote[]
+  progressionId: string | undefined
   masterVolume: number
   metronomeVolume: number
   bassVolume: number

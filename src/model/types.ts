@@ -72,6 +72,7 @@ export type BarModel = HasId & {
 
 export type ChordProgression = HasId & {
   bars: string[]
+  tuning: PitchedNote[]
 }
 
 export type HasId = {

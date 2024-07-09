@@ -1,4 +1,4 @@
-import { CoreSettings, PlayerSettings } from '@coderline/alphatab'
+import type { CoreSettings, PlayerSettings } from '@coderline/alphatab'
 
 const core: Partial<CoreSettings> = {
   tex: true,

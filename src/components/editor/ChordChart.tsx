@@ -4,12 +4,9 @@ import { BarBlock } from './BarBlock'
 import { useSelector } from 'react-redux'
 import { AddBarBlock } from './AddBarBlock'
 import { ChordProgression } from '../../model/types'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
 import { progressionsSlice } from '../../state/progressions'
-
-export type ChartProps = {
-  progressionId: string
-}
+import { isNil } from '../../model/isNil'
 
 const chordChartStyle = css`
   display: grid;
@@ -20,22 +17,24 @@ const chordChartStyle = css`
   padding: 22px 50px;
 `
 
-export const ChordChart: FC<ChartProps> = ({ progressionId }) => {
+export const ChordChart: FC = () => {
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
   const progression = useSelector<AppState, ChordProgression>(
     (state) =>
-      progressionsSlice.selectors.getProgression(state, progressionId)!,
+      progressionsSlice.selectors.getProgression(state, progressionId!)!,
   )
+
+  if (isNil(progression)) {
+    return null
+  }
   return (
     <div className={chordChartStyle}>
       {progression.bars.map((barId, i) => (
-        <BarBlock
-          progressionId={progressionId}
-          barId={barId}
-          count={i + 1}
-          key={barId}
-        />
+        <BarBlock barId={barId} count={i + 1} key={barId} />
       ))}
-      <AddBarBlock progressionId={progressionId} />
+      <AddBarBlock />
     </div>
   )
 }

@@ -10,14 +10,13 @@ import { FiTrash2 } from 'react-icons/fi'
 import { getNextChord } from '../../state/selectors/getNextChord'
 import { TransitionButton } from './TransitionButton'
 import { isNil } from '../../model/isNil'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
 import { chordsSlice } from '../../state/chords'
 import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
 
 export type ChordBlockProps = {
-  progressionId: string
   barId: string
   chordId: string
 }
@@ -66,16 +65,15 @@ const popoverStyle = css`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
 
-export const ChordBlock: FC<ChordBlockProps> = ({
-  progressionId,
-  barId,
-  chordId,
-}) => {
+export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progressionId, barId, chordId),
+    getNextChord(state, progressionId!, barId, chordId),
   )
   const dispatch = useDispatch<AppDispatch>()
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
@@ -148,11 +146,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({
         </div>
       </Popover>
       {nextChord !== undefined ? (
-        <TransitionButton
-          barId={barId}
-          chordId={chordId}
-          progressionId={progressionId}
-        />
+        <TransitionButton barId={barId} chordId={chordId} />
       ) : null}
     </div>
   )

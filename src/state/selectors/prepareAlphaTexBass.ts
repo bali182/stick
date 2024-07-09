@@ -5,7 +5,7 @@ import {
   ChordSymbol,
   PitchedNote,
   _BarPitches,
-  _ChordChord,
+  _ChordPitches,
   _Pitch,
 } from '../../model/types'
 import { getFretboardLocations } from './getFretboardLocations'
@@ -13,7 +13,6 @@ import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { getTransition } from '../../model/getTransition'
 import { AppState } from '../types'
 import { chordsSlice } from '../chords'
-import { configSlice } from '../config'
 import { progressionsSlice } from '../progressions'
 import { barsSlice } from '../bars'
 
@@ -103,7 +102,7 @@ function addFretboardLocations(pitches: _Pitch[], tuning: PitchedNote[]): void {
 function groupPitches(pitches: _Pitch[], bars: BarModel[]): _BarPitches[] {
   return bars.map((bar): _BarPitches => {
     const chords = bar.chords.map(
-      (chordId): _ChordChord => ({
+      (chordId): _ChordPitches => ({
         chordId,
         pitches: pitches.filter((pitch) => pitch.chordId === chordId),
       }),
@@ -141,11 +140,11 @@ export function prepareAlphaTexBass(
   state: AppState,
   progressionId: string,
 ): _BarPitches[] {
-  const tuning = configSlice.selectors.getTuning(state)
   const progression = progressionsSlice.selectors.getProgression(
     state,
     progressionId,
   )!
+  const tuning = progression.tuning
   const bars = progression.bars.map(
     (barId) => barsSlice.selectors.getBar(state, barId)!,
   )

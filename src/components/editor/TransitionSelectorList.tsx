@@ -4,23 +4,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
 import { RiSearchLine } from 'react-icons/ri'
 import {
+  ChordProgression,
   ChordSymbol,
-  PitchedNote,
   Transition,
   TransitionCategory,
 } from '../../model/types'
 import { chordsSlice } from '../../state/chords'
-import { configSlice } from '../../state/config'
 import { getNextChord } from '../../state/selectors/getNextChord'
 import { TRANSITION_CATEGORIES } from '../../../generated/transitions'
 import { canTransition } from '../../model/canTransition'
 import { filterCategoriesByTransitions } from '../../model/filterCategoriesByTransitions'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
+import { progressionsSlice } from '../../state/progressions'
 
 export type TransitionSelectorListProps = {
   isOpen: boolean
   setOpen: (open: boolean) => void
-  progressionId: string
   barId: string
   chordId: string
 }
@@ -96,17 +95,22 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   setOpen,
   chordId,
   barId,
-  progressionId,
 }) => {
   const [search, setSearch] = useState('')
+
+  const { progressionId } = useSelector<AppState, ConfigState>(
+    (state) => state.config,
+  )
+  const progression = useSelector<AppState, ChordProgression>(
+    (state) =>
+      progressionsSlice.selectors.getProgression(state, progressionId!)!,
+  )
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )!
-  const tuning = useSelector<AppState, PitchedNote[]>(
-    configSlice.selectors.getTuning,
-  )
+  const tuning = progression.tuning
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progressionId, barId, chordId),
+    getNextChord(state, progressionId!, barId, chordId),
   )!
   const useableCategories = useMemo<TransitionCategory[]>(() => {
     return filterCategoriesByTransitions(TRANSITION_CATEGORIES, (transition) =>

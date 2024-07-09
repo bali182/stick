@@ -4,7 +4,7 @@ import { isNil } from '../../model/isNil'
 import { randomElement } from '../../model/randomElement'
 import { ChordSymbol } from '../../model/types'
 import { FillTransitionsAction } from '../actionTypes'
-import { configSlice } from '../config'
+import { progressionsSlice } from '../progressions'
 import { chordsIterator } from '../selectors/chordsIterator'
 import { AppState } from '../types'
 
@@ -13,7 +13,12 @@ export function fillTransitionsReducer(
   action: FillTransitionsAction,
 ): AppState {
   try {
-    const tuning = configSlice.selectors.getTuning(state)
+    const { progressionId } = state.config
+    const progression = progressionsSlice.selectors.getProgression(
+      state,
+      progressionId!,
+    )!
+    const tuning = progression.tuning
     const updatedChords: ChordSymbol[] = []
     const chordsGenerator = chordsIterator(state, action.payload.progressionId)
     const chordsWithBars = Array.from(chordsGenerator)

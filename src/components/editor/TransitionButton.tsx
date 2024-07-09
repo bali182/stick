@@ -10,11 +10,10 @@ import { chordsSlice } from '../../state/chords'
 import { TRANSITION_MAP } from '../../model/constants'
 import { isNil } from '../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
-import { AppState } from '../../state/types'
+import { AppState, ConfigState } from '../../state/types'
 import { useOnEscape } from './useOnEscape'
 
 export type TransitionButtonProps = {
-  progressionId: string
   barId: string
   chordId: string
 }
@@ -121,7 +120,6 @@ const popoverStyle = css`
 
 export const TransitionButton: FC<TransitionButtonProps> = ({
   chordId,
-  progressionId,
   barId,
 }) => {
   const [isOpen, setOpen] = useState(false)
@@ -166,7 +164,6 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
               setOpen={setOpen}
               barId={barId}
               chordId={chordId}
-              progressionId={progressionId}
             />
           </div>
         </ArrowContainer>
