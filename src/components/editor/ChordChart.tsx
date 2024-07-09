@@ -13,8 +13,9 @@ const chordChartStyle = css`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: 1fr;
   gap: 16px;
-  flex-grow: 1;
   padding: 22px 50px;
+  overflow: auto;
+  max-height: calc(100vh - 100px - 70px);
 `
 
 export const ChordChart: FC = () => {

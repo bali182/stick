@@ -19,3 +19,9 @@ export type AppState = {
   chords: ChordSymbolsState
   config: ConfigState
 }
+
+export type ProgressionTemplate = {
+  progression: ChordProgression
+  bars: BarsState
+  chords: ChordSymbolsState
+}

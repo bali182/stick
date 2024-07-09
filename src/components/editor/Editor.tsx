@@ -10,11 +10,6 @@ import { AppDispatch } from '../../state/store'
 import { configSlice } from '../../state/config'
 import { ChordChart } from './ChordChart'
 
-const editorStyle = css`
-  height: 100%;
-  width: 100%;
-`
-
 export const Editor: FC = () => {
   const { progressionId } = useSelector<AppState, ConfigState>(
     (state) => state.config,
@@ -34,10 +29,10 @@ export const Editor: FC = () => {
   }, [progressions, progressionId])
 
   return (
-    <div className={editorStyle}>
+    <>
       <ProjectToolBar />
       {hasNoProgressions && <NewProjectModal onClose={() => {}} />}
       {!isNil(progressionId) && <ChordChart />}
-    </div>
+    </>
   )
 }

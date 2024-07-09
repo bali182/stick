@@ -13,6 +13,7 @@ export const initialState: AppState = {
   progressions: {
     default: {
       id: 'default',
+      name: 'Default',
       tuning: ['G2', 'D2', 'A1', 'E1'],
       bars: [
         'default-first-bar',

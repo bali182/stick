@@ -1,0 +1,385 @@
+import { ProgressionTemplate } from '../types'
+
+export const autumnLeavesTemplate: ProgressionTemplate = {
+  chords: {
+    'autumn-leaves-WynJlNt8uWXZHY3-hi7iS': {
+      id: 'autumn-leaves-WynJlNt8uWXZHY3-hi7iS',
+      name: 'C',
+      type: 'MINOR-SEVENTH',
+      root: 'C2',
+    },
+    'autumn-leaves-BwFMZMaEpBYzsOYSa0Fm4': {
+      id: 'autumn-leaves-BwFMZMaEpBYzsOYSa0Fm4',
+      name: 'F',
+      type: 'DOMINANT-SEVENTH',
+      root: 'F1',
+    },
+    'autumn-leaves-YqBdIrbfsgrqpjwHj1JFM': {
+      id: 'autumn-leaves-YqBdIrbfsgrqpjwHj1JFM',
+      name: 'Bb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Bb1',
+    },
+    'autumn-leaves-LlCIgBXskn2TZ6luigGMC': {
+      id: 'autumn-leaves-LlCIgBXskn2TZ6luigGMC',
+      name: 'Eb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Eb2',
+    },
+    'autumn-leaves-J_NCngYrP8KhNp6DmPcYf': {
+      id: 'autumn-leaves-J_NCngYrP8KhNp6DmPcYf',
+      name: 'A',
+      type: 'DIMINISHED',
+      root: 'A1',
+    },
+    'autumn-leaves-cNJXyKyfY6aqI_9S6qYxS': {
+      id: 'autumn-leaves-cNJXyKyfY6aqI_9S6qYxS',
+      name: 'D',
+      type: 'DOMINANT-SEVENTH',
+      root: 'D2',
+    },
+    'autumn-leaves-FsLYg7HRZqeDtT8b29Mny': {
+      id: 'autumn-leaves-FsLYg7HRZqeDtT8b29Mny',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-ZaauCuq85UEvbd230d7gj': {
+      id: 'autumn-leaves-ZaauCuq85UEvbd230d7gj',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-dRkE4J3S_8ObYbCsMx7RL': {
+      id: 'autumn-leaves-dRkE4J3S_8ObYbCsMx7RL',
+      name: 'C',
+      type: 'MINOR-SEVENTH',
+      root: 'C2',
+    },
+    'autumn-leaves-3iO4Q67KSFOG50yCCan4x': {
+      id: 'autumn-leaves-3iO4Q67KSFOG50yCCan4x',
+      name: 'F',
+      type: 'DOMINANT-SEVENTH',
+      root: 'F1',
+    },
+    'autumn-leaves-K6a3Wu5YlgVcaIvcUb9F0': {
+      id: 'autumn-leaves-K6a3Wu5YlgVcaIvcUb9F0',
+      name: 'Bb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Bb1',
+    },
+    'autumn-leaves-gQ_xFsLVI6HqTT9HffJqR': {
+      id: 'autumn-leaves-gQ_xFsLVI6HqTT9HffJqR',
+      name: 'Eb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Eb2',
+    },
+    'autumn-leaves-1xpkVv5EZNNutDlnX2Bny': {
+      id: 'autumn-leaves-1xpkVv5EZNNutDlnX2Bny',
+      name: 'A',
+      type: 'DIMINISHED',
+      root: 'A1',
+    },
+    'autumn-leaves-mpw15D6iAttKKyEw8Qa1-': {
+      id: 'autumn-leaves-mpw15D6iAttKKyEw8Qa1-',
+      name: 'D',
+      type: 'DOMINANT-SEVENTH',
+      root: 'D2',
+    },
+    'autumn-leaves-qyi81JkkN-k4nsbBXCBx0': {
+      id: 'autumn-leaves-qyi81JkkN-k4nsbBXCBx0',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-Rf8Ez4hc_U_dszUVlSywg': {
+      id: 'autumn-leaves-Rf8Ez4hc_U_dszUVlSywg',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-40k-VrFgNqGiEIrOVU0ax': {
+      id: 'autumn-leaves-40k-VrFgNqGiEIrOVU0ax',
+      name: 'A',
+      type: 'DIMINISHED',
+      root: 'A1',
+    },
+    'autumn-leaves-9PPfqlZFiZsXGaM-u1xlp': {
+      id: 'autumn-leaves-9PPfqlZFiZsXGaM-u1xlp',
+      name: 'D',
+      type: 'DOMINANT-SEVENTH',
+      root: 'D2',
+    },
+    'autumn-leaves-YFgf3DTSFgh8Lr8q7LYrT': {
+      id: 'autumn-leaves-YFgf3DTSFgh8Lr8q7LYrT',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-oiDpTPEzuh5nHQmte7X6B': {
+      id: 'autumn-leaves-oiDpTPEzuh5nHQmte7X6B',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-8cmAdQhs7pGiN11KDboBv': {
+      id: 'autumn-leaves-8cmAdQhs7pGiN11KDboBv',
+      name: 'C',
+      type: 'MINOR-SEVENTH',
+      root: 'C2',
+    },
+    'autumn-leaves-tjrZ5uBy2mEVAwGloUbsJ': {
+      id: 'autumn-leaves-tjrZ5uBy2mEVAwGloUbsJ',
+      name: 'F',
+      type: 'DOMINANT-SEVENTH',
+      root: 'F1',
+    },
+    'autumn-leaves-f-ZeS7wI7dST2Fm7_bw_N': {
+      id: 'autumn-leaves-f-ZeS7wI7dST2Fm7_bw_N',
+      name: 'Bb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Bb1',
+    },
+    'autumn-leaves-F8VBXZXX_rBlGCAkRW7EP': {
+      id: 'autumn-leaves-F8VBXZXX_rBlGCAkRW7EP',
+      name: 'Bb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Bb1',
+    },
+    'autumn-leaves-effjevDHeQ36K8qFuYPwL': {
+      id: 'autumn-leaves-effjevDHeQ36K8qFuYPwL',
+      name: 'A',
+      type: 'DIMINISHED',
+      root: 'A1',
+    },
+    'autumn-leaves-cFN-jCVFFaJ1tvLBXvfeG': {
+      id: 'autumn-leaves-cFN-jCVFFaJ1tvLBXvfeG',
+      name: 'D',
+      type: 'DOMINANT-SEVENTH',
+      root: 'D2',
+    },
+    'autumn-leaves-G6QtKyHVU5ehRxgf5oj_7': {
+      id: 'autumn-leaves-G6QtKyHVU5ehRxgf5oj_7',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-3Zrf90Kuua30rM8E_EfzT': {
+      id: 'autumn-leaves-3Zrf90Kuua30rM8E_EfzT',
+      name: 'Gb',
+      type: 'DOMINANT-SEVENTH',
+      root: 'Gb1',
+    },
+    'autumn-leaves-QkPGwJGblQPjo7AyYGKGy': {
+      id: 'autumn-leaves-QkPGwJGblQPjo7AyYGKGy',
+      name: 'F',
+      type: 'MINOR-SEVENTH',
+      root: 'F1',
+    },
+    'autumn-leaves-a15hE4um-x6X1bFPgSbBE': {
+      id: 'autumn-leaves-a15hE4um-x6X1bFPgSbBE',
+      name: 'E',
+      type: 'DOMINANT-SEVENTH',
+      root: 'E1',
+    },
+    'autumn-leaves-ckJY4f0T-s-7g1sDIW_oA': {
+      id: 'autumn-leaves-ckJY4f0T-s-7g1sDIW_oA',
+      name: 'Eb',
+      type: 'MAJOR-SEVENTH',
+      root: 'Eb2',
+    },
+    'autumn-leaves-ZsjDW5DwOyaA9UrpBjXoh': {
+      id: 'autumn-leaves-ZsjDW5DwOyaA9UrpBjXoh',
+      name: 'D',
+      type: 'DOMINANT-SEVENTH',
+      root: 'D2',
+    },
+    'autumn-leaves-C12vP7f_lCaXVY-mEzI-s': {
+      id: 'autumn-leaves-C12vP7f_lCaXVY-mEzI-s',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+    'autumn-leaves-GRCQSDP0r3yP3Bf6I9e7w': {
+      id: 'autumn-leaves-GRCQSDP0r3yP3Bf6I9e7w',
+      name: 'G',
+      type: 'MINOR-SEVENTH',
+      root: 'G1',
+    },
+  },
+  bars: {
+    'autumn-leaves-NaQlXYlN5QSWu1hStya9J': {
+      id: 'autumn-leaves-NaQlXYlN5QSWu1hStya9J',
+      chords: ['autumn-leaves-WynJlNt8uWXZHY3-hi7iS'],
+    },
+    'autumn-leaves-O1pZeKZKtjC8mEqqwbgKw': {
+      id: 'autumn-leaves-O1pZeKZKtjC8mEqqwbgKw',
+      chords: ['autumn-leaves-BwFMZMaEpBYzsOYSa0Fm4'],
+    },
+    'autumn-leaves-yqqX7iy-b0tMQlzI5OwF5': {
+      id: 'autumn-leaves-yqqX7iy-b0tMQlzI5OwF5',
+      chords: ['autumn-leaves-YqBdIrbfsgrqpjwHj1JFM'],
+    },
+    'autumn-leaves-kGiyy4LIBr3Ci1-k5J6tJ': {
+      id: 'autumn-leaves-kGiyy4LIBr3Ci1-k5J6tJ',
+      chords: ['autumn-leaves-LlCIgBXskn2TZ6luigGMC'],
+    },
+    'autumn-leaves-c-edLmaCKL_sSOffK-uuP': {
+      id: 'autumn-leaves-c-edLmaCKL_sSOffK-uuP',
+      chords: ['autumn-leaves-J_NCngYrP8KhNp6DmPcYf'],
+    },
+    'autumn-leaves-36y9WYGi0RVKFSXv4kFzb': {
+      id: 'autumn-leaves-36y9WYGi0RVKFSXv4kFzb',
+      chords: ['autumn-leaves-cNJXyKyfY6aqI_9S6qYxS'],
+    },
+    'autumn-leaves-dPZHIqZPJUZq4fJSdBSwu': {
+      id: 'autumn-leaves-dPZHIqZPJUZq4fJSdBSwu',
+      chords: ['autumn-leaves-FsLYg7HRZqeDtT8b29Mny'],
+    },
+    'autumn-leaves-_2Ph4nghcMhdf6516Ga4X': {
+      id: 'autumn-leaves-_2Ph4nghcMhdf6516Ga4X',
+      chords: ['autumn-leaves-ZaauCuq85UEvbd230d7gj'],
+    },
+    'autumn-leaves-eB4pvFAjiIcwf8hoOtKz_': {
+      id: 'autumn-leaves-eB4pvFAjiIcwf8hoOtKz_',
+      chords: ['autumn-leaves-dRkE4J3S_8ObYbCsMx7RL'],
+    },
+    'autumn-leaves-LfCu2KDQ08DV7xGniPbi5': {
+      id: 'autumn-leaves-LfCu2KDQ08DV7xGniPbi5',
+      chords: ['autumn-leaves-3iO4Q67KSFOG50yCCan4x'],
+    },
+    'autumn-leaves-qSG-juLXYtNMVqDremMYj': {
+      id: 'autumn-leaves-qSG-juLXYtNMVqDremMYj',
+      chords: ['autumn-leaves-K6a3Wu5YlgVcaIvcUb9F0'],
+    },
+    'autumn-leaves-26uLw3lXFZ-2G0nvrlL9M': {
+      id: 'autumn-leaves-26uLw3lXFZ-2G0nvrlL9M',
+      chords: ['autumn-leaves-gQ_xFsLVI6HqTT9HffJqR'],
+    },
+    'autumn-leaves-6eQWvsY3FmghX-_oW3U3_': {
+      id: 'autumn-leaves-6eQWvsY3FmghX-_oW3U3_',
+      chords: ['autumn-leaves-1xpkVv5EZNNutDlnX2Bny'],
+    },
+    'autumn-leaves-XYCZ8b7nh1mz9y4JKgXvA': {
+      id: 'autumn-leaves-XYCZ8b7nh1mz9y4JKgXvA',
+      chords: ['autumn-leaves-mpw15D6iAttKKyEw8Qa1-'],
+    },
+    'autumn-leaves-PKNLUJJ-WpBeZbNkyczy5': {
+      id: 'autumn-leaves-PKNLUJJ-WpBeZbNkyczy5',
+      chords: ['autumn-leaves-qyi81JkkN-k4nsbBXCBx0'],
+    },
+    'autumn-leaves-uafIkj2X9SlN6-FJI36NF': {
+      id: 'autumn-leaves-uafIkj2X9SlN6-FJI36NF',
+      chords: ['autumn-leaves-Rf8Ez4hc_U_dszUVlSywg'],
+    },
+    'autumn-leaves-5CmaG7eqhNg_ryalk3eZG': {
+      id: 'autumn-leaves-5CmaG7eqhNg_ryalk3eZG',
+      chords: ['autumn-leaves-40k-VrFgNqGiEIrOVU0ax'],
+    },
+    'autumn-leaves-6t-Xi39YaWS0K6pn6_SKR': {
+      id: 'autumn-leaves-6t-Xi39YaWS0K6pn6_SKR',
+      chords: ['autumn-leaves-9PPfqlZFiZsXGaM-u1xlp'],
+    },
+    'autumn-leaves-bXar2XIDi1RbZ4pBHkNpB': {
+      id: 'autumn-leaves-bXar2XIDi1RbZ4pBHkNpB',
+      chords: ['autumn-leaves-YFgf3DTSFgh8Lr8q7LYrT'],
+    },
+    'autumn-leaves-Y38TUPVE37nQpKNZW2e21': {
+      id: 'autumn-leaves-Y38TUPVE37nQpKNZW2e21',
+      chords: ['autumn-leaves-oiDpTPEzuh5nHQmte7X6B'],
+    },
+    'autumn-leaves-W8VlN0iFXfmHfOQIQITVb': {
+      id: 'autumn-leaves-W8VlN0iFXfmHfOQIQITVb',
+      chords: ['autumn-leaves-8cmAdQhs7pGiN11KDboBv'],
+    },
+    'autumn-leaves-vHmxvrDbPY2jzCoUcvo87': {
+      id: 'autumn-leaves-vHmxvrDbPY2jzCoUcvo87',
+      chords: ['autumn-leaves-tjrZ5uBy2mEVAwGloUbsJ'],
+    },
+    'autumn-leaves-5SzcqUzmlWQ56tWDleDbB': {
+      id: 'autumn-leaves-5SzcqUzmlWQ56tWDleDbB',
+      chords: ['autumn-leaves-f-ZeS7wI7dST2Fm7_bw_N'],
+    },
+    'autumn-leaves-uzWqFGDhH2jPQs88P74kJ': {
+      id: 'autumn-leaves-uzWqFGDhH2jPQs88P74kJ',
+      chords: ['autumn-leaves-F8VBXZXX_rBlGCAkRW7EP'],
+    },
+    'autumn-leaves-Kap35mmRG4x0RWnZNFUQW': {
+      id: 'autumn-leaves-Kap35mmRG4x0RWnZNFUQW',
+      chords: ['autumn-leaves-effjevDHeQ36K8qFuYPwL'],
+    },
+    'autumn-leaves-UhPK5TDwfT1_NpV_GXbkK': {
+      id: 'autumn-leaves-UhPK5TDwfT1_NpV_GXbkK',
+      chords: ['autumn-leaves-cFN-jCVFFaJ1tvLBXvfeG'],
+    },
+    'autumn-leaves-ccH0UrtLGRG8SuYPaOlRE': {
+      id: 'autumn-leaves-ccH0UrtLGRG8SuYPaOlRE',
+      chords: [
+        'autumn-leaves-G6QtKyHVU5ehRxgf5oj_7',
+        'autumn-leaves-3Zrf90Kuua30rM8E_EfzT',
+      ],
+    },
+    'autumn-leaves-hdHzOndlMCRrsUw6a1ABD': {
+      id: 'autumn-leaves-hdHzOndlMCRrsUw6a1ABD',
+      chords: [
+        'autumn-leaves-QkPGwJGblQPjo7AyYGKGy',
+        'autumn-leaves-a15hE4um-x6X1bFPgSbBE',
+      ],
+    },
+    'autumn-leaves-IbqPf74lCMzYsi0yPTGfQ': {
+      id: 'autumn-leaves-IbqPf74lCMzYsi0yPTGfQ',
+      chords: ['autumn-leaves-ckJY4f0T-s-7g1sDIW_oA'],
+    },
+    'autumn-leaves-ecqsI5gOFdndYCOhe37cv': {
+      id: 'autumn-leaves-ecqsI5gOFdndYCOhe37cv',
+      chords: ['autumn-leaves-ZsjDW5DwOyaA9UrpBjXoh'],
+    },
+    'autumn-leaves-Ys-6hzl3MiBOtbkIVvOQZ': {
+      id: 'autumn-leaves-Ys-6hzl3MiBOtbkIVvOQZ',
+      chords: ['autumn-leaves-C12vP7f_lCaXVY-mEzI-s'],
+    },
+    'autumn-leaves-A8cm6k6RNTFmtEusuG1kF': {
+      id: 'autumn-leaves-A8cm6k6RNTFmtEusuG1kF',
+      chords: ['autumn-leaves-GRCQSDP0r3yP3Bf6I9e7w'],
+    },
+  },
+  progression: {
+    id: 'autumn-leaves-zm2PzAVfrCCUZC0hQwmNv',
+    tuning: ['G2', 'D2', 'A1', 'E1'],
+    name: 'Autumn Leaves Template',
+    bars: [
+      'autumn-leaves-NaQlXYlN5QSWu1hStya9J',
+      'autumn-leaves-O1pZeKZKtjC8mEqqwbgKw',
+      'autumn-leaves-yqqX7iy-b0tMQlzI5OwF5',
+      'autumn-leaves-kGiyy4LIBr3Ci1-k5J6tJ',
+      'autumn-leaves-c-edLmaCKL_sSOffK-uuP',
+      'autumn-leaves-36y9WYGi0RVKFSXv4kFzb',
+      'autumn-leaves-dPZHIqZPJUZq4fJSdBSwu',
+      'autumn-leaves-_2Ph4nghcMhdf6516Ga4X',
+      'autumn-leaves-eB4pvFAjiIcwf8hoOtKz_',
+      'autumn-leaves-LfCu2KDQ08DV7xGniPbi5',
+      'autumn-leaves-qSG-juLXYtNMVqDremMYj',
+      'autumn-leaves-26uLw3lXFZ-2G0nvrlL9M',
+      'autumn-leaves-6eQWvsY3FmghX-_oW3U3_',
+      'autumn-leaves-XYCZ8b7nh1mz9y4JKgXvA',
+      'autumn-leaves-PKNLUJJ-WpBeZbNkyczy5',
+      'autumn-leaves-uafIkj2X9SlN6-FJI36NF',
+      'autumn-leaves-5CmaG7eqhNg_ryalk3eZG',
+      'autumn-leaves-6t-Xi39YaWS0K6pn6_SKR',
+      'autumn-leaves-bXar2XIDi1RbZ4pBHkNpB',
+      'autumn-leaves-Y38TUPVE37nQpKNZW2e21',
+      'autumn-leaves-W8VlN0iFXfmHfOQIQITVb',
+      'autumn-leaves-vHmxvrDbPY2jzCoUcvo87',
+      'autumn-leaves-5SzcqUzmlWQ56tWDleDbB',
+      'autumn-leaves-uzWqFGDhH2jPQs88P74kJ',
+      'autumn-leaves-Kap35mmRG4x0RWnZNFUQW',
+      'autumn-leaves-UhPK5TDwfT1_NpV_GXbkK',
+      'autumn-leaves-ccH0UrtLGRG8SuYPaOlRE',
+      'autumn-leaves-hdHzOndlMCRrsUw6a1ABD',
+      'autumn-leaves-IbqPf74lCMzYsi0yPTGfQ',
+      'autumn-leaves-ecqsI5gOFdndYCOhe37cv',
+      'autumn-leaves-Ys-6hzl3MiBOtbkIVvOQZ',
+      'autumn-leaves-A8cm6k6RNTFmtEusuG1kF',
+    ],
+  },
+}

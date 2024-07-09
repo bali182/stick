@@ -4,6 +4,7 @@ import { barsSlice } from './bars'
 import { configSlice } from './config'
 import { progressionsSlice } from './progressions'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { ProgressionTemplate } from './types'
 
 export type ChordsActions = ActionType<typeof chordsSlice.actions>
 export type BarsActions = ActionType<typeof barsSlice.actions>
@@ -16,15 +17,25 @@ export type FillTransitionsPayload = {
 export type ClearTransitionsPayload = {
   progressionId: string
 }
+export type CreateProgressionFromTemplatePayload = {
+  template: ProgressionTemplate
+}
 export type FillTransitionsAction = PayloadAction<
   FillTransitionsPayload,
   'global/fillTransitions'
 >
 export type ClearTransitionsAction = PayloadAction<
-  FillTransitionsPayload,
+  ClearTransitionsPayload,
   'global/clearTransitions'
 >
-export type GlobalActionTypes = FillTransitionsAction | ClearTransitionsAction
+export type CreateProgressionFromTemplateAction = PayloadAction<
+  CreateProgressionFromTemplatePayload,
+  'global/createProgressionFromTemplate'
+>
+export type GlobalActionTypes =
+  | FillTransitionsAction
+  | ClearTransitionsAction
+  | CreateProgressionFromTemplateAction
 
 export type AppActions =
   | ChordsActions

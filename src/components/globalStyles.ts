@@ -1,6 +1,11 @@
 import { css } from '@emotion/react'
 
 export const globalStyles = css`
+  #root {
+    width: 100vw;
+    height: 100vh;
+  }
+
   *,
   *::before,
   *::after {

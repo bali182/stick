@@ -3,10 +3,16 @@ import { Modal } from '../Modal'
 import { css, cx } from '@emotion/css'
 import { PiFileLight, PiMusicNotesLight, PiPlusBold } from 'react-icons/pi'
 import { IconType } from 'react-icons'
-import { AppState } from '../../state/types'
-import { useSelector } from 'react-redux'
+import { AppState, ProgressionTemplate } from '../../state/types'
+import { useDispatch, useSelector } from 'react-redux'
 import { progressionsSlice } from '../../state/progressions'
 import { isNil } from '../../model/isNil'
+import { withUniqueIds } from '../../state/templates/withUniqueIds'
+import { autumnLeavesTemplate } from '../../state/templates/autumnLeavesTemplate'
+import { emptyTemplate } from '../../state/templates/emptyTemplate'
+import { AppDispatch } from '../../state/store'
+import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
+import { configSlice } from '../../state/config'
 
 export type NewProjectModalProps = {
   onClose: () => void
@@ -120,43 +126,64 @@ const buttonStyle = css`
   }
 `
 
-type ProgressionTemplate = {
+type TemplateDescriptor = {
   name: string
   Icon: IconType
   description: string
-  factory: (name: string) => Partial<AppState>
+  factory: (name: string) => ProgressionTemplate
 }
 
-const templates: ProgressionTemplate[] = [
+const templates: TemplateDescriptor[] = [
   {
     name: 'From scratch',
     Icon: PiFileLight,
     description: 'Create your own progression from scratch.',
-    factory: (name: string): Partial<AppState> => ({}),
+    factory: (name: string): ProgressionTemplate =>
+      withUniqueIds(emptyTemplate, name),
   },
   {
     name: 'Pop song',
     Icon: PiMusicNotesLight,
     description: 'Start with a basic pop chord progression TODO find song.',
-    factory: (name: string): Partial<AppState> => ({}),
+    factory: (name: string): ProgressionTemplate =>
+      withUniqueIds(autumnLeavesTemplate, name),
   },
   {
     name: 'Jazz standard',
     Icon: PiMusicNotesLight,
     description: 'Start with the popular standard called, Autumn Leaves.',
-    factory: (name: string): Partial<AppState> => ({}),
+    factory: (name: string): ProgressionTemplate =>
+      withUniqueIds(autumnLeavesTemplate, name),
   },
 ]
 
 export const NewProjectModal: FC<NewProjectModalProps> = ({ onClose }) => {
   const [name, setName] = useState('')
-  const [template, setTemplate] = useState<ProgressionTemplate>()
+  const [template, setTemplate] = useState<TemplateDescriptor>()
   const [useAutoName, setUseAutoName] = useState(true)
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
   const autoName = useMemo(() => {
     const baseName = isNil(template) ? 'Progression' : template.name
     return `${baseName} ${progressions.length + 1}`
   }, [template, progressions])
+  const dispatch = useDispatch<AppDispatch>()
+  const onCreateProject = () => {
+    if (isNil(template)) {
+      return
+    }
+    const projectTemplate = template.factory(useAutoName ? autoName : name)
+    const action: CreateProgressionFromTemplateAction = {
+      type: 'global/createProgressionFromTemplate',
+      payload: { template: projectTemplate },
+    }
+    dispatch(action)
+    dispatch(
+      configSlice.actions.updateConfig({
+        progressionId: projectTemplate.progression.id,
+      }),
+    )
+  }
+
   return (
     <Modal onBackdropClick={onClose}>
       <div className={contentContainerStyle}>
@@ -199,6 +226,7 @@ export const NewProjectModal: FC<NewProjectModalProps> = ({ onClose }) => {
             type="button"
             className={buttonStyle}
             disabled={isNil(template)}
+            onClick={onCreateProject}
           >
             <PiPlusBold /> Create
           </button>
