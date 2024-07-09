@@ -69,3 +69,7 @@ export function transpose(n: Note, a: number, ac: Accidental = '#'): Note {
       )
   }
 }
+
+export function lerp(start: number, end: number, ratio: number): number {
+  return Math.floor((1 - ratio) * start + ratio * end)
+}

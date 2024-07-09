@@ -1,5 +1,5 @@
 import { css } from '@emotion/css'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiBrushLine } from 'react-icons/ri'
 import { PiGear } from 'react-icons/pi'
@@ -11,6 +11,7 @@ import {
 } from '../../state/actionTypes'
 import { ProgressionsStatus } from '../../model/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
+import { SettingsModal } from '../settings/SettingsModal'
 
 const toolbarStyle = css`
   display: flex;
@@ -64,10 +65,12 @@ export type ProjectToolBarProps = {
 }
 
 export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
-  const { canAutoFillTransitions, canClearTransitions, canGenerateScore } =
-    useSelector<AppState, ProgressionsStatus>((state) =>
-      getProgressionStatus(state, progressionId),
-    )
+  const [isSettingsOpen, setSettingsOpen] = useState(false)
+
+  const { canAutoFillTransitions, canClearTransitions } = useSelector<
+    AppState,
+    ProgressionsStatus
+  >((state) => getProgressionStatus(state, progressionId))
 
   const dispatch = useDispatch()
 
@@ -87,33 +90,41 @@ export const ProjectToolBar: FC<ProjectToolBarProps> = ({ progressionId }) => {
     dispatch(action)
   }
 
-  return (
-    <div className={toolbarStyle}>
-      <div className={buttonContainerStyle}>
-        <button
-          className={buttonStyle}
-          disabled={!canAutoFillTransitions}
-          onClick={onAutoAddTransitions}
-        >
-          <RiBrushLine className={buttonIconStyle} />
-          Fill transitions
-        </button>
+  const onOpenSettings = () => setSettingsOpen(true)
+  const onCloseSettings = () => setSettingsOpen(false)
 
-        <button
-          className={buttonStyle}
-          disabled={!canClearTransitions}
-          onClick={onClearTransitions}
-        >
-          <FiTrash2 className={buttonIconStyle} />
-          Clear transitions
-        </button>
+  return (
+    <>
+      {isSettingsOpen && (
+        <SettingsModal onBackdropClick={onCloseSettings} onClose={onCloseSettings} />
+      )}
+      <div className={toolbarStyle}>
+        <div className={buttonContainerStyle}>
+          <button
+            className={buttonStyle}
+            disabled={!canAutoFillTransitions}
+            onClick={onAutoAddTransitions}
+          >
+            <RiBrushLine className={buttonIconStyle} />
+            Fill transitions
+          </button>
+
+          <button
+            className={buttonStyle}
+            disabled={!canClearTransitions}
+            onClick={onClearTransitions}
+          >
+            <FiTrash2 className={buttonIconStyle} />
+            Clear transitions
+          </button>
+        </div>
+        <div className={buttonContainerStyle}>
+          <button className={buttonStyle} onClick={onOpenSettings}>
+            <PiGear className={buttonIconStyle} />
+            Settings
+          </button>
+        </div>
       </div>
-      <div className={buttonContainerStyle}>
-        <button className={buttonStyle}>
-          <PiGear className={buttonIconStyle} />
-          Settings
-        </button>
-      </div>
-    </div>
+    </>
   )
 }
