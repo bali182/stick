@@ -31,7 +31,9 @@ export const Editor: FC = () => {
   return (
     <>
       <ProjectToolBar />
-      {hasNoProgressions && <NewProjectModal onClose={() => {}} />}
+      {hasNoProgressions && (
+        <NewProjectModal canClose={false} onClose={() => {}} />
+      )}
       {!isNil(progressionId) && <ChordChart />}
     </>
   )

@@ -13,4 +13,7 @@ export const configSlice = createSlice({
       ...payload,
     }),
   },
+  selectors: {
+    getActiveProgressionId: (state: ConfigState) => state.progressionId,
+  },
 })

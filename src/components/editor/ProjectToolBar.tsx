@@ -2,17 +2,22 @@ import { css } from '@emotion/css'
 import { FC, useState } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiBrushLine } from 'react-icons/ri'
-import { PiGear } from 'react-icons/pi'
+import { PiGear, PiNoteLight } from 'react-icons/pi'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppState, ConfigState } from '../../state/types'
+import { AppState } from '../../state/types'
 import {
   ClearTransitionsAction,
   FillTransitionsAction,
 } from '../../state/actionTypes'
-import { ProgressionsStatus } from '../../model/types'
+import { ChordProgression, ProgressionsStatus } from '../../model/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
+import { configSlice } from '../../state/config'
+import { progressionsSlice } from '../../state/progressions'
+import { ArrowContainer, Popover } from 'react-tiny-popover'
+import { ProgressionSelector } from './ProgressionListSelector'
+import { NewProjectModal } from './NewProjectModal'
 
 const toolbarStyle = css`
   display: flex;
@@ -61,12 +66,29 @@ const buttonIconStyle = css`
   font-size: 1.2em;
 `
 
+const popoverStyle = css`
+  background-color: #181818;
+  border-radius: 12px;
+  width: 280px;
+  height: 340px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
+`
+
 export const ProjectToolBar: FC = () => {
   const [isSettingsOpen, setSettingsOpen] = useState(false)
+  const [isProgressionsOpen, setProgressionsOpen] = useState(false)
+  const [isProgressionModalOpen, setProgressionModalOpen] = useState(false)
 
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
+  const activeProgressionId = useSelector(
+    configSlice.selectors.getActiveProgressionId,
   )
+
+  const progression = useSelector<AppState, ChordProgression | undefined>(
+    (state) =>
+      progressionsSlice.selectors.getProgression(state, activeProgressionId),
+  )
+
   const { canAutoFillTransitions, canClearTransitions } = useSelector<
     AppState,
     ProgressionsStatus
@@ -77,7 +99,7 @@ export const ProjectToolBar: FC = () => {
   const onAutoAddTransitions = () => {
     const action: FillTransitionsAction = {
       type: 'global/fillTransitions',
-      payload: { progressionId: progressionId! },
+      payload: { progressionId: activeProgressionId! },
     }
     dispatch(action)
   }
@@ -85,19 +107,54 @@ export const ProjectToolBar: FC = () => {
   const onClearTransitions = () => {
     const action: ClearTransitionsAction = {
       type: 'global/clearTransitions',
-      payload: { progressionId: progressionId! },
+      payload: { progressionId: activeProgressionId! },
     }
     dispatch(action)
   }
 
   const onOpenSettings = () => setSettingsOpen(true)
   const onCloseSettings = () => setSettingsOpen(false)
+  const onOpenProgressions = () => setProgressionsOpen(true)
+  const onCloseProgressions = () => setProgressionsOpen(false)
+  const onOpenProgressionModal = () => setProgressionModalOpen(true)
+  const onCloseProgressionModal = () => setProgressionModalOpen(false)
 
   return (
     <>
       {isSettingsOpen && <SettingsModal onClose={onCloseSettings} />}
+      {isProgressionModalOpen && (
+        <NewProjectModal onClose={onCloseProgressionModal} canClose={true} />
+      )}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>
+          <Popover
+            isOpen={isProgressionsOpen}
+            onClickOutside={onCloseProgressions}
+            clickOutsideCapture={true}
+            positions={['bottom', 'right', 'left']}
+            content={({ position, childRect, popoverRect }) => (
+              <ArrowContainer
+                position={position}
+                childRect={childRect}
+                popoverRect={popoverRect}
+                arrowColor="#181818"
+                arrowSize={10}
+              >
+                <div className={popoverStyle}>
+                  <ProgressionSelector
+                    setOpen={setProgressionsOpen}
+                    add={onOpenProgressionModal}
+                  />
+                </div>
+              </ArrowContainer>
+            )}
+          >
+            <button className={buttonStyle} onClick={onOpenProgressions}>
+              <PiNoteLight className={buttonIconStyle} />
+              {progression?.name ?? ''}
+            </button>
+          </Popover>
+
           <button
             className={buttonStyle}
             disabled={!canAutoFillTransitions}
@@ -118,7 +175,7 @@ export const ProjectToolBar: FC = () => {
         </div>
         <div className={buttonContainerStyle}>
           <button
-            disabled={isNil(progressionId)}
+            disabled={isNil(activeProgressionId)}
             className={buttonStyle}
             onClick={onOpenSettings}
           >

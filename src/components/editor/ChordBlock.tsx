@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { css } from '@emotion/css'
 import uniqolor from 'uniqolor'
 import { ArrowContainer, Popover } from 'react-tiny-popover'

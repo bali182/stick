@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Modal } from '../Modal'
 import { css, cx } from '@emotion/css'
-import { PiFileLight, PiMusicNotesLight, PiPlusBold } from 'react-icons/pi'
+import { PiFileLight, PiMusicNotesLight, PiPlusBold, PiX } from 'react-icons/pi'
 import { IconType } from 'react-icons'
-import { AppState, ProgressionTemplate } from '../../state/types'
+import { ProgressionTemplate } from '../../state/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { progressionsSlice } from '../../state/progressions'
 import { isNil } from '../../model/isNil'
@@ -16,6 +16,7 @@ import { configSlice } from '../../state/config'
 
 export type NewProjectModalProps = {
   onClose: () => void
+  canClose: boolean
 }
 
 const contentContainerStyle = css`
@@ -27,6 +28,16 @@ const contentContainerStyle = css`
 const headerStyle = css`
   font-size: 1.6em;
   color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const closeIconStyle = css`
+  font-size: 1.4em;
+  color: #ffffff;
+  cursor: pointer;
 `
 
 const cardsContainerStyle = css`
@@ -157,7 +168,10 @@ const templates: TemplateDescriptor[] = [
   },
 ]
 
-export const NewProjectModal: FC<NewProjectModalProps> = ({ onClose }) => {
+export const NewProjectModal: FC<NewProjectModalProps> = ({
+  onClose,
+  canClose,
+}) => {
   const [name, setName] = useState('')
   const [template, setTemplate] = useState<TemplateDescriptor>()
   const [useAutoName, setUseAutoName] = useState(true)
@@ -182,12 +196,18 @@ export const NewProjectModal: FC<NewProjectModalProps> = ({ onClose }) => {
         progressionId: projectTemplate.progression.id,
       }),
     )
+    if (canClose) {
+      onClose()
+    }
   }
 
   return (
     <Modal onBackdropClick={onClose}>
       <div className={contentContainerStyle}>
-        <header className={headerStyle}>New progression</header>
+        <header className={headerStyle}>
+          <span>New progression</span>
+          {canClose && <PiX className={closeIconStyle} onClick={onClose} />}
+        </header>
         <div className={cardsContainerStyle}>
           {templates.map((t) => {
             const className = cx(

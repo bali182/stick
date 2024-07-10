@@ -3,6 +3,7 @@ import { ChordProgression } from '../model/types'
 import { removeByKey } from '../model/utils'
 import { initialState } from './initialState'
 import { ProgressionsState } from './types'
+import { isNil } from '../model/isNil'
 
 export type CrateProgressionPayload = { progression: ChordProgression }
 export type DeleteProgressionPayload = { progressionId: string }
@@ -70,8 +71,11 @@ export const progressionsSlice = createSlice({
     getProgressions: (state): ChordProgression[] => {
       return Array.from(Object.values(state))
     },
-    getProgression: (state, id: string): ChordProgression | undefined => {
-      return state[id]
+    getProgression: (
+      state,
+      id: string | undefined,
+    ): ChordProgression | undefined => {
+      return isNil(id) ? undefined : state[id]
     },
     getDefaultProgression: (state): ChordProgression => {
       return state['default']!
