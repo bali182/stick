@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react(), alphaTab()],
   appType: 'spa',
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     emptyOutDir: true,
     chunkSizeWarningLimit: 99999,
   },
