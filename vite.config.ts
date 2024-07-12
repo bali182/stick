@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { copyAssetsPlugin } from './copyAssetsPlugin'
+import { alphaTab } from '@coderline/alphatab/vite'
+// import { copyAssetsPlugin } from './copyAssetsPlugin'
 
 export default defineConfig({
-  plugins: [react(), copyAssetsPlugin({}) /*alphaTab()*/],
+  plugins: [react(), alphaTab() /*copyAssetsPlugin({}) */],
   appType: 'spa',
   build: {
     outDir: 'docs',
