@@ -91,7 +91,7 @@ export const Toolbar: FC = () => {
             ? cx(tabStyle, activeTabStyle)
             : tabStyle
           return (
-            <a href={`/#${path}`} className={className} key={path}>
+            <a href={`#${path}`} className={className} key={path}>
               <Icon /> {label}
             </a>
           )
