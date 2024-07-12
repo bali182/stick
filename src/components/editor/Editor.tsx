@@ -4,7 +4,7 @@ import { ProjectToolBar } from './ProjectToolBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppState, ConfigState } from '../../state/types'
 import { isNil } from '../../model/isNil'
-import { NewProjectModal } from './NewProjectModal'
+import { NewProgressionModal } from './NewProgressionModal'
 import { progressionsSlice } from '../../state/progressions'
 import { AppDispatch } from '../../state/store'
 import { configSlice } from '../../state/config'
@@ -32,7 +32,7 @@ export const Editor: FC = () => {
     <>
       <ProjectToolBar />
       {hasNoProgressions && (
-        <NewProjectModal canClose={false} onClose={() => {}} />
+        <NewProgressionModal canClose={false} onClose={() => {}} />
       )}
       {!isNil(progressionId) && <ChordChart />}
     </>

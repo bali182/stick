@@ -14,7 +14,7 @@ import { AppDispatch } from '../../state/store'
 import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
 import { configSlice } from '../../state/config'
 
-export type NewProjectModalProps = {
+export type NewProgressionModalProps = {
   onClose: () => void
   canClose: boolean
 }
@@ -168,7 +168,7 @@ const templates: TemplateDescriptor[] = [
   },
 ]
 
-export const NewProjectModal: FC<NewProjectModalProps> = ({
+export const NewProgressionModal: FC<NewProgressionModalProps> = ({
   onClose,
   canClose,
 }) => {

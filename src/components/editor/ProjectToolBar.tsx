@@ -17,7 +17,7 @@ import { configSlice } from '../../state/config'
 import { progressionsSlice } from '../../state/progressions'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { ProgressionSelector } from './ProgressionListSelector'
-import { NewProjectModal } from './NewProjectModal'
+import { NewProgressionModal } from './NewProgressionModal'
 
 const toolbarStyle = css`
   display: flex;
@@ -123,7 +123,7 @@ export const ProjectToolBar: FC = () => {
     <>
       {isSettingsOpen && <SettingsModal onClose={onCloseSettings} />}
       {isProgressionModalOpen && (
-        <NewProjectModal onClose={onCloseProgressionModal} canClose={true} />
+        <NewProgressionModal onClose={onCloseProgressionModal} canClose={true} />
       )}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>

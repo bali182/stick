@@ -4,6 +4,7 @@ import { ComponentType, FC, useState } from 'react'
 import { IconType } from 'react-icons'
 import { PiGearFill, PiMusicNoteSimple, PiX } from 'react-icons/pi'
 import { Modal } from '../Modal'
+import { BaseProgressionSettings } from './BaseProgressionSettings'
 
 export type ModalProps = {
   onClose: () => void
@@ -111,7 +112,7 @@ const editors: ModalEditor[] = [
     id: nanoid(),
     name: 'Preferences',
     Icon: PiMusicNoteSimple,
-    Component: () => <div>Preferences editor</div>,
+    Component: BaseProgressionSettings,
   },
   {
     id: nanoid(),
