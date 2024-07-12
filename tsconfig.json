@@ -25,6 +25,7 @@
     "src/**/*",
     "generated/**/*",
     "transitions/**/*",
-    "generator/**/*"
+    "generator/**/*",
+    "copyAssetsPlugin.ts"
   ]
 }
