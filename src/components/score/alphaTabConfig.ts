@@ -1,13 +1,24 @@
-import type { CoreSettings, PlayerSettings } from '@coderline/alphatab'
+import { AlphaTabApi } from '@coderline/alphatab'
 
-const core: Partial<CoreSettings> = {
+// Get the constructor type which is a union
+type Settings = ConstructorParameters<typeof AlphaTabApi>[1]
+// Extract the JSON type with some ts magic
+type ExtractJsonType<T> = T extends { fillFromJson: any } ? never : T
+type SettingsJson = ExtractJsonType<Settings>
+
+// Extract the necessary types from the Json type
+type CoreSettingsJson = Exclude<SettingsJson['core'], undefined>
+type PlayerSettingsJson = Exclude<SettingsJson['player'], undefined>
+type DisplaySettingsJson = Exclude<SettingsJson['display'], undefined>
+
+const core: Partial<CoreSettingsJson> = {
   tex: true,
   fontDirectory: '/font/',
   engine: 'svg',
 }
 
 // Typings are unusable here
-const display = {
+const display: DisplaySettingsJson = {
   staveProfile: 'Default',
   scale: 1.4,
   justifyLastSystem: true,
@@ -21,7 +32,7 @@ const display = {
   },
 }
 
-const player: Partial<PlayerSettings> = {
+const player: Partial<PlayerSettingsJson> = {
   enableCursor: true,
   enableAnimatedBeatCursor: true,
   enableElementHighlighting: true,
@@ -31,7 +42,7 @@ const player: Partial<PlayerSettings> = {
     'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
 }
 
-export const alphaTabConfig = {
+export const alphaTabConfig: SettingsJson = {
   core,
   display,
   player,

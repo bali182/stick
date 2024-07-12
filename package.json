@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "type": "module",
   "scripts": {
     "test": "",
     "start": "vite",
@@ -11,10 +12,10 @@
     "gt": "rm -rf generated/transitions && ts-node generator/generate.ts",
     "prefix": "ts-node src/state/templates/prefixWithProgressionName.ts"
   },
-  "author": "Balázs Édes",
+  "author": "Balázs Édes ^1.4.0-alpha.1080",
   "license": "ISC",
   "dependencies": {
-    "@coderline/alphatab": "1.3.0",
+    "@coderline/alphatab": "1.3.1",
     "@emotion/css": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
@@ -36,11 +37,11 @@
     "@types/node": "20.2.5",
     "@types/prettier": "2.4.4",
     "@types/react-dom": "18.2.4",
-    "@vitejs/plugin-react": "4.0.0",
+    "@vitejs/plugin-react": "4.3.1",
     "antlr4": "4.13.1-patch-1",
     "prettier": "2.8.1",
     "ts-node": "10.9.2",
     "typescript": "5.4.5",
-    "vite": "4.5.3"
+    "vite": "5.3.3"
   }
 }
