@@ -166,7 +166,7 @@ export function workerPlugin(options: AlphaTabVitePluginOptions): Plugin {
 
                 while ((match = workerAssetUrlRE.exec(code))) {
                     const [full, hash] = match;
-                    const filename = fileNameHash.get(hash)!;
+                    const filename = fileNameHash.get(hash!)!;
                     const replacement = toOutputFilePathInJS(
                         filename,
                         'asset',

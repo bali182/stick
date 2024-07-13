@@ -61,11 +61,7 @@ export type ChordType =
   | 'AUGMENTED'
   | 'AUGMENTED-SEVENTH'
 
-export type Tag =
-  | 'TWO_NOTES'
-  | 'FOUR_NOTES'
-  | 'EIGHT_NOTES'
-  | 'CHROMATIC_APPROACH'
+export type Tag = 'CHROMATIC_APPROACH' | 'CHORD_TONE_ONLY'
 
 export type BarModel = HasId & {
   chords: string[]
@@ -85,7 +81,7 @@ export type ChordSymbol = HasId & {
   root: PitchedNote
   name: Note
   type: ChordType
-  tags: Tag[]
+  tags?: Tag[]
   transitionId?: string
 }
 

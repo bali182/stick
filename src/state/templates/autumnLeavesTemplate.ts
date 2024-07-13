@@ -151,12 +151,14 @@ export const autumnLeavesTemplate: ProgressionTemplate = {
       name: 'A',
       type: 'DIMINISHED',
       root: 'A1',
+      tags: [],
     },
     'autumn-leaves-cFN-jCVFFaJ1tvLBXvfeG': {
       id: 'autumn-leaves-cFN-jCVFFaJ1tvLBXvfeG',
       name: 'D',
       type: 'DOMINANT-SEVENTH',
       root: 'D2',
+      tags: [],
     },
     'autumn-leaves-G6QtKyHVU5ehRxgf5oj_7': {
       id: 'autumn-leaves-G6QtKyHVU5ehRxgf5oj_7',

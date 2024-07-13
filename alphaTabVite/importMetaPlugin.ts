@@ -8,7 +8,7 @@
 
 // With https://github.com/vitejs/vite/pull/16422 integrated this custom code should not be needed anymore
 
-// Original Sources Licensed under: 
+// Original Sources Licensed under:
 
 // MIT License
 // Copyright (c) 2019-present, Yuxi (Evan) You and Vite contributors
@@ -31,174 +31,198 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
-import { AlphaTabVitePluginOptions } from './AlphaTabVitePluginOptions';
-import MagicString from 'magic-string';
+import { AlphaTabVitePluginOptions } from './AlphaTabVitePluginOptions'
+import MagicString from 'magic-string'
 import {
-    type ResolvedConfig,
-    type Plugin,
-    evalValue,
-    tryFsResolve,
-    tryOptimizedDepResolve,
-    fileToUrl,
-    cleanUrl,
-    injectQuery,
-    workerFileToUrl,
-    AlphaTabWorkerTypes,
-    WORKER_FILE_ID
-} from './bridge';
-import path from 'path';
+  type ResolvedConfig,
+  type Plugin,
+  evalValue,
+  tryFsResolve,
+  tryOptimizedDepResolve,
+  fileToUrl,
+  cleanUrl,
+  injectQuery,
+  workerFileToUrl,
+  AlphaTabWorkerTypes,
+  WORKER_FILE_ID,
+} from './bridge'
+import path from 'path'
 
 const alphaTabWorkerPatterns = [
-    ['alphaTabWorker', 'new URL', 'import.meta.url'],
-    ['alphaTabWorklet.addModule', 'new URL', 'import.meta.url']
-];
+  ['alphaTabWorker', 'new URL', 'import.meta.url'],
+  ['alphaTabWorklet.addModule', 'new URL', 'import.meta.url'],
+]
 
 function includesAlphaTabWorker(code: string): boolean {
-    for (const pattern of alphaTabWorkerPatterns) {
-        let position = 0;
+  for (const pattern of alphaTabWorkerPatterns) {
+    let position = 0
 
-        for (const match of pattern) {
-            position = code.indexOf(match, position);
-            if (position === -1) {
-                break;
-            }
-        }
-
-        if (position !== -1) {
-            return true;
-        }
+    for (const match of pattern) {
+      position = code.indexOf(match, position)
+      if (position === -1) {
+        break
+      }
     }
 
-    return false;
+    if (position !== -1) {
+      return true
+    }
+  }
+
+  return false
 }
 
-function getWorkerType(code: string, match: RegExpExecArray): AlphaTabWorkerTypes {
-    if (match[1].includes('.addModule')) {
-        return AlphaTabWorkerTypes.AudioWorklet;
-    }
+function getWorkerType(
+  code: string,
+  match: RegExpExecArray,
+): AlphaTabWorkerTypes {
+  if (match[1]?.includes('.addModule')) {
+    return AlphaTabWorkerTypes.AudioWorklet
+  }
 
-    const endOfMatch = match.indices![0][1];
+  const endOfMatch = match.indices![0]![1]
 
-    const startOfOptions = code.indexOf('{', endOfMatch);
-    if (startOfOptions === -1) {
-        return AlphaTabWorkerTypes.WorkerClassic;
-    }
+  const startOfOptions = code.indexOf('{', endOfMatch)
+  if (startOfOptions === -1) {
+    return AlphaTabWorkerTypes.WorkerClassic
+  }
 
-    const endOfOptions = code.indexOf('}', endOfMatch);
-    if (endOfOptions === -1) {
-        return AlphaTabWorkerTypes.WorkerClassic;
-    }
+  const endOfOptions = code.indexOf('}', endOfMatch)
+  if (endOfOptions === -1) {
+    return AlphaTabWorkerTypes.WorkerClassic
+  }
 
-    const endOfWorkerCreate = code.indexOf(')', endOfMatch);
-    if (startOfOptions > endOfWorkerCreate || endOfOptions > endOfWorkerCreate) {
-        return AlphaTabWorkerTypes.WorkerClassic;
-    }
+  const endOfWorkerCreate = code.indexOf(')', endOfMatch)
+  if (startOfOptions > endOfWorkerCreate || endOfOptions > endOfWorkerCreate) {
+    return AlphaTabWorkerTypes.WorkerClassic
+  }
 
-    let workerOptions: string | null | { type: string } = code.slice(startOfOptions, endOfOptions + 1);
-    try {
-        workerOptions = evalValue(workerOptions);
-    } catch (e) {
-        return AlphaTabWorkerTypes.WorkerClassic;
-    }
+  let workerOptions: string | null | { type: string } = code.slice(
+    startOfOptions,
+    endOfOptions + 1,
+  )
+  try {
+    workerOptions = evalValue(workerOptions)
+  } catch (e) {
+    return AlphaTabWorkerTypes.WorkerClassic
+  }
 
-    if (typeof workerOptions === 'object' && workerOptions?.type === 'module') {
-        return AlphaTabWorkerTypes.WorkerModule;
-    }
+  if (typeof workerOptions === 'object' && workerOptions?.type === 'module') {
+    return AlphaTabWorkerTypes.WorkerModule
+  }
 
-    return AlphaTabWorkerTypes.WorkerClassic;
+  return AlphaTabWorkerTypes.WorkerClassic
 }
 
-export function importMetaUrlPlugin(options: AlphaTabVitePluginOptions): Plugin {
-    let resolvedConfig: ResolvedConfig;
-    let isBuild: boolean;
-    let preserveSymlinks: boolean;
+export function importMetaUrlPlugin(
+  options: AlphaTabVitePluginOptions,
+): Plugin {
+  let resolvedConfig: ResolvedConfig
+  let isBuild: boolean
+  let preserveSymlinks: boolean
 
-    const isWorkerActive = options.webWorkers !== false;
-    const isWorkletActive = options.audioWorklets !== false;
-    const isActive = isWorkerActive || isWorkletActive;
+  const isWorkerActive = options.webWorkers !== false
+  const isWorkletActive = options.audioWorklets !== false
+  const isActive = isWorkerActive || isWorkletActive
 
-    return {
-        name: 'vite-plugin-alphatab-url',
-        enforce: 'pre',
-        configResolved(config) {
-            resolvedConfig = config as ResolvedConfig;
-            isBuild = config.command === 'build';
-            preserveSymlinks = config.resolve.preserveSymlinks;
-        },
+  return {
+    name: 'vite-plugin-alphatab-url',
+    enforce: 'pre',
+    configResolved(config) {
+      resolvedConfig = config as ResolvedConfig
+      isBuild = config.command === 'build'
+      preserveSymlinks = config.resolve.preserveSymlinks
+    },
 
-        shouldTransformCachedModule({ code }) {
-            if (isActive && isBuild && resolvedConfig.build.watch && includesAlphaTabWorker(code)) {
-                return true;
-            }
-            return;
-        },
+    shouldTransformCachedModule({ code }) {
+      if (
+        isActive &&
+        isBuild &&
+        resolvedConfig.build.watch &&
+        includesAlphaTabWorker(code)
+      ) {
+        return true
+      }
+      return
+    },
 
-        async transform(code, id, options) {
-            if (!isActive || options?.ssr || !includesAlphaTabWorker(code)) {
-                return;
-            }
+    async transform(code, id, options) {
+      if (!isActive || options?.ssr || !includesAlphaTabWorker(code)) {
+        return
+      }
 
-            let s: MagicString | undefined;
+      let s: MagicString | undefined
 
-            const alphaTabWorkerPattern =
-                /\b(alphaTabWorker|alphaTabWorklet\.addModule)\s*\(\s*(new\s+URL\s*\(\s*('[^']+'|"[^"]+"|`[^`]+`)\s*,\s*import\.meta\.url\s*\))/dg;
+      const alphaTabWorkerPattern =
+        /\b(alphaTabWorker|alphaTabWorklet\.addModule)\s*\(\s*(new\s+URL\s*\(\s*('[^']+'|"[^"]+"|`[^`]+`)\s*,\s*import\.meta\.url\s*\))/dg
 
-            let match: RegExpExecArray | null;
-            while ((match = alphaTabWorkerPattern.exec(code))) {
-                const workerType = getWorkerType(code, match);
+      let match: RegExpExecArray | null
+      while ((match = alphaTabWorkerPattern.exec(code))) {
+        const workerType = getWorkerType(code, match)
 
-                let typeActive = false;
-                switch (workerType) {
-                    case AlphaTabWorkerTypes.WorkerClassic:
-                    case AlphaTabWorkerTypes.WorkerModule:
-                        typeActive = isWorkerActive;
-                        break;
-                    case AlphaTabWorkerTypes.AudioWorklet:
-                        typeActive = isWorkletActive;
-                        break;
-                }
-
-                if (!typeActive) {
-                    continue;
-                }
-
-                s ??= new MagicString(code);
-
-                const url = code.slice(match.indices![3][0] + 1, match.indices![3][1] - 1);
-
-                let file = path.resolve(path.dirname(id), url);
-                file =
-                    tryFsResolve(file, preserveSymlinks) ??
-                    tryOptimizedDepResolve(resolvedConfig, options?.ssr === true, url, id, preserveSymlinks) ??
-                    file;
-
-                let builtUrl: string;
-                if (isBuild) {
-                    builtUrl = await workerFileToUrl(resolvedConfig, file);
-                } else {
-                    builtUrl = await fileToUrl(cleanUrl(file), resolvedConfig);
-                    builtUrl = injectQuery(builtUrl, `${WORKER_FILE_ID}&type=${workerType}`);
-                }
-                s.update(
-                    match.indices![3][0],
-                    match.indices![3][1],
-                    // add `'' +` to skip vite:asset-import-meta-url plugin
-                    `new URL('' + ${JSON.stringify(builtUrl)}, import.meta.url)`
-                );
-            }
-
-            if (s) {
-                return {
-                    code: s.toString(),
-                    map:
-                        resolvedConfig.command === 'build' && resolvedConfig.build.sourcemap
-                            ? s.generateMap({ hires: 'boundary', source: id })
-                            : null
-                };
-            }
-
-            return null;
+        let typeActive = false
+        switch (workerType) {
+          case AlphaTabWorkerTypes.WorkerClassic:
+          case AlphaTabWorkerTypes.WorkerModule:
+            typeActive = isWorkerActive
+            break
+          case AlphaTabWorkerTypes.AudioWorklet:
+            typeActive = isWorkletActive
+            break
         }
-    };
+
+        if (!typeActive) {
+          continue
+        }
+
+        s ??= new MagicString(code)
+
+        const url = code.slice(
+          match.indices![3]![0] + 1,
+          match.indices![3]![1] - 1,
+        )
+
+        let file = path.resolve(path.dirname(id), url)
+        file =
+          tryFsResolve(file, preserveSymlinks) ??
+          tryOptimizedDepResolve(
+            resolvedConfig,
+            options?.ssr === true,
+            url,
+            id,
+            preserveSymlinks,
+          ) ??
+          file
+
+        let builtUrl: string
+        if (isBuild) {
+          builtUrl = await workerFileToUrl(resolvedConfig, file)
+        } else {
+          builtUrl = await fileToUrl(cleanUrl(file), resolvedConfig)
+          builtUrl = injectQuery(
+            builtUrl,
+            `${WORKER_FILE_ID}&type=${workerType}`,
+          )
+        }
+        s.update(
+          match.indices![3]![0],
+          match.indices![3]![1],
+          // add `'' +` to skip vite:asset-import-meta-url plugin
+          `new URL('' + ${JSON.stringify(builtUrl)}, import.meta.url)`,
+        )
+      }
+
+      if (s) {
+        return {
+          code: s.toString(),
+          map:
+            resolvedConfig.command === 'build' && resolvedConfig.build.sourcemap
+              ? s.generateMap({ hires: 'boundary', source: id })
+              : null,
+        }
+      }
+
+      return null
+    },
+  }
 }
