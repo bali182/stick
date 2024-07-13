@@ -9,6 +9,7 @@ export const rootThirdUpFifthUpNextRootMinus1: Transition = {
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: -1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdUpFifthUpNextRootPlus1: Transition = {
@@ -20,6 +21,7 @@ export const rootThirdUpFifthUpNextRootPlus1: Transition = {
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: 1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdDownFifthDownNextRootMinus1: Transition = {
@@ -31,6 +33,7 @@ export const rootThirdDownFifthDownNextRootMinus1: Transition = {
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: -1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdDownFifthDownNextRootPlus1: Transition = {
@@ -42,6 +45,7 @@ export const rootThirdDownFifthDownNextRootPlus1: Transition = {
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: 1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdUpFifthDownNextRootMinus1: Transition = {
@@ -53,6 +57,7 @@ export const rootThirdUpFifthDownNextRootMinus1: Transition = {
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: -1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdUpFifthDownNextRootPlus1: Transition = {
@@ -64,6 +69,7 @@ export const rootThirdUpFifthDownNextRootPlus1: Transition = {
     { chordRef: 'CURRENT', dir: 'DOWN', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: 1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdDownFifthUpNextRootMinus1: Transition = {
@@ -75,6 +81,7 @@ export const rootThirdDownFifthUpNextRootMinus1: Transition = {
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: -1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const rootThirdDownFifthUpNextRootPlus1: Transition = {
@@ -86,6 +93,7 @@ export const rootThirdDownFifthUpNextRootPlus1: Transition = {
     { chordRef: 'CURRENT', dir: 'UP', interval: 0, tone: 'FIFTH' },
     { chordRef: 'NEXT', dir: 'NONE', interval: 1, tone: 'ROOT' },
   ],
+  tags: ['FOUR_NOTES', 'CHROMATIC_APPROACH'],
 }
 
 export const chordTonesWithChromaticLeadingTone: TransitionCategory = {

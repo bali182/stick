@@ -9,7 +9,7 @@ export function getTransitionCategory(
   const { transitions: rawTransitions, description, name, tags } = category
   const transitions = rawTransitions
     .map((transition) => getTransitionAst(transition))
-    .map((ast) => getTransitionModel(ast))
+    .map((ast) => getTransitionModel(ast, category.tags))
   return {
     id,
     description,

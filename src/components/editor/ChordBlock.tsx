@@ -1,6 +1,5 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useState } from 'react'
 import { css } from '@emotion/css'
-import uniqolor from 'uniqolor'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { ChordEditor } from './ChordEditor'
 import { ChordSymbol } from '../../model/types'
@@ -15,6 +14,7 @@ import { chordsSlice } from '../../state/chords'
 import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
+import { NOTE_COLORS } from '../../model/constants'
 
 export type ChordBlockProps = {
   barId: string
@@ -93,14 +93,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
   const onMouseEnter = () => setHovered(true)
   const onMouseLeave = () => setHovered(false)
 
-  const background = useMemo(
-    () =>
-      uniqolor(getChordSymbolName(chord), {
-        format: 'hex',
-        lightness: 40,
-      }).color,
-    [chord],
-  )
+  const background = chord?.name ? NOTE_COLORS[chord?.name] : 'transparent'
 
   useOnEscape(closeChordPicker, isChordPickerOpen)
 

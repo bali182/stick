@@ -4,7 +4,7 @@ import { alphaTab } from '@coderline/alphatab/vite'
 // import { copyAssetsPlugin } from './copyAssetsPlugin'
 
 export default defineConfig({
-  plugins: [react() /*alphaTab() copyAssetsPlugin({}) */],
+  plugins: [react(), alphaTab() /* copyAssetsPlugin({}) */],
   appType: 'spa',
   base: './',
   build: {

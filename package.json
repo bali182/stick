@@ -9,7 +9,7 @@
     "start": "vite",
     "build": "vite build",
     "gg": "rm -rf generated/wbp && antlr4 -Dlanguage=TypeScript  -no-visitor -no-listener -o generated/wbp wbp.g4",
-    "gt": "rm -rf generated/transitions && ts-node generator/generate.ts",
+    "gt": "rm -rf generated/transitions && ts-node ./generator/generate.ts",
     "prefix": "ts-node src/state/templates/prefixWithProgressionName.ts"
   },
   "author": "Balázs Édes ",

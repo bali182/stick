@@ -2,6 +2,7 @@ export type Transition = {
   id: string
   name: string
   steps: Step[]
+  tags: Tag[]
 }
 
 export type Step = {
@@ -84,6 +85,7 @@ export type ChordSymbol = HasId & {
   root: PitchedNote
   name: Note
   type: ChordType
+  tags: Tag[]
   transitionId?: string
 }
 
