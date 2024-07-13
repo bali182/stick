@@ -14,7 +14,7 @@ import { chordsSlice } from '../../state/chords'
 import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
-import { NOTE_COLORS } from '../../model/constants'
+import { NOTE_COLORS } from '../colors'
 
 export type ChordBlockProps = {
   barId: string
