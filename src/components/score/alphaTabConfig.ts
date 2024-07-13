@@ -13,7 +13,7 @@ type DisplaySettingsJson = Exclude<SettingsJson['display'], undefined>
 
 const core: Partial<CoreSettingsJson> = {
   tex: true,
-  fontDirectory: '/font/',
+  fontDirectory: 'font/',
   engine: 'svg',
 }
 
