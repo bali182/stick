@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { BarModel, ChordProgression, ChordSymbol } from '../../model/types'
+import { Bar, ChordProgression, ChordSymbol } from '../../model/types'
 import { ProgressionTemplate } from '../types'
 
 function prefixKey(
@@ -31,7 +31,7 @@ export function withUniqueIds(
   )
 
   const bars = Object.fromEntries(
-    Object.entries(template.bars).map(([key, value]): [string, BarModel] => [
+    Object.entries(template.bars).map(([key, value]): [string, Bar] => [
       prefixKey(key, prefix, ids),
       {
         ...value,

@@ -50,9 +50,6 @@ export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
   setOpen,
   add,
 }) => {
-  const activeProgressionId = useSelector(
-    configSlice.selectors.getActiveProgressionId,
-  )
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
 
   const dispatch = useDispatch<AppDispatch>()
@@ -68,21 +65,20 @@ export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
   }
 
   return (
-    <>
-      <ListSelector<ChordProgression[], ChordProgression>
-        categories={[progressions]}
-        canCreate={true}
-        createLabel="Create progression"
-        onCreate={onCreate}
-        onItemClick={onItemClick}
-        getChildren={getChildren}
-        getCategoryKey={getCategoryKey}
-        getCategoryLabel={getCategoryLabel}
-        getItemKey={getItemKey}
-        getItemLabel={getItemLabel}
-        matches={matches}
-        noHitsLabel={noHitsLabel}
-      />
-    </>
+    <ListSelector<ChordProgression[], ChordProgression>
+      categories={[progressions]}
+      canCreate={true}
+      canSearch={true}
+      createLabel="Create progression"
+      onCreate={onCreate}
+      onItemClick={onItemClick}
+      getChildren={getChildren}
+      getCategoryKey={getCategoryKey}
+      getCategoryLabel={getCategoryLabel}
+      getItemKey={getItemKey}
+      getItemLabel={getItemLabel}
+      matches={matches}
+      noHitsLabel={noHitsLabel}
+    />
   )
 }

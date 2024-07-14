@@ -1,19 +1,17 @@
 import { css } from '@emotion/css'
-import { ComponentType, FC, useMemo } from 'react'
+import { ComponentType, useMemo } from 'react'
 import { EditorProps } from './types'
 import { nanoid } from 'nanoid'
 
-export type InputSectionProps<T> = {
+export type InputSectionProps<T, D> = Omit<EditorProps<T, D>, 'id'> & {
   name: string
-  value: T
-  onChange: (value: T) => void
-  Editor: ComponentType<EditorProps<T>>
+  description: string
+  Editor: ComponentType<EditorProps<T, D>>
 }
 
 const sectionStyle = css`
   display: flex;
   flex-direction: column;
-  gap: 10px;
   padding: 14px;
   pointer-events: auto;
 `
@@ -21,15 +19,24 @@ const sectionStyle = css`
 const labelStyle = css`
   font-size: 1em;
   color: #ffffff;
+  margin-bottom: 2px;
   pointer-events: auto;
 `
 
-export function InputSection<T>({
+const descriptionStyle = css`
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  color: #ffffffaa;
+`
+
+export function InputSection<T, D = void>({
   Editor,
   name,
   value,
+  data,
+  description,
   onChange,
-}: InputSectionProps<T>) {
+}: InputSectionProps<T, D>) {
   const id = useMemo(() => {
     const lcname = name.toLowerCase().replace(/^\W/gi, '').replace(/\s+/g, '-')
     return `${lcname}-${nanoid()}`
@@ -40,7 +47,8 @@ export function InputSection<T>({
       <label className={labelStyle} htmlFor={id}>
         {name}
       </label>
-      <Editor id={id} value={value} onChange={onChange} />
+      <span className={descriptionStyle}>{description}</span>
+      <Editor id={id} value={value} data={data} onChange={onChange} />
     </div>
   )
 }

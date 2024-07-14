@@ -348,6 +348,7 @@ export const autumnLeavesTemplate: ProgressionTemplate = {
   progression: {
     id: 'autumn-leaves-zm2PzAVfrCCUZC0hQwmNv',
     tuning: ['G2', 'D2', 'A1', 'E1'],
+    noteCount: 4,
     name: 'Autumn Leaves Template',
     bars: [
       'autumn-leaves-NaQlXYlN5QSWu1hStya9J',

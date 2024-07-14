@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { BarModel } from '../model/types'
+import { Bar } from '../model/types'
 import { removeByKey } from '../model/utils'
 import { initialState } from './initialState'
 
-export type CrateBarPayload = { bar: BarModel }
+export type CrateBarPayload = { bar: Bar }
 export type DeleteBarPayload = { barId: string }
-export type UpdateBarPayload = { bar: BarModel }
+export type UpdateBarPayload = { bar: Bar }
 export type AddChordsPayload = { barId: string; chordIds: string[] }
 export type RemoveChordsPayload = { barId: string; chordIds: string[] }
 
@@ -52,7 +52,7 @@ export const barsSlice = createSlice({
     },
   },
   selectors: {
-    getBar: (state, id: string): BarModel | undefined => {
+    getBar: (state, id: string): Bar | undefined => {
       return state[id]
     },
   },

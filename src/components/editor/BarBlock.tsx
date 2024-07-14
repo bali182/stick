@@ -2,7 +2,7 @@ import { css } from '@emotion/css'
 import { FC, useState } from 'react'
 import { ChordBlock } from './ChordBlock'
 import { useDispatch, useSelector } from 'react-redux'
-import { BarModel, ChordSymbol } from '../../model/types'
+import { Bar, ChordSymbol } from '../../model/types'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { nanoid } from 'nanoid'
@@ -11,6 +11,7 @@ import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
 import { AppDispatch } from '../../state/store'
+import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 
 export type BarBlockProps = {
   barId: string
@@ -56,7 +57,6 @@ const addChordOverlayStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   top: 10px;
   right: 10px;
   bottom: 0px;
@@ -94,6 +94,7 @@ const emptyBarAddButtonStyle = css`
 const addChordCloneStyle = css`
   color: #fff;
   font-size: 1.8em;
+  cursor: pointer;
 `
 
 const addFirstChordStyle = css``
@@ -109,12 +110,10 @@ const trashIconStyle = css`
 export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   const [isHovered, setHovered] = useState(false)
   const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
-  const bar = useSelector<AppState, BarModel | undefined>((state) =>
+  const bar = useSelector<AppState, Bar | undefined>((state) =>
     barsSlice.selectors.getBar(state, barId),
   )
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
+  const progression = useSelector(getActiveProgression)
   const firstChord = useSelector<AppState, ChordSymbol | undefined>((state) => {
     if (bar?.chords?.length !== 1) {
       return undefined
@@ -129,7 +128,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
     const chordIds = bar?.chords ?? []
     dispatch(
       progressionsSlice.actions.removeBars({
-        progressionId: progressionId!,
+        progressionId: progression?.id!,
         barIds: [barId],
       }),
     )
@@ -193,8 +192,11 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
           <ChordBlock barId={barId} chordId={chordId} key={i} />
         ))}
         {bar.chords.length === 1 && isChordsAreaHovered ? (
-          <div className={addChordOverlayStyle} onClick={onAddSecondChord}>
-            <LuSplitSquareHorizontal className={addChordCloneStyle} />
+          <div className={addChordOverlayStyle}>
+            <LuSplitSquareHorizontal
+              className={addChordCloneStyle}
+              onClick={onAddSecondChord}
+            />
           </div>
         ) : null}
         {bar.chords.length === 0 ? (

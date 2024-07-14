@@ -1,14 +1,11 @@
 import { isNil } from '../../model/isNil'
-import { BarModel, ChordSymbol, ProgressionsStatus } from '../../model/types'
+import { Bar, ChordSymbol, ProgressionsStatus } from '../../model/types'
 import { barsSlice } from '../bars'
 import { chordsSlice } from '../chords'
 import { progressionsSlice } from '../progressions'
 import { AppState } from '../types'
 
-function canAutoFillTransitions(
-  bars: BarModel[],
-  chords: ChordSymbol[],
-): boolean {
+function canAutoFillTransitions(bars: Bar[], chords: ChordSymbol[]): boolean {
   // Empty bars, no solution
   if (bars.some((bar) => bar.chords.length === 0)) {
     return false
@@ -20,7 +17,7 @@ function canAutoFillTransitions(
   return true
 }
 
-function canGenerateScore(bars: BarModel[], chords: ChordSymbol[]): boolean {
+function canGenerateScore(bars: Bar[], chords: ChordSymbol[]): boolean {
   // Empty bars, no score
   if (bars.some((bar) => bar.chords.length === 0)) {
     return false
@@ -42,10 +39,7 @@ function canGenerateScore(bars: BarModel[], chords: ChordSymbol[]): boolean {
   return true
 }
 
-function canClearTransitions(
-  _bars: BarModel[],
-  chords: ChordSymbol[],
-): boolean {
+function canClearTransitions(_bars: Bar[], chords: ChordSymbol[]): boolean {
   return chords.some((chord) => chord.transitionId !== undefined)
 }
 

@@ -18,6 +18,7 @@ import { progressionsSlice } from '../../state/progressions'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { ProgressionSelector } from './ProgressionListSelector'
 import { NewProgressionModal } from './NewProgressionModal'
+import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 
 const toolbarStyle = css`
   display: flex;
@@ -80,14 +81,7 @@ export const ProjectToolBar: FC = () => {
   const [isProgressionsOpen, setProgressionsOpen] = useState(false)
   const [isProgressionModalOpen, setProgressionModalOpen] = useState(false)
 
-  const activeProgressionId = useSelector(
-    configSlice.selectors.getActiveProgressionId,
-  )
-
-  const progression = useSelector<AppState, ChordProgression | undefined>(
-    (state) =>
-      progressionsSlice.selectors.getProgression(state, activeProgressionId),
-  )
+  const progression = useSelector(getActiveProgression)
 
   const { canAutoFillTransitions, canClearTransitions } = useSelector<
     AppState,
@@ -99,7 +93,7 @@ export const ProjectToolBar: FC = () => {
   const onAutoAddTransitions = () => {
     const action: FillTransitionsAction = {
       type: 'global/fillTransitions',
-      payload: { progressionId: activeProgressionId! },
+      payload: { progressionId: progression?.id! },
     }
     dispatch(action)
   }
@@ -107,7 +101,7 @@ export const ProjectToolBar: FC = () => {
   const onClearTransitions = () => {
     const action: ClearTransitionsAction = {
       type: 'global/clearTransitions',
-      payload: { progressionId: activeProgressionId! },
+      payload: { progressionId: progression?.id! },
     }
     dispatch(action)
   }
@@ -123,7 +117,10 @@ export const ProjectToolBar: FC = () => {
     <>
       {isSettingsOpen && <SettingsModal onClose={onCloseSettings} />}
       {isProgressionModalOpen && (
-        <NewProgressionModal onClose={onCloseProgressionModal} canClose={true} />
+        <NewProgressionModal
+          onClose={onCloseProgressionModal}
+          canClose={true}
+        />
       )}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>
@@ -175,7 +172,7 @@ export const ProjectToolBar: FC = () => {
         </div>
         <div className={buttonContainerStyle}>
           <button
-            disabled={isNil(activeProgressionId)}
+            disabled={isNil(progression?.id)}
             className={buttonStyle}
             onClick={onOpenSettings}
           >

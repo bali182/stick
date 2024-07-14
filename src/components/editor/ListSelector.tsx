@@ -8,7 +8,8 @@ import { PiPlusBold } from 'react-icons/pi'
 export type ListSelectorProps<C, I> = {
   categories: C[]
   noHitsLabel: string
-  canCreate?: boolean
+  canCreate: boolean
+  canSearch: boolean
   createLabel?: string
   onCreate?: () => void
   onItemClick: (item: I) => void
@@ -123,6 +124,7 @@ export function ListSelector<C, I>({
   categories,
   noHitsLabel,
   canCreate,
+  canSearch,
   createLabel,
   getChildren,
   getCategoryKey,
@@ -155,13 +157,15 @@ export function ListSelector<C, I>({
 
   return (
     <>
-      <input
-        type="text"
-        className={searchTextBoxStyle}
-        placeholder="Search..."
-        value={search}
-        onChange={onSearchChange}
-      />
+      {canSearch && (
+        <input
+          type="text"
+          className={searchTextBoxStyle}
+          placeholder="Search..."
+          value={search}
+          onChange={onSearchChange}
+        />
+      )}
       <div className={containerStyle}>
         {data.length === 0 && (
           <div className={noHitsContainerStyle}>

@@ -1,5 +1,5 @@
 import { isNil } from '../../model/isNil'
-import { BarModel, ChordSymbol } from '../../model/types'
+import { Bar, ChordSymbol } from '../../model/types'
 import { barsSlice } from '../bars'
 import { chordsSlice } from '../chords'
 import { progressionsSlice } from '../progressions'
@@ -19,7 +19,7 @@ export function* chordsIterator(
   state: AppState,
   progressionId: string,
   config: Partial<ChordsIteratorConfig> = {},
-): Generator<[ChordSymbol, BarModel]> {
+): Generator<[ChordSymbol, Bar]> {
   const cfg: ChordsIteratorConfig = { ...DEFAULT_CONFIG, ...config }
   const progression = progressionsSlice.selectors.getProgression(
     state,

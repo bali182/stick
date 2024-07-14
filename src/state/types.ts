@@ -1,6 +1,6 @@
-import { BarModel, ChordProgression, ChordSymbol } from '../model/types'
+import { Bar, ChordProgression, ChordSymbol } from '../model/types'
 
-export type BarsState = Record<string, BarModel>
+export type BarsState = Record<string, Bar>
 export type ChordSymbolsState = Record<string, ChordSymbol>
 export type ProgressionsState = Record<string, ChordProgression>
 

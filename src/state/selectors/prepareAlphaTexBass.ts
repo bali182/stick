@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { getPitchedNotes } from '../../model/getPitchedNotes'
 import {
-  BarModel,
+  Bar,
   ChordSymbol,
   PitchedNote,
   _BarPitches,
@@ -99,7 +99,7 @@ function addFretboardLocations(pitches: _Pitch[], tuning: PitchedNote[]): void {
   }
 }
 
-function groupPitches(pitches: _Pitch[], bars: BarModel[]): _BarPitches[] {
+function groupPitches(pitches: _Pitch[], bars: Bar[]): _BarPitches[] {
   return bars.map((bar): _BarPitches => {
     const chords = bar.chords.map(
       (chordId): _ChordPitches => ({
@@ -127,7 +127,7 @@ function addDurations(bars: _BarPitches[]): void {
 }
 
 /** Mapping chords to bars (key: chordId, value: barId) */
-function mapChordsToBars(bars: BarModel[]): Record<string, string> {
+function mapChordsToBars(bars: Bar[]): Record<string, string> {
   return bars.reduce((mapping, bar) => {
     bar.chords.forEach((chordId) => {
       mapping[chordId] = bar.id

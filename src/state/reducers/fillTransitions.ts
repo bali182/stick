@@ -6,6 +6,7 @@ import { ChordSymbol } from '../../model/types'
 import { FillTransitionsAction } from '../actionTypes'
 import { progressionsSlice } from '../progressions'
 import { chordsIterator } from '../selectors/chordsIterator'
+import { getActiveProgression } from '../selectors/getActiveProgression'
 import { AppState } from '../types'
 
 export function fillTransitionsReducer(
@@ -13,12 +14,11 @@ export function fillTransitionsReducer(
   action: FillTransitionsAction,
 ): AppState {
   try {
-    const { progressionId } = state.config
-    const progression = progressionsSlice.selectors.getProgression(
-      state,
-      progressionId!,
-    )!
-    const tuning = progression.tuning
+    const progression = getActiveProgression(state)
+    const tuning = progression?.tuning
+    if (isNil(progression) || isNil(tuning)) {
+      return state
+    }
     const updatedChords: ChordSymbol[] = []
     const chordsGenerator = chordsIterator(state, action.payload.progressionId)
     const chordsWithBars = Array.from(chordsGenerator)
@@ -29,9 +29,16 @@ export function fillTransitionsReducer(
         continue
       }
       const [to] = chordsWithBars[i + 1]!
+      const preferredNoteCount = from.noteCount ?? progression.noteCount ?? 4
+      const tags = Array.from(
+        new Set([...(progression.tags ?? []), ...(from.tags ?? [])]),
+      )
+
       const transitions = TRANSITIONS.filter((transition) =>
         canTransition(from, to, tuning, transition),
       )
+        .filter((transition) => transition.steps.length === preferredNoteCount)
+        .filter((transition) => tags.every((t) => transition.tags.includes(t)))
       // No viable transitions
       if (transitions.length === 0) {
         continue

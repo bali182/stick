@@ -6,7 +6,6 @@ import Select, {
 } from 'react-select'
 import { css } from '@emotion/css'
 import {
-  ChordProgression,
   ChordSymbol,
   ChordType,
   Note,
@@ -17,9 +16,7 @@ import { getPossiblePitches } from '../../model/utils'
 import { useSelector } from 'react-redux'
 import { getNoteRange } from '../../model/getNoteRange'
 import { INDEX_BY_NOTE } from '../../model/constants'
-import { configSlice } from '../../state/config'
-import { progressionsSlice } from '../../state/progressions'
-import { AppState, ConfigState } from '../../state/types'
+import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
@@ -140,16 +137,10 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     value: chord.root,
   }
 
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
-  const progression = useSelector<AppState, ChordProgression>(
-    (state) =>
-      progressionsSlice.selectors.getProgression(state, progressionId!)!,
-  )
+  const progression = useSelector(getActiveProgression)
   const range = useMemo(
-    () => getNoteRange(progression.tuning),
-    [progression.tuning],
+    () => getNoteRange(progression?.tuning!),
+    [progression?.tuning],
   )
   const possibleRoots = useMemo<SelectItem<PitchedNote>[]>(
     () =>

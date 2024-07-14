@@ -3,10 +3,8 @@ import { FC } from 'react'
 import { BarBlock } from './BarBlock'
 import { useSelector } from 'react-redux'
 import { AddBarBlock } from './AddBarBlock'
-import { ChordProgression } from '../../model/types'
-import { AppState, ConfigState } from '../../state/types'
-import { progressionsSlice } from '../../state/progressions'
 import { isNil } from '../../model/isNil'
+import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 
 const chordChartStyle = css`
   display: grid;
@@ -19,13 +17,7 @@ const chordChartStyle = css`
 `
 
 export const ChordChart: FC = () => {
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
-  const progression = useSelector<AppState, ChordProgression>(
-    (state) =>
-      progressionsSlice.selectors.getProgression(state, progressionId!)!,
-  )
+  const progression = useSelector(getActiveProgression)
 
   if (isNil(progression)) {
     return null

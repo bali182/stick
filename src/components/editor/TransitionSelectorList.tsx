@@ -72,6 +72,8 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   return (
     <ListSelector<TransitionCategory, Transition>
       categories={categories}
+      canSearch={true}
+      canCreate={false}
       onItemClick={onItemClick}
       getChildren={getChildren}
       getCategoryKey={getCategoryKey}

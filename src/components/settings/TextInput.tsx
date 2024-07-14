@@ -1,5 +1,5 @@
 import { css } from '@emotion/css'
-import React, { FC } from 'react'
+import React, { FC, InputHTMLAttributes } from 'react'
 import { EditorProps } from './types'
 
 const inputStyle = css`
@@ -14,21 +14,26 @@ const inputStyle = css`
   &:hover {
     background-color: #ffffff30;
   }
-
   &:focus {
     background-color: #ffffff50;
   }
 `
 
-export const TextInput: FC<EditorProps<string>> = ({ id, value, onChange }) => {
+export const TextInput: FC<EditorProps<string, InputHTMLAttributes<any>>> = ({
+  id,
+  value,
+  onChange,
+  data,
+}) => {
   const _onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value)
   }
   return (
     <input
-      id={id}
-      className={inputStyle}
       type="text"
+      className={inputStyle}
+      {...(data ?? {})}
+      id={id}
       value={value}
       onChange={_onChange}
     />

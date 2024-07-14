@@ -104,15 +104,15 @@ type ModalEditor = {
 const editors: ModalEditor[] = [
   {
     id: nanoid(),
-    name: 'Tuning',
-    Icon: PiMusicNoteSimple,
-    Component: () => <div>Tuning editor</div>,
-  },
-  {
-    id: nanoid(),
     name: 'Preferences',
     Icon: PiMusicNoteSimple,
     Component: BaseProgressionSettings,
+  },
+  {
+    id: nanoid(),
+    name: 'Tuning',
+    Icon: PiMusicNoteSimple,
+    Component: () => <div>Tuning editor</div>,
   },
   {
     id: nanoid(),

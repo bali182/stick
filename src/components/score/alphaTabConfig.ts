@@ -20,8 +20,8 @@ const core: Partial<CoreSettingsJson> = {
 // Typings are unusable here
 const display: DisplaySettingsJson = {
   staveProfile: 'Default',
-  scale: 1.4,
   justifyLastSystem: true,
+  barsPerRow: 4,
   resources: {
     staffLineColor: '#ffffff80',
     barSeparatorColor: '#fff',

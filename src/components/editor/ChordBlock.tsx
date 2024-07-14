@@ -15,6 +15,8 @@ import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
 import { NOTE_COLORS } from '../colors'
+import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { NoteCountPicker } from './NoteCountPicker'
 
 export type ChordBlockProps = {
   barId: string
@@ -66,14 +68,12 @@ const popoverStyle = css`
 `
 
 export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
+  const progression = useSelector(getActiveProgression)
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progressionId!, barId, chordId),
+    getNextChord(state, progression?.id!, barId, chordId),
   )
   const dispatch = useDispatch<AppDispatch>()
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
@@ -115,6 +115,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
       {isHovered ? (
         <FiTrash2 className={trashIconStyle} onClick={onChordDeleted} />
       ) : null}
+      <NoteCountPicker chordId={chordId} />
       <Popover
         isOpen={isChordPickerOpen}
         onClickOutside={closeChordPicker}

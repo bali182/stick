@@ -14,6 +14,7 @@ export const initialState: AppState = {
     default: {
       id: 'default',
       name: 'Default',
+      noteCount: 4,
       tuning: ['G2', 'D2', 'A1', 'E1'],
       bars: [
         'default-first-bar',
