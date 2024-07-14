@@ -25,7 +25,6 @@
     "src/**/*",
     "generated/**/*",
     "transitions/**/*",
-    "generator/**/*",
-    "alphaTabVite/**/*"
+    "generator/**/*"
   ]
 }
