@@ -18,7 +18,7 @@ const noteCountPickerStyle = css`
   top: 8px;
   right: 14px;
   color: #ffffffbb;
-  z-index: 10;
+  z-index: 1;
   &:hover {
     color: #ffffff;
   }
