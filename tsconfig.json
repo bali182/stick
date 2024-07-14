@@ -26,7 +26,6 @@
     "generated/**/*",
     "transitions/**/*",
     "generator/**/*",
-    "alphaTabVite/**/*",
-    "copyAssetsPlugin.ts"
+    "alphaTabVite/**/*"
   ]
 }
