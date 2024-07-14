@@ -1,7 +1,3 @@
 node_modules
 docs
-
-# ignore stuff being put in the public folder
-public/font/*
-public/soundfont/*
-!_README.md
+public
