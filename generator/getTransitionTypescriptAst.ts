@@ -12,7 +12,7 @@ export function getTransitionTypescriptAst(model: Transition): Statement {
           factory.createIdentifier(getTransitionVariableName(model)),
           undefined,
           factory.createTypeReferenceNode('Transition'),
-          getLiteralAst(model),
+          getLiteralAst(model, true),
         ),
       ],
       NodeFlags.Const,

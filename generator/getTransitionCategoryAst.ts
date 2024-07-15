@@ -9,7 +9,7 @@ export function getTransitionCategoryAst(cat: TransitionCategory): Statement {
   const transitions = _transitions.map((transition) =>
     factory.createIdentifier(getTransitionVariableName(transition)),
   )
-  const ast = getLiteralAst({ ...rest, transitions })
+  const ast = getLiteralAst({ ...rest, transitions }, true)
 
   return factory.createVariableStatement(
     [factory.createToken(SyntaxKind.ExportKeyword)],

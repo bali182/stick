@@ -1,6 +1,6 @@
 import { Expression, factory, SyntaxKind, isExpression } from 'typescript'
 
-export function getLiteralAst(value: any): Expression {
+export function getLiteralAst(value: any, skipUndefined: boolean): Expression {
   // null, undefined, or an expression anywhere in the tree taken care of
   if (value === null) {
     return factory.createNull()
@@ -21,12 +21,21 @@ export function getLiteralAst(value: any): Expression {
   } else if (typeof value === 'boolean') {
     return value ? factory.createTrue() : factory.createFalse()
   } else if (Array.isArray(value)) {
-    return factory.createArrayLiteralExpression(value.map(getLiteralAst), false)
+    const values = value
+      .filter((val) => (skipUndefined ? val !== undefined : true))
+      .map((val) => getLiteralAst(val, skipUndefined))
+    return factory.createArrayLiteralExpression(values, false)
   } else if (typeof value === 'object') {
     const entries = Object.entries(value)
-    const properties = entries.map(([key, value]) =>
-      factory.createPropertyAssignment(key, getLiteralAst(value)),
-    )
+    const properties = entries
+      .filter(([, val]) => (skipUndefined ? val !== undefined : true))
+      .map(([key, value]) =>
+        factory.createPropertyAssignment(
+          key,
+          getLiteralAst(value, skipUndefined),
+        ),
+      )
+
     return factory.createObjectLiteralExpression(properties, false)
   }
 

@@ -24,6 +24,8 @@ export type Transition = {
   name: string
   steps: Step[]
   tags: Tag[]
+  source?: ChordType[]
+  target?: number
 }
 
 export type Step = {

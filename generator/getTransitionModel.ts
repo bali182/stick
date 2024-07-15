@@ -1,5 +1,7 @@
 import { TransitionContext } from '../generated/wbp/wbpParser'
 import { Tag, Transition } from '../src/model/types'
+import { getSourceChordTypes } from './getSourceChordTypes'
+import { getTargetChordInterval } from './getTargetChordInterval'
 import { getTransitionName } from './getTransitionName'
 import { getTransitionStep } from './getTransitionStep'
 
@@ -14,6 +16,8 @@ export function getTransitionModel(
     name: '',
     steps,
     tags,
+    source: getSourceChordTypes(ast),
+    target: getTargetChordInterval(ast),
   }
   model.name = getTransitionName(model)
   return model

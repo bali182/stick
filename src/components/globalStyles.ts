@@ -58,6 +58,10 @@ export const globalStyles = css`
     text-decoration: none;
   }
 
+  a {
+    text-decoration: none !important;
+  }
+
   // Custom scrollbar
   * {
     --sb-track-color: #ffffff20;
@@ -67,6 +71,7 @@ export const globalStyles = css`
 
   *::-webkit-scrollbar {
     width: var(--sb-size);
+    height: var(--sb-size);
   }
 
   *::-webkit-scrollbar-track {
