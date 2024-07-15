@@ -110,6 +110,10 @@ Error generating stack: `+n.message+`
     text-decoration: none;
   }
 
+  a {
+    text-decoration: none !important;
+  }
+
   // Custom scrollbar
   * {
     --sb-track-color: #ffffff20;
@@ -119,6 +123,7 @@ Error generating stack: `+n.message+`
 
   *::-webkit-scrollbar {
     width: var(--sb-size);
+    height: var(--sb-size);
   }
 
   *::-webkit-scrollbar-track {
