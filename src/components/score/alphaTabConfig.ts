@@ -6,7 +6,6 @@ const core: json.CoreSettingsJson = {
   engine: 'svg',
 }
 
-// Typings are unusable here
 const display: json.DisplaySettingsJson = {
   staveProfile: 'Default',
   justifyLastSystem: true,
@@ -21,7 +20,8 @@ const display: json.DisplaySettingsJson = {
   },
 }
 
-const player: json.PlayerSettingsJson = {
+const player = (scrollElement: HTMLElement): json.PlayerSettingsJson => ({
+  scrollElement,
   enableCursor: true,
   enableAnimatedBeatCursor: true,
   enableElementHighlighting: true,
@@ -29,10 +29,12 @@ const player: json.PlayerSettingsJson = {
   enableUserInteraction: true,
   soundFont:
     'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
-}
+})
 
-export const alphaTabConfig: json.SettingsJson = {
+export const alphaTabConfig = (
+  scrollElement: HTMLElement,
+): json.SettingsJson => ({
   core,
   display,
-  player,
-}
+  player: player(scrollElement),
+})

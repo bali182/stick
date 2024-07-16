@@ -83,6 +83,7 @@ const controlsContainerStyle = css`
 
 export const Score: FC = () => {
   const wrapperRef = useRef<HTMLElement>(null)
+  const scrollRef = useRef<HTMLElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   const apiRef = useRef<AlphaTabApi>()
 
@@ -118,7 +119,10 @@ export const Score: FC = () => {
   useMetronomeVolume(apiRef, metronomeVolume)
 
   useEffect(() => {
-    const api = new AlphaTabApi(mainRef.current!, alphaTabConfig)
+    const api = new AlphaTabApi(
+      mainRef.current!,
+      alphaTabConfig(scrollRef.current!),
+    )
 
     api.renderStarted.on(() => setLoading(true))
     api.renderFinished.on(() => setLoading(false))
@@ -152,7 +156,7 @@ export const Score: FC = () => {
     <div className={wrapStyle} ref={wrapperRef as any}>
       <ScoreOverlay isVisible={isLoading} />
       <div className={contentStyle}>
-        <div className={viewportStyle}>
+        <div className={viewportStyle} ref={scrollRef as any}>
           <div className="at-main" ref={mainRef as any}></div>
         </div>
       </div>
