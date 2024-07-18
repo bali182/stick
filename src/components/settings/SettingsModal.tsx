@@ -2,9 +2,16 @@ import { css, cx } from '@emotion/css'
 import { nanoid } from 'nanoid'
 import { ComponentType, FC, useState } from 'react'
 import { IconType } from 'react-icons'
-import { PiGearFill, PiMusicNoteSimple, PiX } from 'react-icons/pi'
+import {
+  PiGear,
+  PiGearFill,
+  PiMusicNoteSimple,
+  PiWarning,
+  PiX,
+} from 'react-icons/pi'
 import { Modal } from '../Modal'
 import { BaseProgressionSettings } from './BaseProgressionSettings'
+import { StringsSettings } from './StringsSettings'
 
 export type ModalProps = {
   onClose: () => void
@@ -92,7 +99,10 @@ const closeIconStyle = css`
   cursor: pointer;
 `
 
-const contentContainerStyle = css``
+const contentContainerStyle = css`
+  width: 600px;
+  height: 600px;
+`
 
 type ModalEditor = {
   id: string
@@ -105,19 +115,19 @@ const editors: ModalEditor[] = [
   {
     id: nanoid(),
     name: 'Preferences',
-    Icon: PiMusicNoteSimple,
+    Icon: PiGear,
     Component: BaseProgressionSettings,
   },
   {
     id: nanoid(),
     name: 'Tuning',
     Icon: PiMusicNoteSimple,
-    Component: () => <div>Tuning editor</div>,
+    Component: StringsSettings,
   },
   {
     id: nanoid(),
-    name: 'Test',
-    Icon: PiMusicNoteSimple,
+    name: 'Danger Zone',
+    Icon: PiWarning,
     Component: () => <div>Test editor</div>,
   },
 ]

@@ -1,18 +1,14 @@
 import { FC, useMemo } from 'react'
-import Select, {
+import {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import {
-  ChordSymbol,
-  PitchedNote,
-  SelectItem,
-  Transition,
-} from '../../model/types'
+import { ChordSymbol, PitchedNote, Transition } from '../../model/types'
 import { TRANSITIONS } from '../../model/constants'
 import { canTransition } from '../../model/canTransition'
+import { DropdownProxy } from '../DropdownProxy'
 
 export type TransitionEditorProps = {
   transitionId: string | undefined
@@ -57,9 +53,7 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
   IndicatorSeparator: () => null,
 }
 
-const TRANSITION_ITEMS: SelectItem<Transition>[] = TRANSITIONS.map(
-  (value): SelectItem<Transition> => ({ label: value.name, value }),
-)
+const getLabel = ({ name }: Transition) => name
 
 export const TransitionEditor: FC<TransitionEditorProps> = ({
   transitionId,
@@ -68,30 +62,30 @@ export const TransitionEditor: FC<TransitionEditorProps> = ({
   tuning,
   onChange,
 }) => {
-  const nameItem = transitionId
-    ? TRANSITION_ITEMS.find(({ value }) => value.id === transitionId)
+  const transition = transitionId
+    ? TRANSITIONS.find(({ id }) => id === transitionId)
     : undefined
 
-  const availableItems = useMemo<SelectItem<Transition>[]>(() => {
-    return TRANSITION_ITEMS.filter(({ value }) =>
-      canTransition(from, to, tuning, value),
-    )
-  }, [from, to, tuning])
+  const availableTransitions = useMemo<Transition[]>(
+    () => TRANSITIONS.filter((trns) => canTransition(from, to, tuning, trns)),
+    [from, to, tuning],
+  )
 
-  const onTransitionChange = (data: SelectItem<string>): void => {
-    onChange(data.value)
+  const onTransitionChange = (data: Transition): void => {
+    onChange(data.id)
   }
 
   return (
     <div className={chordEditorStyle}>
-      <Select
-        value={nameItem}
-        options={availableItems}
+      <DropdownProxy
+        value={transition}
+        values={availableTransitions}
         placeholder="Transition"
         styles={leftSelectStyles}
         components={overrideComponents}
         autoFocus={true}
         onChange={onTransitionChange as any}
+        getLabel={getLabel}
       />
     </div>
   )

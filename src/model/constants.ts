@@ -80,6 +80,19 @@ const CHORD_TYPES_MAP: Record<ChordType, boolean> = {
   'AUGMENTED-SEVENTH': true,
 }
 
+export const CHORD_TYPES_TO_NAMES: Record<ChordType, string> = {
+  MAJOR: 'Major',
+  'DOMINANT-SEVENTH': 'Dominant 7th',
+  'MAJOR-SEVENTH': 'Major 7th',
+  MINOR: 'Minor',
+  'MINOR-SEVENTH': 'Minor 7th',
+  DIMINISHED: 'Diminished',
+  'HALF-DIMINISHED': 'Half-Diminished',
+  'DIMINISHED-SEVENTH': 'Diminished 7th',
+  AUGMENTED: 'Augmented',
+  'AUGMENTED-SEVENTH': 'Augmented 7th',
+}
+
 export const CHORD_TYPES = Object.keys(CHORD_TYPES_MAP) as ChordType[]
 
 export const CHORMATIC_SCALE_LENGTH = 12

@@ -1,51 +1,28 @@
 import { FC, useEffect, useMemo } from 'react'
-import Select, {
+import {
   CSSObjectWithLabel,
   StylesConfig,
   SelectComponentsConfig,
 } from 'react-select'
 import { css } from '@emotion/css'
-import {
-  ChordSymbol,
-  ChordType,
-  Note,
-  PitchedNote,
-  SelectItem,
-} from '../../model/types'
+import { ChordSymbol, ChordType, Note, PitchedNote } from '../../model/types'
 import { getPossiblePitches } from '../../model/utils'
 import { useSelector } from 'react-redux'
 import { getNoteRange } from '../../model/getNoteRange'
-import { INDEX_BY_NOTE } from '../../model/constants'
+import { CHORD_TYPES_TO_NAMES, INDEX_BY_NOTE } from '../../model/constants'
 import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { DropdownProxy } from '../DropdownProxy'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
   onChange: (chord: ChordSymbol) => void
 }
 
-const NOTES = Object.keys(INDEX_BY_NOTE).map(
-  (note): SelectItem<Note> => ({ label: note, value: note as Note }),
-)
+const NOTES = Object.keys(INDEX_BY_NOTE) as Note[]
 
-const CHORD_TYPES_TO_NAMES: Record<ChordType, string> = {
-  MAJOR: 'Major',
-  'DOMINANT-SEVENTH': 'Dominant 7th',
-  'MAJOR-SEVENTH': 'Major 7th',
-  MINOR: 'Minor',
-  'MINOR-SEVENTH': 'Minor 7th',
-  DIMINISHED: 'Diminished',
-  'HALF-DIMINISHED': 'Half-Diminished',
-  'DIMINISHED-SEVENTH': 'Diminished 7th',
-  AUGMENTED: 'Augmented',
-  'AUGMENTED-SEVENTH': 'Augmented 7th',
-}
+const CHORD_TYPES = Object.keys(CHORD_TYPES_TO_NAMES) as ChordType[]
 
-const CHORD_TYPES = Object.entries(CHORD_TYPES_TO_NAMES).map(
-  ([value, label]): SelectItem<ChordType> => ({
-    label,
-    value: value as ChordType,
-  }),
-)
+const getChordTypeName = (type: ChordType) => CHORD_TYPES_TO_NAMES[type]
 
 const chordEditorStyle = css`
   display: flex;
@@ -107,6 +84,7 @@ const rightSelectStyles: StylesConfig = {
   control: (provided, props): CSSObjectWithLabel => ({
     ...baseProps.control!(provided, props)!,
     ':before': {
+      color: '#fff',
       content: '"/"',
     },
   }),
@@ -124,45 +102,29 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
 export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
   const inputId = `${chord.id}-input`
 
-  const nameItem: SelectItem<Note> = {
-    label: chord.name,
-    value: chord.name,
-  }
-  const typeItem: SelectItem<ChordType> = {
-    label: CHORD_TYPES_TO_NAMES[chord.type],
-    value: chord.type,
-  }
-  const rootItem: SelectItem<PitchedNote> = {
-    label: chord.root,
-    value: chord.root,
-  }
-
   const progression = useSelector(getActiveProgression)
   const range = useMemo(
     () => getNoteRange(progression?.tuning!),
     [progression?.tuning],
   )
-  const possibleRoots = useMemo<SelectItem<PitchedNote>[]>(
-    () =>
-      getPossiblePitches(chord.name, range)
-        .sort()
-        .map((root): SelectItem<PitchedNote> => ({ label: root, value: root })),
+  const possibleRoots = useMemo<PitchedNote[]>(
+    () => getPossiblePitches(chord.name, range).sort(),
     [range, chord.name],
   )
 
-  const onNameChange = (data: SelectItem<Note>): void => {
-    const possiblePitches = getPossiblePitches(data.value, range)
+  const onNameChange = (data: Note): void => {
+    const possiblePitches = getPossiblePitches(data, range)
     onChange({
       ...chord,
-      name: data.value,
+      name: data,
       root: possiblePitches[possiblePitches.length - 1]!,
     })
   }
-  const onTypeChange = (data: SelectItem<ChordType>): void => {
-    onChange({ ...chord, type: data.value })
+  const onTypeChange = (data: ChordType): void => {
+    onChange({ ...chord, type: data })
   }
-  const onRootChange = (data: SelectItem<PitchedNote>): void => {
-    onChange({ ...chord, root: data?.value! })
+  const onRootChange = (data: PitchedNote): void => {
+    onChange({ ...chord, root: data })
   }
 
   useEffect(() => {
@@ -171,28 +133,29 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
 
   return (
     <div className={chordEditorStyle}>
-      <Select
-        inputId={inputId}
-        value={nameItem}
-        options={NOTES}
+      <DropdownProxy
+        id={inputId}
+        value={chord.name}
+        values={NOTES}
         placeholder="Note"
         styles={leftSelectStyles}
         components={overrideComponents}
         autoFocus={true}
         onChange={onNameChange as any}
       />
-      <Select
-        value={typeItem}
-        options={CHORD_TYPES}
+      <DropdownProxy
+        value={chord.type}
+        values={CHORD_TYPES}
         placeholder="Type"
         components={overrideComponents}
         styles={middleSelectStyles}
         onChange={onTypeChange as any}
+        getLabel={getChordTypeName}
       />
-      <Select
-        value={rootItem}
+      <DropdownProxy
+        value={chord.root}
         components={overrideComponents}
-        options={possibleRoots}
+        values={possibleRoots}
         placeholder="Root"
         styles={rightSelectStyles}
         onChange={onRootChange as any}

@@ -54,12 +54,9 @@ const transitionNameBtnStyle = css`
   border-bottom-left-radius: 6px;
   padding: 4px 10px;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
-  display: flex;
   font-size: 1.2em;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   border: none;
   color: #fff;
   background-color: transparent;
