@@ -14,6 +14,9 @@ const chordChartStyle = css`
   padding: 22px 60px;
   overflow: auto;
   max-height: calc(100vh - 100px - 70px);
+  & * {
+    overflow: hidden;
+  }
 `
 
 export const ChordChart: FC = () => {

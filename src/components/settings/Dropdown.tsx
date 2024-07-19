@@ -28,7 +28,6 @@ export const MultiDropdown: FC<
       options={wrappedValues}
       styles={defaultStyles}
       components={defaultComponents}
-      autoFocus={true}
       onChange={_onChange as any}
     />
   )
@@ -55,7 +54,6 @@ export const Dropdown: FC<
       options={wrappedValues}
       styles={defaultStyles}
       components={defaultComponents}
-      autoFocus={true}
       onChange={_onChange as any}
     />
   )

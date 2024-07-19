@@ -11,8 +11,18 @@ import {
   defaultStyles,
   DropdownProxy,
 } from '../DropdownProxy'
-import { NOTES } from '../../model/constants'
-import { PiArrowDownBold, PiArrowUpBold, PiX } from 'react-icons/pi'
+import {
+  DEFAULT_4_STRING_BASS_TUNING,
+  DEFAULT_5_STRING_BASS_TUNING,
+  NOTES,
+} from '../../model/constants'
+import {
+  PiArrowDownBold,
+  PiArrowUpBold,
+  PiMusicNoteSimple,
+  PiPlusBold,
+  PiX,
+} from 'react-icons/pi'
 
 const sectionStyle = css`
   display: flex;
@@ -90,6 +100,22 @@ const buttonStyle = css`
   }
 `
 
+const buttonsContainer = css`
+  display: flex;
+  flex-direction: row;
+`
+
+const leftButtons = css`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`
+const hrStyle = css`
+  border-color: #ffffff66;
+  margin: 20px 0px;
+`
+
 export const TuningSettings: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useSelector(getActiveProgression)!
@@ -120,6 +146,18 @@ export const TuningSettings: FC = () => {
 
   const removeString = (index: number) => () => {
     updateTuning(removeByIndex(tuning, index))
+  }
+
+  const addString = () => {
+    updateTuning([...tuning, 'B0'])
+  }
+
+  const set4StringStandard = () => {
+    updateTuning(DEFAULT_4_STRING_BASS_TUNING)
+  }
+
+  const set5StringStandard = () => {
+    updateTuning(DEFAULT_5_STRING_BASS_TUNING)
   }
 
   return (
@@ -167,6 +205,20 @@ export const TuningSettings: FC = () => {
             </div>
           )
         })}
+      </div>
+      <hr className={hrStyle} />
+      <div className={buttonsContainer}>
+        <div className={leftButtons}>
+          <button className={buttonStyle} onClick={set4StringStandard}>
+            <PiMusicNoteSimple /> E A D G
+          </button>
+          <button className={buttonStyle} onClick={set5StringStandard}>
+            <PiMusicNoteSimple /> B E A D G
+          </button>
+        </div>
+        <button className={buttonStyle} onClick={addString}>
+          <PiPlusBold /> Add String
+        </button>
       </div>
     </div>
   )
