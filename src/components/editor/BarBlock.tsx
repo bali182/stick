@@ -26,7 +26,7 @@ const barBlockStyle = css`
   background-color: #ffffff30;
   transition: box-shadow 0.2s ease, background-color 0.2s ease;
   box-shadow: none;
-  height: 170px;
+  height: 183px;
   &:hover {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
       rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -57,12 +57,12 @@ const addChordOverlayStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 10px;
+  top: 60px;
   right: 10px;
-  bottom: 0px;
+  bottom: 50px;
   border-radius: 10px;
   width: 40px;
-  background: linear-gradient(90deg, #00000000 0%, #00000030 100%); ;
+  /* background: linear-gradient(90deg, #00000000 0%, #00000030 100%); ; */
 `
 
 const emptyBarAddButtonStyle = css`

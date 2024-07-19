@@ -18,6 +18,13 @@ export type TransitionButtonProps = {
   chordId: string
 }
 
+const containerStyle = css`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const transitionButtonStyle = css`
   color: #ffffffdd;
   border-radius: 6px;
@@ -166,7 +173,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
         </ArrowContainer>
       )}
     >
-      <div>
+      <div className={containerStyle}>
         {isNil(transition) && (
           <button className={transitionButtonStyle} onClick={toggle}>
             <div className={walkStyle}>

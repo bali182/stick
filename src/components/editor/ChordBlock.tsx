@@ -26,12 +26,25 @@ export type ChordBlockProps = {
 const chordBlockStyle = css`
   display: flex;
   flex-direction: column;
-  flex: 1;
   align-items: center;
+  flex: 1;
   border-radius: 10px;
-  gap: 10px;
-  padding: 14px;
+  height: 138px;
+  padding: 12px 14px 8px 14px;
+`
+
+const headerStyle = css`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+`
+const contentStyle = css`
   position: relative;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `
 
 const chordNameStyle = css`
@@ -51,9 +64,6 @@ const chordNameStyle = css`
 `
 const trashIconStyle = css`
   cursor: pointer;
-  position: absolute;
-  top: 10px;
-  left: 10px;
   color: #ffffffbb;
   &:hover {
     color: #ffffff;
@@ -112,36 +122,42 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {isHovered ? (
-        <FiTrash2 className={trashIconStyle} onClick={onChordDeleted} />
-      ) : null}
-      <NoteCountPicker chordId={chordId} />
-      <Popover
-        isOpen={isChordPickerOpen}
-        onClickOutside={closeChordPicker}
-        clickOutsideCapture={true}
-        positions={['bottom', 'top', 'right', 'left']}
-        content={({ position, childRect, popoverRect }) => (
-          <ArrowContainer
-            position={position}
-            childRect={childRect}
-            popoverRect={popoverRect}
-            arrowColor="#181818"
-            arrowSize={10}
-          >
-            <div className={popoverStyle}>
-              <ChordEditor chord={chord} onChange={onChordChange} />
-            </div>
-          </ArrowContainer>
-        )}
-      >
-        <div onClick={toggleChordPicker} className={chordNameStyle}>
-          <span>{getChordSymbolName(chord)}</span>
-        </div>
-      </Popover>
-      {nextChord !== undefined ? (
-        <TransitionButton barId={barId} chordId={chordId} />
-      ) : null}
+      <div className={headerStyle}>
+        <FiTrash2
+          className={trashIconStyle}
+          style={{ visibility: isHovered ? 'visible' : 'hidden' }}
+          onClick={onChordDeleted}
+        />
+        <NoteCountPicker chordId={chordId} />
+      </div>
+      <div className={contentStyle}>
+        <Popover
+          isOpen={isChordPickerOpen}
+          onClickOutside={closeChordPicker}
+          clickOutsideCapture={true}
+          positions={['bottom', 'top', 'right', 'left']}
+          content={({ position, childRect, popoverRect }) => (
+            <ArrowContainer
+              position={position}
+              childRect={childRect}
+              popoverRect={popoverRect}
+              arrowColor="#181818"
+              arrowSize={10}
+            >
+              <div className={popoverStyle}>
+                <ChordEditor chord={chord} onChange={onChordChange} />
+              </div>
+            </ArrowContainer>
+          )}
+        >
+          <div onClick={toggleChordPicker} className={chordNameStyle}>
+            <span>{getChordSymbolName(chord)}</span>
+          </div>
+        </Popover>
+        {nextChord !== undefined ? (
+          <TransitionButton barId={barId} chordId={chordId} />
+        ) : null}
+      </div>
     </div>
   )
 }

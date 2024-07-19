@@ -14,11 +14,7 @@ export type NoteCountPickerProps = {
 
 const noteCountPickerStyle = css`
   cursor: pointer;
-  position: absolute;
-  top: 8px;
-  right: 14px;
   color: #ffffffbb;
-  z-index: 1;
   &:hover {
     color: #ffffff;
   }
@@ -28,7 +24,7 @@ const popoverStyle = css`
   background-color: #181818;
   border-radius: 12px;
   width: 280px;
-  height: 160px;
+  height: 140px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
