@@ -11,7 +11,7 @@ import {
 } from 'react-icons/pi'
 import { Modal } from '../Modal'
 import { BaseProgressionSettings } from './BaseProgressionSettings'
-import { StringsSettings } from './StringsSettings'
+import { TuningSettings } from './TuningSettings'
 
 export type ModalProps = {
   onClose: () => void
@@ -122,7 +122,7 @@ const editors: ModalEditor[] = [
     id: nanoid(),
     name: 'Tuning',
     Icon: PiMusicNoteSimple,
-    Component: StringsSettings,
+    Component: TuningSettings,
   },
   {
     id: nanoid(),

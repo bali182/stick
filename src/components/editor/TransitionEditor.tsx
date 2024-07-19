@@ -28,7 +28,7 @@ const fontChangeProps = (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
   fontSize: '1.2em',
 })
 
-const baseProps: StylesConfig = {
+const styles: StylesConfig = {
   input: fontChangeProps,
   singleValue: fontChangeProps,
   menuList: fontChangeProps,
@@ -38,10 +38,6 @@ const baseProps: StylesConfig = {
     borderWidth: '0px',
     boxShadow: 'none',
   }),
-}
-
-const leftSelectStyles: StylesConfig = {
-  ...baseProps,
   menu: (provided): CSSObjectWithLabel => ({
     ...provided,
     minWidth: '180px',
@@ -81,7 +77,7 @@ export const TransitionEditor: FC<TransitionEditorProps> = ({
         value={transition}
         values={availableTransitions}
         placeholder="Transition"
-        styles={leftSelectStyles}
+        styles={styles}
         components={overrideComponents}
         autoFocus={true}
         onChange={onTransitionChange as any}

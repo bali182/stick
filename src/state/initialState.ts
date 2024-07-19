@@ -1,4 +1,4 @@
-import { TRANSITIONS } from '../model/constants'
+import { DEFAULT_BASS_TUNING, TRANSITIONS } from '../model/constants'
 import { AppState } from './types'
 
 export const initialState: AppState = {
@@ -15,7 +15,7 @@ export const initialState: AppState = {
       id: 'default',
       name: 'Default',
       noteCount: 4,
-      tuning: ['G2', 'D2', 'A1', 'E1'],
+      tuning: DEFAULT_BASS_TUNING,
       bars: [
         'default-first-bar',
         'default-second-bar',

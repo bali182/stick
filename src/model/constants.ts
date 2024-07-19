@@ -10,6 +10,7 @@ import {
 import { getPitchedNoteParts } from './getPitchedNoteParts'
 import { TRANSITION_CATEGORIES } from '../../generated/transitions'
 
+export const DEFAULT_BASS_TUNING: PitchedNote[] = ['G2', 'D2', 'A1', 'E1']
 export const GUITAR_TUNING: PitchedNote[] = ['E5', 'B4', 'G4', 'D4', 'A3', 'E3']
 
 export const INDEX_BY_NOTE: Record<Note, NoteIndex> = {

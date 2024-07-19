@@ -1,5 +1,9 @@
 import { useMemo } from 'react'
-import Select, { SelectComponentsConfig, StylesConfig } from 'react-select'
+import Select, {
+  CSSObjectWithLabel,
+  SelectComponentsConfig,
+  StylesConfig,
+} from 'react-select'
 import { SelectItem } from '../model/types'
 
 export type DropdownProxyProps<T> = {
@@ -8,8 +12,8 @@ export type DropdownProxyProps<T> = {
   values: T[]
   placeholder?: string
   autoFocus?: boolean
-  styles: StylesConfig
-  components: SelectComponentsConfig<any, any, any>
+  styles?: StylesConfig
+  components?: SelectComponentsConfig<any, any, any>
   onChange: (value: T) => void
   getLabel?: (value: T) => string
 }
@@ -57,4 +61,53 @@ export function DropdownProxy<T>({
       onChange={_onChange as any}
     />
   )
+}
+
+const fontChangeProps = (provided: CSSObjectWithLabel): CSSObjectWithLabel => ({
+  ...provided,
+  fontSize: '1em',
+  color: '#ffffff',
+})
+
+export const defaultStyles: StylesConfig = {
+  input: fontChangeProps,
+  singleValue: fontChangeProps,
+  menuList: (provided): CSSObjectWithLabel => ({
+    ...fontChangeProps(provided),
+    backgroundColor: '#181818',
+  }),
+  placeholder: fontChangeProps,
+  control: (provided): CSSObjectWithLabel => ({
+    ...provided,
+    borderWidth: '0px',
+    boxShadow: 'none',
+    padding: '3px 6px',
+    borderRadius: '6px',
+    backgroundColor: '#ffffff10',
+    ':hover': {
+      backgroundColor: '#ffffff30',
+    },
+    ':focus': {
+      backgroundColor: '#ffffff50',
+    },
+  }),
+  option: (provided, { isSelected, isFocused }) => ({
+    ...provided,
+    backgroundColor: isSelected
+      ? '#ffffff40'
+      : isFocused
+      ? '#ffffff30'
+      : 'transparent',
+    ':active': {
+      backgroundColor: '#ffffff30',
+    },
+  }),
+  menu: (provided): CSSObjectWithLabel => ({
+    ...provided,
+    minWidth: '60px',
+  }),
+}
+
+export const defaultComponents: SelectComponentsConfig<any, any, any> = {
+  IndicatorSeparator: () => null,
 }

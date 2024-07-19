@@ -73,3 +73,41 @@ export function transpose(n: Note, a: number, ac: Accidental = '#'): Note {
 export function lerp(start: number, end: number, ratio: number): number {
   return Math.floor((1 - ratio) * start + ratio * end)
 }
+
+export function moveUp<T>(arr: T[], index: number): T[] {
+  // If the index is 0 or invalid, return a copy of the original array
+  if (index <= 0 || index >= arr.length) {
+    return [...arr]
+  }
+
+  // Create a copy of the original array
+  const newArr = [...arr]
+
+  // Swap the elements using a temporary variable
+  const temp = newArr[index]!
+  newArr[index] = newArr[index - 1]!
+  newArr[index - 1] = temp
+
+  return newArr
+}
+
+export function removeByIndex<T>(arr: T[], index: number): T[] {
+  return arr.slice(0, index).concat(arr.slice(index + 1))
+}
+
+export function moveDown<T>(arr: T[], index: number): T[] {
+  // If the index is invalid or the last element, return a copy of the original array
+  if (index < 0 || index >= arr.length - 1) {
+    return [...arr]
+  }
+
+  // Create a copy of the original array
+  const newArr = [...arr]
+
+  // Swap the elements using a temporary variable
+  const temp = newArr[index]!
+  newArr[index] = newArr[index + 1]!
+  newArr[index + 1] = temp
+
+  return newArr
+}
