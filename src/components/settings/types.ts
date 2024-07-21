@@ -4,3 +4,7 @@ export type EditorProps<T, D = void> = {
   data?: D
   onChange: (value: T) => void
 }
+
+export type PageProps = {
+  onClose: () => void
+}

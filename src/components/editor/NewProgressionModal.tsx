@@ -13,6 +13,7 @@ import { emptyTemplate } from '../../state/templates/emptyTemplate'
 import { AppDispatch } from '../../state/store'
 import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
 import { configSlice } from '../../state/config'
+import { aMinorBlues } from '../../state/templates/aMinorBlues'
 
 export type NewProgressionModalProps = {
   onClose: () => void
@@ -153,16 +154,18 @@ const templates: TemplateDescriptor[] = [
       withUniqueIds(emptyTemplate, name),
   },
   {
-    name: 'Pop song',
+    name: 'A Minor Blues',
     Icon: PiMusicNotesLight,
-    description: 'Start with a basic pop chord progression TODO find song.',
+    description:
+      'Simple minor blues progression, focusing on i, iv and v chords.',
     factory: (name: string): ProgressionTemplate =>
-      withUniqueIds(autumnLeavesTemplate, name),
+      withUniqueIds(aMinorBlues, name),
   },
   {
-    name: 'Jazz standard',
+    name: 'Autumn Leaves',
     Icon: PiMusicNotesLight,
-    description: 'Start with the popular standard called, Autumn Leaves.',
+    description:
+      'Autumn Leaves in G minor. For practicing both the major and minor ii V I',
     factory: (name: string): ProgressionTemplate =>
       withUniqueIds(autumnLeavesTemplate, name),
   },

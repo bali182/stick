@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes } from 'react'
+import { FC } from 'react'
 import { InputSection } from './InputSection'
 import { TextInput } from './TextInput'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,7 +7,8 @@ import { getActiveProgression } from '../../state/selectors/getActiveProgression
 import { isNil } from '../../model/isNil'
 import { progressionsSlice } from '../../state/progressions'
 import { Dropdown, MultiDropdown } from './Dropdown'
-import { Tag } from '../../model/types'
+import { ChordProgression, Tag } from '../../model/types'
+import { PageProps } from './types'
 
 const TAGS_MAP: Record<Tag, boolean> = {
   CHROMATIC_APPROACH: true,
@@ -22,41 +23,27 @@ const notesData = {
   values: ['1', '2', '4'],
 }
 
-export const BaseProgressionSettings: FC = () => {
+export const BasePage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useSelector(getActiveProgression)
 
-  const onNameChange = (name: string) => {
+  function updateProgression(prog: ChordProgression): void {
     if (isNil(progression)) {
       return
     }
-    dispatch(
-      progressionsSlice.actions.updateProgression({
-        progression: { ...progression, name },
-      }),
-    )
+    dispatch(progressionsSlice.actions.updateProgression({ progression: prog }))
+  }
+
+  const onNameChange = (name: string) => {
+    updateProgression({ ...progression!, name })
   }
 
   const onNoteCountChange = (amount: string) => {
-    if (isNil(progression)) {
-      return
-    }
-    dispatch(
-      progressionsSlice.actions.updateProgression({
-        progression: { ...progression, noteCount: parseInt(amount) },
-      }),
-    )
+    updateProgression({ ...progression!, noteCount: parseInt(amount) })
   }
 
   const onTagsChange = (tags: string[]) => {
-    if (isNil(progression)) {
-      return
-    }
-    dispatch(
-      progressionsSlice.actions.updateProgression({
-        progression: { ...progression, tags: tags as Tag[] },
-      }),
-    )
+    updateProgression({ ...progression!, tags: tags as Tag[] })
   }
 
   return (

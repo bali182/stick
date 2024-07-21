@@ -116,7 +116,7 @@ const hrStyle = css`
   margin: 20px 0px;
 `
 
-export const TuningSettings: FC = () => {
+export const TuningPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useSelector(getActiveProgression)!
   const tuning = progression?.tuning!

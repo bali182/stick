@@ -10,12 +10,10 @@ import {
   PiX,
 } from 'react-icons/pi'
 import { Modal } from '../Modal'
-import { BaseProgressionSettings } from './BaseProgressionSettings'
-import { TuningSettings } from './TuningSettings'
-
-export type ModalProps = {
-  onClose: () => void
-}
+import { BasePage } from './BasePage'
+import { TuningPage } from './TuningPage'
+import { DangerPage } from './DangerPage'
+import { PageProps } from './types'
 
 const menuStyle = css`
   border-top-left-radius: 14px;
@@ -108,7 +106,7 @@ type ModalEditor = {
   id: string
   name: string
   Icon: IconType
-  Component: ComponentType<{}>
+  Component: ComponentType<PageProps>
 }
 
 const editors: ModalEditor[] = [
@@ -116,23 +114,23 @@ const editors: ModalEditor[] = [
     id: nanoid(),
     name: 'Preferences',
     Icon: PiGear,
-    Component: BaseProgressionSettings,
+    Component: BasePage,
   },
   {
     id: nanoid(),
     name: 'Tuning',
     Icon: PiMusicNoteSimple,
-    Component: TuningSettings,
+    Component: TuningPage,
   },
   {
     id: nanoid(),
     name: 'Danger Zone',
     Icon: PiWarning,
-    Component: () => <div>Test editor</div>,
+    Component: DangerPage,
   },
 ]
 
-export const SettingsModal: FC<ModalProps> = ({ onClose }) => {
+export const SettingsModal: FC<PageProps> = ({ onClose }) => {
   const [activeEditor, setActiveEditor] = useState<ModalEditor>(editors[0]!)
   return (
     <Modal onBackdropClick={onClose}>
@@ -164,7 +162,7 @@ export const SettingsModal: FC<ModalProps> = ({ onClose }) => {
           <PiX className={closeIconStyle} onClick={onClose} />
         </header>
         <div className={contentContainerStyle}>
-          {<activeEditor.Component />}
+          {<activeEditor.Component onClose={onClose} />}
         </div>
       </div>
     </Modal>
