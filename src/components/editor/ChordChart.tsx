@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { AddBarBlock } from './AddBarBlock'
 import { isNil } from '../../model/isNil'
 import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { useActiveProgression } from '../../useActiveProgression'
 
 const chordChartStyle = css`
   display: grid;
@@ -21,6 +22,7 @@ const chordChartStyle = css`
 
 export const ChordChart: FC = () => {
   const progression = useSelector(getActiveProgression)
+  const p = useActiveProgression()
 
   if (isNil(progression)) {
     return null

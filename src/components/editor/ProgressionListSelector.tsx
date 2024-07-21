@@ -45,6 +45,7 @@ const getItemLabel = (item: ChordProgression) => item.name
 const matches = (item: ChordProgression, search: string) =>
   item.name.toLowerCase().includes(search.toLowerCase())
 const noHitsLabel = 'No progressions found! Please create one!'
+const getHyperLink = (item: ChordProgression) => `#/${item.id}/editor`
 
 export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
   setOpen,
@@ -52,12 +53,7 @@ export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
 }) => {
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
 
-  const dispatch = useDispatch<AppDispatch>()
-
-  const onItemClick = ({ id }: ChordProgression) => {
-    dispatch(configSlice.actions.updateConfig({ progressionId: id }))
-    setOpen(false)
-  }
+  const onItemClick = () => setOpen(false)
 
   const onCreate = () => {
     setOpen(false)
@@ -77,6 +73,7 @@ export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
       getCategoryLabel={getCategoryLabel}
       getItemKey={getItemKey}
       getItemLabel={getItemLabel}
+      getHyperLink={getHyperLink}
       matches={matches}
       noHitsLabel={noHitsLabel}
     />

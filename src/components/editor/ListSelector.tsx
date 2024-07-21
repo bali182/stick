@@ -19,6 +19,7 @@ export type ListSelectorProps<C, I> = {
   getCategoryIcon?: (category: C) => IconType
   getItemKey: (item: I) => string
   getItemLabel: (item: I) => string
+  getHyperLink?: (item: I) => string
   getItemIcon?: (item: I) => IconType
   matches: (item: I, search: string) => boolean
 }
@@ -133,6 +134,7 @@ export function ListSelector<C, I>({
   getItemKey,
   getItemLabel,
   getItemIcon,
+  getHyperLink,
   onItemClick,
   onCreate,
   matches,
@@ -185,15 +187,28 @@ export function ListSelector<C, I>({
               </div>
               {items.map((item) => {
                 const ItemIcon = isNil(getItemIcon) ? null : getItemIcon(item)
+                const key = getItemKey(item)
+                const label = getItemLabel(item)
+                const click = onClick(item)
+                if (isNil(getHyperLink)) {
+                  return (
+                    <div key={key} className={itemStyle} onClick={click}>
+                      {ItemIcon && <ItemIcon />}
+                      {label}
+                    </div>
+                  )
+                }
+                const link = getHyperLink(item)
                 return (
-                  <div
-                    key={getItemKey(item)}
+                  <a
+                    key={key}
                     className={itemStyle}
-                    onClick={onClick(item)}
+                    href={link}
+                    onClick={click}
                   >
                     {ItemIcon && <ItemIcon />}
-                    {getItemLabel(item)}
-                  </div>
+                    {label}
+                  </a>
                 )
               })}
             </Fragment>

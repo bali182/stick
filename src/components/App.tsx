@@ -18,8 +18,8 @@ export const App: FC = () => {
       <Routes>
         <Route>
           <Route path="/" Component={Editor} />
-          <Route path="/editor" Component={Editor} />
-          <Route path="/score" Component={ScoreView} />
+          <Route path="/:progressionId/editor" Component={Editor} />
+          <Route path="/:progressionId/score" Component={ScoreView} />
         </Route>
       </Routes>
     </div>
