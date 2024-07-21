@@ -111,3 +111,16 @@ export function moveDown<T>(arr: T[], index: number): T[] {
 
   return newArr
 }
+
+export function getUniqueName(
+  name: string,
+  names: Set<string>,
+  glue: string = '-',
+): string {
+  let uniqueName = name
+  let num = 1
+  while (names.has(uniqueName)) {
+    uniqueName = `${name}${glue}${num++}`
+  }
+  return uniqueName
+}

@@ -3,7 +3,7 @@ import { Modal } from '../Modal'
 import { css, cx } from '@emotion/css'
 import { PiFileLight, PiMusicNotesLight, PiPlusBold, PiX } from 'react-icons/pi'
 import { IconType } from 'react-icons'
-import { ProgressionTemplate } from '../../state/types'
+import { AppState, ProgressionTemplate } from '../../state/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { progressionsSlice } from '../../state/progressions'
 import { isNil } from '../../model/isNil'
@@ -14,6 +14,7 @@ import { AppDispatch } from '../../state/store'
 import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
 import { configSlice } from '../../state/config'
 import { aMinorBlues } from '../../state/templates/aMinorBlues'
+import { getUniqueName } from '../../model/utils'
 
 export type NewProgressionModalProps = {
   onClose: () => void
@@ -142,7 +143,7 @@ type TemplateDescriptor = {
   name: string
   Icon: IconType
   description: string
-  factory: (name: string) => ProgressionTemplate
+  factory: (name: string, state: AppState) => ProgressionTemplate
 }
 
 const templates: TemplateDescriptor[] = [
@@ -150,24 +151,24 @@ const templates: TemplateDescriptor[] = [
     name: 'From scratch',
     Icon: PiFileLight,
     description: 'Create your own progression from scratch.',
-    factory: (name: string): ProgressionTemplate =>
-      withUniqueIds(emptyTemplate, name),
+    factory: (name: string, state: AppState): ProgressionTemplate =>
+      withUniqueIds(state, emptyTemplate, name),
   },
   {
     name: 'A Minor Blues',
     Icon: PiMusicNotesLight,
     description:
       'Simple minor blues progression, focusing on i, iv and v chords.',
-    factory: (name: string): ProgressionTemplate =>
-      withUniqueIds(aMinorBlues, name),
+    factory: (name: string, state: AppState): ProgressionTemplate =>
+      withUniqueIds(state, aMinorBlues, name),
   },
   {
     name: 'Autumn Leaves',
     Icon: PiMusicNotesLight,
     description:
       'Autumn Leaves in G minor. For practicing both the major and minor ii V I',
-    factory: (name: string): ProgressionTemplate =>
-      withUniqueIds(autumnLeavesTemplate, name),
+    factory: (name: string, state: AppState): ProgressionTemplate =>
+      withUniqueIds(state, autumnLeavesTemplate, name),
   },
 ]
 
@@ -178,17 +179,25 @@ export const NewProgressionModal: FC<NewProgressionModalProps> = ({
   const [name, setName] = useState('')
   const [template, setTemplate] = useState<TemplateDescriptor>()
   const [useAutoName, setUseAutoName] = useState(true)
+  const appState = useSelector<AppState, AppState>((state) => state)
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
   const autoName = useMemo(() => {
     const baseName = isNil(template) ? 'Progression' : template.name
-    return `${baseName} ${progressions.length + 1}`
+    return getUniqueName(
+      baseName,
+      new Set(progressions.map(({ name }) => name)),
+      ' ',
+    )
   }, [template, progressions])
   const dispatch = useDispatch<AppDispatch>()
   const onCreateProject = () => {
     if (isNil(template)) {
       return
     }
-    const projectTemplate = template.factory(useAutoName ? autoName : name)
+    const projectTemplate = template.factory(
+      useAutoName ? autoName : name,
+      appState,
+    )
     const action: CreateProgressionFromTemplateAction = {
       type: 'global/createProgressionFromTemplate',
       payload: { template: projectTemplate },

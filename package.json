@@ -20,6 +20,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@reduxjs/toolkit": "2.2.5",
+    "@types/slug": "^5.0.8",
     "nanoid": "5.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -29,6 +30,7 @@
     "react-router-dom": "^6.24.0",
     "react-select": "5.8.0",
     "react-tiny-popover": "8.0.4",
+    "slug": "^9.1.0",
     "tonal": "6.0.1",
     "typesafe-actions": "^5.1.0",
     "uniqolor": "1.1.1"
