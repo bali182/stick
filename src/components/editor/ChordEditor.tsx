@@ -10,8 +10,8 @@ import { getPossiblePitches } from '../../model/utils'
 import { useSelector } from 'react-redux'
 import { getNoteRange } from '../../model/getNoteRange'
 import { CHORD_TYPES_TO_NAMES, INDEX_BY_NOTE } from '../../model/constants'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { DropdownProxy } from '../DropdownProxy'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type ChordEditorProps = {
   chord: ChordSymbol
@@ -102,7 +102,7 @@ const overrideComponents: SelectComponentsConfig<any, any, any> = {
 export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
   const inputId = `${chord.id}-input`
 
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
   const range = useMemo(
     () => getNoteRange(progression?.tuning!),
     [progression?.tuning],

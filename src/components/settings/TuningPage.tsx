@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
 import { PitchedNote } from '../../model/types'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { progressionsSlice } from '../../state/progressions'
 import { lerp, moveDown, moveUp, removeByIndex } from '../../model/utils'
 import {
@@ -23,6 +22,7 @@ import {
   PiPlusBold,
   PiX,
 } from 'react-icons/pi'
+import { useActiveProgression } from '../../useActiveProgression'
 
 const sectionStyle = css`
   display: flex;
@@ -118,7 +118,7 @@ const hrStyle = css`
 
 export const TuningPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const progression = useSelector(getActiveProgression)!
+  const progression = useActiveProgression()!
   const tuning = progression?.tuning!
 
   function updateTuning(tuning: PitchedNote[]) {

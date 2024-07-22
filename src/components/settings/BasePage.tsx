@@ -3,12 +3,12 @@ import { InputSection } from './InputSection'
 import { TextInput } from './TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { isNil } from '../../model/isNil'
 import { progressionsSlice } from '../../state/progressions'
 import { Dropdown, MultiDropdown } from './Dropdown'
 import { ChordProgression, Tag } from '../../model/types'
 import { PageProps } from './types'
+import { useActiveProgression } from '../../useActiveProgression'
 
 const TAGS_MAP: Record<Tag, boolean> = {
   CHROMATIC_APPROACH: true,
@@ -25,7 +25,7 @@ const notesData = {
 
 export const BasePage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
 
   function updateProgression(prog: ChordProgression): void {
     if (isNil(progression)) {

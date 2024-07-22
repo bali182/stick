@@ -1,9 +1,9 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { Route, Routes } from 'react-router'
-import { Toolbar } from './Toolbar'
 import { Editor } from './editor/Editor'
 import { ScoreView } from './score/ScoreView'
+import { Home } from './home/Home'
 
 const appStyle = css`
   width: 100%;
@@ -14,12 +14,11 @@ const appStyle = css`
 export const App: FC = () => {
   return (
     <div className={appStyle}>
-      <Toolbar />
       <Routes>
-        <Route>
-          <Route path="/" Component={Editor} />
-          <Route path="/:progressionId/editor" Component={Editor} />
-          <Route path="/:progressionId/score" Component={ScoreView} />
+        <Route path="/" Component={Home} />
+        <Route path="/:progressionId">
+          <Route path="score" Component={ScoreView} />
+          <Route path="editor" Component={Editor} />
         </Route>
       </Routes>
     </div>

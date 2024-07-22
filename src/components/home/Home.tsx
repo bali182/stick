@@ -1,27 +1,19 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Modal } from '../Modal'
 import { css, cx } from '@emotion/css'
-import { PiFileLight, PiMusicNotesLight, PiPlusBold, PiX } from 'react-icons/pi'
-import { IconType } from 'react-icons'
-import { AppState, ProgressionTemplate } from '../../state/types'
+import { PiPlusBold, PiX } from 'react-icons/pi'
+import { AppState } from '../../state/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { progressionsSlice } from '../../state/progressions'
 import { isNil } from '../../model/isNil'
-import { withUniqueIds } from '../../state/templates/withUniqueIds'
-import { autumnLeavesTemplate } from '../../state/templates/autumnLeavesTemplate'
-import { emptyTemplate } from '../../state/templates/emptyTemplate'
 import { AppDispatch } from '../../state/store'
 import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
-import { configSlice } from '../../state/config'
-import { aMinorBlues } from '../../state/templates/aMinorBlues'
 import { getUniqueName } from '../../model/utils'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
-
-export type NewProgressionModalProps = {
-  onClose: () => void
-  canClose: boolean
-}
+import { TemplateDescriptor } from './types'
+import { templates } from './templates'
+import { Toolbar } from '../Toolbar'
 
 const contentContainerStyle = css`
   display: flex;
@@ -141,43 +133,7 @@ const buttonStyle = css`
   }
 `
 
-type TemplateDescriptor = {
-  name: string
-  Icon: IconType
-  description: string
-  factory: (name: string, state: AppState) => ProgressionTemplate
-}
-
-const templates: TemplateDescriptor[] = [
-  {
-    name: 'From scratch',
-    Icon: PiFileLight,
-    description: 'Create your own progression from scratch.',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, emptyTemplate, name),
-  },
-  {
-    name: 'A Minor Blues',
-    Icon: PiMusicNotesLight,
-    description:
-      'Simple minor blues progression, focusing on i, iv and v chords.',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, aMinorBlues, name),
-  },
-  {
-    name: 'Autumn Leaves',
-    Icon: PiMusicNotesLight,
-    description:
-      'Autumn Leaves in G minor. For practicing both the major and minor ii V I',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, autumnLeavesTemplate, name),
-  },
-]
-
-export const NewProgressionModal: FC<NewProgressionModalProps> = ({
-  onClose,
-  canClose,
-}) => {
+export const Home: FC = () => {
   const [name, setName] = useState('')
   const [template, setTemplate] = useState<TemplateDescriptor>()
   const [useAutoName, setUseAutoName] = useState(true)
@@ -207,18 +163,14 @@ export const NewProgressionModal: FC<NewProgressionModalProps> = ({
     }
     dispatch(action)
     navigate(Paths.editor(projectTemplate.progression.id))
-
-    if (canClose) {
-      onClose()
-    }
   }
 
   return (
-    <Modal onBackdropClick={onClose}>
+    <>
+      <Toolbar />
       <div className={contentContainerStyle}>
         <header className={headerStyle}>
           <span>New progression</span>
-          {canClose && <PiX className={closeIconStyle} onClick={onClose} />}
         </header>
         <div className={cardsContainerStyle}>
           {templates.map((t) => {
@@ -264,6 +216,6 @@ export const NewProgressionModal: FC<NewProgressionModalProps> = ({
           </button>
         </div>
       </div>
-    </Modal>
+    </>
   )
 }

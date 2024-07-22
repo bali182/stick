@@ -6,6 +6,9 @@ import { NoScoreView } from './NoScoreView'
 import { AppState } from '../../state/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { ProgressionsStatus } from '../../model/types'
+import { useActiveProgression } from '../../useActiveProgression'
+import { Toolbar } from '../Toolbar'
+import { Navigation } from '../Navigation'
 
 const scoreViewStyle = css`
   height: 100%;
@@ -15,13 +18,19 @@ const scoreViewStyle = css`
 `
 
 export const ScoreView: FC = () => {
+  const progression = useActiveProgression()
   const { canGenerateScore } = useSelector<AppState, ProgressionsStatus>(
-    (state) => getProgressionStatus(state),
+    (state) => getProgressionStatus(state, progression!.id),
   )
   return (
-    <div className={scoreViewStyle}>
-      {!canGenerateScore ? <NoScoreView /> : null}
-      {canGenerateScore ? <Score /> : null}
-    </div>
+    <>
+      <Toolbar>
+        <Navigation />
+      </Toolbar>
+      <div className={scoreViewStyle}>
+        {!canGenerateScore ? <NoScoreView /> : null}
+        {canGenerateScore ? <Score /> : null}
+      </div>
+    </>
   )
 }

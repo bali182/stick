@@ -10,7 +10,7 @@ import { chordsSlice } from '../../state/chords'
 import { TRANSITION_MAP } from '../../model/constants'
 import { isNil } from '../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
-import { AppState, ConfigState } from '../../state/types'
+import { AppState } from '../../state/types'
 import { useOnEscape } from './useOnEscape'
 
 export type TransitionButtonProps = {

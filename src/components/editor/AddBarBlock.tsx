@@ -7,7 +7,7 @@ import { FiPlusSquare } from 'react-icons/fi'
 import { nanoid } from 'nanoid'
 import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { useActiveProgression } from '../../useActiveProgression'
 
 const barBlockStyle = css`
   display: flex;
@@ -52,7 +52,7 @@ const addButtonStyle = css`
 const addBarIconStyle = css``
 
 export const AddBarBlock: FC = () => {
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
   const dispatch = useDispatch<AppDispatch>()
 
   const onAddBar = () => {

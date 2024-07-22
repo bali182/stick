@@ -20,6 +20,7 @@ import {
 import { TbPiano } from 'react-icons/tb'
 import { GiGuitarBassHead } from 'react-icons/gi'
 import { PiMetronomeBold } from 'react-icons/pi'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type ScoreProps = {
   progressionId: string
@@ -89,11 +90,9 @@ export const Score: FC = () => {
 
   const [isLoading, setLoading] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
+  const progression = useActiveProgression()
   const tex = useSelector<AppState, string>((state) =>
-    getAlphaTex(state, progressionId!),
+    getAlphaTex(state, progression!.id),
   )
   const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useSelector<
     AppState,

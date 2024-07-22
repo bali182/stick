@@ -4,8 +4,8 @@ import { isNil } from '../../model/isNil'
 import { randomElement } from '../../model/randomElement'
 import { ChordSymbol } from '../../model/types'
 import { FillTransitionsAction } from '../actionTypes'
+import { progressionsSlice } from '../progressions'
 import { chordsIterator } from '../selectors/chordsIterator'
-import { getActiveProgression } from '../selectors/getActiveProgression'
 import { AppState } from '../types'
 
 export function fillTransitionsReducer(
@@ -13,7 +13,10 @@ export function fillTransitionsReducer(
   action: FillTransitionsAction,
 ): AppState {
   try {
-    const progression = getActiveProgression(state)
+    const progression = progressionsSlice.selectors.getProgression(
+      state,
+      action.payload.progressionId,
+    )
     const tuning = progression?.tuning
     if (isNil(progression) || isNil(tuning)) {
       return state

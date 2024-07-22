@@ -11,7 +11,7 @@ import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
 import { AppDispatch } from '../../state/store'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type BarBlockProps = {
   barId: string
@@ -113,7 +113,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   const bar = useSelector<AppState, Bar | undefined>((state) =>
     barsSlice.selectors.getBar(state, barId),
   )
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
   const firstChord = useSelector<AppState, ChordSymbol | undefined>((state) => {
     if (bar?.chords?.length !== 1) {
       return undefined

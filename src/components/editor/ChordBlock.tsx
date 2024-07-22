@@ -9,14 +9,14 @@ import { FiTrash2 } from 'react-icons/fi'
 import { getNextChord } from '../../state/selectors/getNextChord'
 import { TransitionButton } from './TransitionButton'
 import { isNil } from '../../model/isNil'
-import { AppState, ConfigState } from '../../state/types'
+import { AppState } from '../../state/types'
 import { chordsSlice } from '../../state/chords'
 import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
 import { NOTE_COLORS } from '../colors'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { NoteCountPicker } from './NoteCountPicker'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type ChordBlockProps = {
   barId: string
@@ -78,7 +78,7 @@ const popoverStyle = css`
 `
 
 export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )

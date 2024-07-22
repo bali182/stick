@@ -5,7 +5,6 @@ export type ChordSymbolsState = Record<string, ChordSymbol>
 export type ProgressionsState = Record<string, ChordProgression>
 
 export type ConfigState = {
-  progressionId: string | undefined
   masterVolume: number
   metronomeVolume: number
   bassVolume: number

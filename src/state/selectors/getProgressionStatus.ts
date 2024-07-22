@@ -49,8 +49,10 @@ const ALL_NEGATIVE_RESULT: ProgressionsStatus = {
   canClearTransitions: false,
 }
 
-export function getProgressionStatus(state: AppState): ProgressionsStatus {
-  const { progressionId } = state.config
+export function getProgressionStatus(
+  state: AppState,
+  progressionId: string,
+): ProgressionsStatus {
   if (isNil(progressionId)) {
     return ALL_NEGATIVE_RESULT
   }

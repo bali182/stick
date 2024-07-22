@@ -1,12 +1,12 @@
 import { FC, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { AppState } from '../../state/types'
 import { ChordSymbol } from '../../model/types'
 import { chordsSlice } from '../../state/chords'
 import { css } from '@emotion/css'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { NoteCountSelectorList } from './NoteCountSelectorList'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type NoteCountPickerProps = {
   chordId: string
@@ -34,7 +34,7 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({ chordId }) => {
   const onClose = () => setOpen(false)
   const onOpen = () => setOpen(true)
 
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )

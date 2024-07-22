@@ -15,6 +15,7 @@ import { filterCategoriesByTransitions } from '../../model/filterCategoriesByTra
 import { AppState, ConfigState } from '../../state/types'
 import { progressionsSlice } from '../../state/progressions'
 import { ListSelector } from './ListSelector'
+import { useActiveProgression } from '../../useActiveProgression'
 
 export type TransitionSelectorListProps = {
   isOpen: boolean
@@ -38,19 +39,13 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   chordId,
   barId,
 }) => {
-  const { progressionId } = useSelector<AppState, ConfigState>(
-    (state) => state.config,
-  )
-  const progression = useSelector<AppState, ChordProgression>(
-    (state) =>
-      progressionsSlice.selectors.getProgression(state, progressionId!)!,
-  )
+  const progression = useActiveProgression()!
   const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
     chordsSlice.selectors.getChord(state, chordId),
   )!
   const tuning = progression.tuning
   const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progressionId!, barId, chordId),
+    getNextChord(state, progression.id!, barId, chordId),
   )!
   const categories = useMemo<TransitionCategory[]>(() => {
     return filterCategoriesByTransitions(TRANSITION_CATEGORIES, (transition) =>

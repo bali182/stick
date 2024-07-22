@@ -13,12 +13,10 @@ import { ChordProgression, ProgressionsStatus } from '../../model/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
-import { configSlice } from '../../state/config'
-import { progressionsSlice } from '../../state/progressions'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { ProgressionSelector } from './ProgressionListSelector'
 import { NewProgressionModal } from './NewProgressionModal'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
+import { useActiveProgression } from '../../useActiveProgression'
 
 const toolbarStyle = css`
   display: flex;
@@ -81,12 +79,12 @@ export const ProjectToolBar: FC = () => {
   const [isProgressionsOpen, setProgressionsOpen] = useState(false)
   const [isProgressionModalOpen, setProgressionModalOpen] = useState(false)
 
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
 
   const { canAutoFillTransitions, canClearTransitions } = useSelector<
     AppState,
     ProgressionsStatus
-  >((state) => getProgressionStatus(state))
+  >((state) => getProgressionStatus(state, progression!.id))
 
   const dispatch = useDispatch()
 

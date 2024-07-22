@@ -3,7 +3,6 @@ import { AppState } from './types'
 
 export const initialState: AppState = {
   config: {
-    progressionId: undefined,
     isLooping: false,
     masterVolume: 1,
     bassVolume: 0.5,

@@ -1,12 +1,14 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../state/store'
-import { getActiveProgression } from '../../state/selectors/getActiveProgression'
 import { progressionsSlice } from '../../state/progressions'
 import { FiTrash2 } from 'react-icons/fi'
 import { PageProps } from './types'
 import { isNil } from '../../model/isNil'
+import { useActiveProgression } from '../../useActiveProgression'
+import { useNavigate } from 'react-router'
+import { Paths } from '../paths'
 
 const sectionStyle = css`
   display: flex;
@@ -58,9 +60,10 @@ const buttonStyle = css`
   }
 `
 
-export const DangerPage: FC<PageProps> = ({ onClose }) => {
+export const DangerPage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const progression = useSelector(getActiveProgression)
+  const progression = useActiveProgression()
+  const navigate = useNavigate()
 
   const deleteProgression = () => {
     if (isNil(progression)) {
@@ -71,7 +74,7 @@ export const DangerPage: FC<PageProps> = ({ onClose }) => {
         progressionId: progression.id,
       }),
     )
-    onClose()
+    navigate(Paths.home())
   }
 
   return (
