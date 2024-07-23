@@ -2,6 +2,42 @@ import { DEFAULT_4_STRING_BASS_TUNING, TRANSITIONS } from '../model/constants'
 import { AppState } from './types'
 
 export const initialState: AppState = {
+  bars: {
+    jywxjNyYIMZeJdAN8NzzE: {
+      id: 'jywxjNyYIMZeJdAN8NzzE',
+      chords: ['56g913ZHvhA94K3K06aEK'],
+    },
+    '1lSOLUu0-qLrsAOnsTHAH': {
+      id: '1lSOLUu0-qLrsAOnsTHAH',
+      chords: ['c_H_aiu6Y3xZ9FZ8myRVm'],
+    },
+    LIz2iFSV8DuhmaTzXPAMG: {
+      id: 'LIz2iFSV8DuhmaTzXPAMG',
+      chords: ['fY2252W_noaipy7BE4qZb'],
+    },
+  },
+  chords: {
+    '56g913ZHvhA94K3K06aEK': {
+      id: '56g913ZHvhA94K3K06aEK',
+      name: 'D',
+      type: 'MINOR',
+      root: 'D2',
+      transitionId: 'S?;T?;C,R->C,T,U->C,F,U->N,R-1;',
+    },
+    c_H_aiu6Y3xZ9FZ8myRVm: {
+      id: 'c_H_aiu6Y3xZ9FZ8myRVm',
+      name: 'A',
+      type: 'DOMINANT-SEVENTH',
+      root: 'A1',
+      transitionId: 'S?;T?;C,R->C,T,U->C,F,U->N,R-1;',
+    },
+    fY2252W_noaipy7BE4qZb: {
+      id: 'fY2252W_noaipy7BE4qZb',
+      name: 'D',
+      type: 'MINOR',
+      root: 'D2',
+    },
+  },
   config: {
     isLooping: false,
     masterVolume: 1,
@@ -12,81 +48,14 @@ export const initialState: AppState = {
   progressions: {
     default: {
       id: 'default',
-      name: 'Default',
       noteCount: 4,
-      tuning: DEFAULT_4_STRING_BASS_TUNING,
+      tuning: ['G2', 'D2', 'A1', 'E1'],
+      name: 'default',
       bars: [
-        'default-first-bar',
-        'default-second-bar',
-        'default-third-bar',
-        'default-fourth-bar',
-        'default-fifth-bar',
+        'jywxjNyYIMZeJdAN8NzzE',
+        '1lSOLUu0-qLrsAOnsTHAH',
+        'LIz2iFSV8DuhmaTzXPAMG',
       ],
-    },
-  },
-  bars: {
-    'default-first-bar': {
-      id: 'default-first-bar',
-      chords: ['default-first-bar-dm'],
-    },
-    'default-second-bar': {
-      id: 'default-second-bar',
-      chords: ['default-second-bar-f'],
-    },
-    'default-third-bar': {
-      id: 'default-third-bar',
-      chords: ['default-third-bar-bb'],
-    },
-    'default-fourth-bar': {
-      id: 'default-fourth-bar',
-      chords: ['default-fourth-bar-g', 'default-fourth-bar-a'],
-    },
-    'default-fifth-bar': {
-      id: 'default-fifth-bar',
-      chords: ['default-fith-bar-dm'],
-    },
-  },
-  chords: {
-    'default-first-bar-dm': {
-      id: 'default-first-bar-dm',
-      name: 'D',
-      type: 'MINOR',
-      root: 'D2',
-      transitionId: TRANSITIONS[0]!.id,
-    },
-    'default-second-bar-f': {
-      id: 'default-second-bar-f',
-      name: 'F',
-      type: 'MAJOR',
-      root: 'F1',
-      transitionId: TRANSITIONS[0]!.id,
-    },
-    'default-third-bar-bb': {
-      id: 'default-third-bar-bb',
-      name: 'Bb',
-      type: 'MAJOR',
-      root: 'Bb2',
-      transitionId: TRANSITIONS[0]!.id,
-    },
-    'default-fourth-bar-g': {
-      id: 'default-fourth-bar-g',
-      name: 'G',
-      type: 'MAJOR',
-      root: 'G1',
-      transitionId: TRANSITIONS[0]!.id,
-    },
-    'default-fourth-bar-a': {
-      id: 'default-fourth-bar-a',
-      name: 'A',
-      type: 'DOMINANT-SEVENTH',
-      root: 'A1',
-      transitionId: TRANSITIONS[0]!.id,
-    },
-    'default-fith-bar-dm': {
-      id: 'default-fith-bar-dm',
-      name: 'D',
-      type: 'MINOR',
-      root: 'D2',
     },
   },
 }
