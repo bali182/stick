@@ -131,12 +131,12 @@ export const RecentProgressions: FC = () => {
   return (
     <div className={containerStyle}>
       <h2 className={titleStyle}>Recent progressions</h2>
-      {progressions.map((progression) => (
-        <a className={itemStyle} href={`#/${progression.id}/editor`}>
+      {progressions.map((p) => (
+        <a className={itemStyle} href={`#/${p.id}/editor`} id={p.id}>
           <PiMusicNotesLight className={iconStyle} />
           <div className={labelContainer}>
-            <span className={nameStyle}>{progression.name}</span>
-            <span className={detailStyle}>{progression.bars.length} Bars</span>
+            <span className={nameStyle}>{p.name}</span>
+            <span className={detailStyle}>{p.bars.length} Bars</span>
           </div>
         </a>
       ))}

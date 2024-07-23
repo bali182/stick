@@ -27,8 +27,7 @@ const player = (scrollElement: HTMLElement): json.PlayerSettingsJson => ({
   enableElementHighlighting: true,
   enablePlayer: true,
   enableUserInteraction: true,
-  soundFont:
-    'https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2',
+  soundFont: 'soundfont/sonivox.sf2',
 })
 
 export const alphaTabConfig = (
