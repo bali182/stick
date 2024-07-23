@@ -16,16 +16,17 @@ function saveState(state: AppState) {
 
 // TODO validate schema
 function loadState(): AppState {
-  try {
-    const serializedState = localStorage.getItem(STATE_STORAGE_KEY)
-    if (serializedState === null) {
-      return initialState
-    }
-    return JSON.parse(serializedState)
-  } catch (e) {
-    console.error('Could not load state', e)
-    return initialState
-  }
+  return initialState
+  // try {
+  //   const serializedState = localStorage.getItem(STATE_STORAGE_KEY)
+  //   if (serializedState === null) {
+  //     return initialState
+  //   }
+  //   return JSON.parse(serializedState)
+  // } catch (e) {
+  //   console.error('Could not load state', e)
+  //   return initialState
+  // }
 }
 
 const saveStateMiddleware: Middleware<{}, AppState> =
