@@ -85,7 +85,11 @@ export type ChordType =
   | 'AUGMENTED'
   | 'AUGMENTED-SEVENTH'
 
-export type Tag = 'CHROMATIC_APPROACH' | 'CHORD_TONE_ONLY'
+export type Tag =
+  | 'CHROMATIC_APPROACH'
+  | 'CHORD_TONE_ONLY'
+  | 'ASCENDING'
+  | 'DESCENDING'
 
 export type HasId = {
   id: string

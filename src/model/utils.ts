@@ -51,25 +51,6 @@ export function getNoteParts(note: Note): [BaseNoteName, Accidental?] {
   return [base, accidental && accidental.length > 0 ? accidental : undefined]
 }
 
-export function transpose(n: Note, a: number, ac: Accidental = '#'): Note {
-  const [_, noteAcc] = getNoteParts(n)
-  const accidental = noteAcc ?? ac
-  const transposedNoteIndex = getNoteIndex(n) + a
-  const newNoteIndex = (transposedNoteIndex %
-    CHORMATIC_SCALE_LENGTH) as NoteIndex
-  const notesByIndex = getNotesAtIndex(newNoteIndex)
-  switch (notesByIndex.length) {
-    case 1:
-      return notesByIndex[0]!
-    case 2:
-      return accidental === '#' ? notesByIndex[0]! : notesByIndex[1]!
-    default:
-      throw new TypeError(
-        `Unexpected notes at "${newNoteIndex}": ${notesByIndex}`,
-      )
-  }
-}
-
 export function lerp(start: number, end: number, ratio: number): number {
   return Math.floor((1 - ratio) * start + ratio * end)
 }
@@ -123,4 +104,25 @@ export function getUniqueName(
     uniqueName = `${name}${glue}${num++}`
   }
   return uniqueName
+}
+
+export function getRandomWeightedElement<T>(elements: [T, number][]): T {
+  // Calculate the total weight
+  const totalWeight = elements.reduce((sum, element) => sum + element[1], 0)
+
+  // Generate a random number between 0 and totalWeight
+  const random = Math.random() * totalWeight
+
+  // Iterate through the array to find the random element
+  let cumulativeWeight = 0
+  for (const [element, weight] of elements) {
+    cumulativeWeight += weight
+    if (random < cumulativeWeight) {
+      return element
+    }
+  }
+
+  // Fallback return statement, this should never be reached
+  // because the random number is always less than totalWeight
+  throw new Error('Should never reach here if input is valid')
 }

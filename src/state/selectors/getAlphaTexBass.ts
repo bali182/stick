@@ -9,7 +9,7 @@ export function getAlphaTexBass(
     tuning,
     instrument: 'AcousticBass',
     clef: 'Bass',
-    name: 'Bass',
+    name: '',
     shortName: '',
     keySignature: 'C',
     timeSignature: { bottom: 4, top: 4 },

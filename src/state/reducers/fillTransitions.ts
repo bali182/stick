@@ -2,7 +2,8 @@ import { canTransition } from '../../model/canTransition'
 import { TRANSITIONS } from '../../model/constants'
 import { isNil } from '../../model/isNil'
 import { randomElement } from '../../model/randomElement'
-import { ChordSymbol } from '../../model/types'
+import { ChordSymbol, Transition } from '../../model/types'
+import { getRandomWeightedElement } from '../../model/utils'
 import { FillTransitionsAction } from '../actionTypes'
 import { progressionsSlice } from '../progressions'
 import { chordsIterator } from '../selectors/chordsIterator'
@@ -36,16 +37,22 @@ export function fillTransitionsReducer(
         new Set([...(progression.tags ?? []), ...(from.tags ?? [])]),
       )
 
-      const transitions = TRANSITIONS.filter((transition) =>
-        canTransition(from, to, tuning, transition),
-      )
+      const trns = TRANSITIONS.filter((t) => canTransition(from, to, tuning, t))
         .filter((transition) => transition.steps.length === preferredNoteCount)
         .filter((transition) => tags.every((t) => transition.tags.includes(t)))
+        .map((transition): [Transition, number] => {
+          const weight =
+            (isNil(transition.source) ? 0 : 10) +
+            (isNil(transition.target) ? 0 : 10) +
+            1
+          return [transition, weight]
+        })
+
       // No viable transitions
-      if (transitions.length === 0) {
+      if (trns.length === 0) {
         continue
       }
-      const transition = randomElement(transitions)!
+      const transition = getRandomWeightedElement(trns)!
       updatedChords.push({ ...from, transitionId: transition.id })
     }
     const chordsState = { ...state.chords }
