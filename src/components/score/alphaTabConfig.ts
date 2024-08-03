@@ -30,10 +30,21 @@ const player = (scrollElement: HTMLElement): json.PlayerSettingsJson => ({
   soundFont: 'soundfont/sonivox.sf2',
 })
 
+// For now it's untyped
+const elements: any = {
+  guitarTuning: false,
+  trackNames: false,
+}
+
+const notation: json.NotationSettingsJson = {
+  elements,
+}
+
 export const alphaTabConfig = (
   scrollElement: HTMLElement,
 ): json.SettingsJson => ({
   core,
   display,
+  notation,
   player: player(scrollElement),
 })

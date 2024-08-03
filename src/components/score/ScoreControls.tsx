@@ -3,6 +3,7 @@ import { FC } from 'react'
 import {
   RiPauseLargeFill,
   RiPlayLargeFill,
+  RiPrinterFill,
   RiStopLargeFill,
 } from 'react-icons/ri'
 import { RxLoop } from 'react-icons/rx'
@@ -89,6 +90,14 @@ export const StopButton: FC<BasicButtonProps> = ({ onClick }) => {
   return (
     <button className={secondaryButtonStyle} onClick={onClick}>
       <RiStopLargeFill />
+    </button>
+  )
+}
+
+export const PrintButton: FC<BasicButtonProps> = ({ onClick }) => {
+  return (
+    <button className={secondaryButtonStyle} onClick={onClick}>
+      <RiPrinterFill />
     </button>
   )
 }

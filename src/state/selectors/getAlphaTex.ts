@@ -18,5 +18,10 @@ export function getAlphaTex(state: AppState, progressionId: string): string {
   const accompanimentTrack = getAlphaTexChords(
     prepareAlphaTexChords(state, progressionId),
   )
-  return `${toAlphaTex(bassTrack)}\n${toAlphaTex(accompanimentTrack)}`
+  return [
+    `\\title "${progression.name}"`,
+    '.',
+    toAlphaTex(bassTrack),
+    toAlphaTex(accompanimentTrack),
+  ].join('\n')
 }
