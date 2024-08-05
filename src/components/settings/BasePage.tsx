@@ -13,6 +13,8 @@ import { useActiveProgression } from '../../useActiveProgression'
 const TAGS_MAP: Record<Tag, boolean> = {
   CHROMATIC_APPROACH: true,
   CHORD_TONE_ONLY: true,
+  ASCENDING: true,
+  DESCENDING: true,
 }
 
 const tagsData = {
@@ -20,7 +22,7 @@ const tagsData = {
 }
 
 const notesData = {
-  values: ['1', '2', '4'],
+  values: ['2', '4'],
 }
 
 export const BasePage: FC<PageProps> = () => {

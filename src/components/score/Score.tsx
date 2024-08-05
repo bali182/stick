@@ -1,4 +1,4 @@
-import { useRef, useEffect, FC, useState } from 'react'
+import { useRef, useEffect, FC, useState, useCallback } from 'react'
 import { AlphaTabApi, synth } from '@coderline/alphatab'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
@@ -12,15 +12,11 @@ import { isNil } from '../../model/isNil'
 import { AppState, ConfigState } from '../../state/types'
 import { configSlice } from '../../state/config'
 import { getAlphaTex } from '../../state/selectors/getAlphaTex'
-import {
-  setTrackVolume,
-  useMetronomeVolume,
-  useTrackVolume,
-} from './volumeHooks'
 import { TbPiano } from 'react-icons/tb'
 import { GiGuitarBassHead } from 'react-icons/gi'
 import { PiMetronomeBold } from 'react-icons/pi'
 import { useActiveProgression } from '../../useActiveProgression'
+import { useAlphaTab } from './useAlphaTab'
 
 export type ScoreProps = {
   progressionId: string
@@ -83,13 +79,17 @@ const controlsContainerStyle = css`
 `
 
 export const Score: FC = () => {
-  const wrapperRef = useRef<HTMLElement>(null)
-  const scrollRef = useRef<HTMLElement>(null)
-  const mainRef = useRef<HTMLElement>(null)
-  const apiRef = useRef<AlphaTabApi>()
+  const [scrollArea, setScrollArea] = useState<HTMLElement>()
+  const [root, setRoot] = useState<HTMLElement>()
 
-  const [isLoading, setLoading] = useState(false)
-  const [isPlaying, setPlaying] = useState(false)
+  const setScrollAreaCallback = useCallback((node: HTMLDivElement | null) => {
+    setScrollArea(node ?? undefined)
+  }, [])
+
+  const setRootCallback = useCallback((node: HTMLDivElement | null) => {
+    setRoot(node ?? undefined)
+  }, [])
+
   const progression = useActiveProgression()
   const tex = useSelector<AppState, string>((state) =>
     getAlphaTex(state, progression!.id),
@@ -101,49 +101,20 @@ export const Score: FC = () => {
 
   const dispatch = useDispatch<AppDispatch>()
 
-  useEffect(() => {
-    const { current: api } = apiRef
-    api?.tex?.(tex)
-  }, [tex])
+  const { api, isPlaying, isLoading } = useAlphaTab({
+    tex,
+    bassVolume,
+    chordsVolume,
+    isLooping,
+    metronomeVolume,
+    root,
+    scrollArea,
+  })
 
-  useEffect(() => {
-    const { current: api } = apiRef
-    if (!isNil(api)) {
-      api.isLooping = isLooping
-    }
-  }, [isLooping])
-
-  useTrackVolume(apiRef, 0, bassVolume)
-  useTrackVolume(apiRef, 1, chordsVolume)
-  useMetronomeVolume(apiRef, metronomeVolume)
-
-  useEffect(() => {
-    const api = new AlphaTabApi(
-      mainRef.current!,
-      alphaTabConfig(scrollRef.current!),
-    )
-
-    api.renderStarted.on(() => setLoading(true))
-    api.renderFinished.on(() => setLoading(false))
-    api.playerStateChanged.on(({ state }) =>
-      setPlaying(state === synth.PlayerState.Playing),
-    )
-
-    api.render()
-    api.tex(tex, [0])
-    api.isLooping = isLooping
-    api.metronomeVolume = metronomeVolume
-    setTrackVolume(api, 0, bassVolume)
-    setTrackVolume(api, 1, chordsVolume)
-    apiRef.current = api
-
-    return () => api.destroy()
-  }, [])
-
-  const onPlayPause = () => apiRef.current?.playPause()
+  const onPlayPause = () => api?.playPause()
   const onLoop = () =>
     dispatch(configSlice.actions.updateConfig({ isLooping: !isLooping }))
-  const onStop = () => apiRef.current?.stop()
+  const onStop = () => api?.stop()
   const onBassVolumeChange = (bassVolume: number) =>
     dispatch(configSlice.actions.updateConfig({ bassVolume }))
   const onChordsVolumeChange = (chordsVolume: number) =>
@@ -152,11 +123,11 @@ export const Score: FC = () => {
     dispatch(configSlice.actions.updateConfig({ metronomeVolume }))
 
   return (
-    <div className={wrapStyle} ref={wrapperRef as any}>
+    <div className={wrapStyle}>
       <ScoreOverlay isVisible={isLoading} />
       <div className={contentStyle}>
-        <div className={viewportStyle} ref={scrollRef as any}>
-          <div className="at-main" ref={mainRef as any}></div>
+        <div className={viewportStyle} ref={setScrollAreaCallback}>
+          <div className="at-main" ref={setRootCallback}></div>
         </div>
       </div>
       <div className={bottomBarStyle}>
