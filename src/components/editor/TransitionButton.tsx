@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
-import { css } from '@emotion/css'
+import { css, cx } from '@emotion/css'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../state/store'
 import { ChordSymbol } from '../../model/types'
@@ -12,6 +12,7 @@ import { isNil } from '../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
 import { AppState } from '../../state/types'
 import { useOnEscape } from './useOnEscape'
+import { useChord } from '../../modelHooks'
 
 export type TransitionButtonProps = {
   barId: string
@@ -66,6 +67,8 @@ const transitionNameBtnStyle = css`
   font-size: 1.2em;
   border: none;
   color: #fff;
+  max-width: 135px;
+  min-width: 40px;
   background-color: transparent;
   cursor: pointer;
   &:hover {
@@ -77,9 +80,7 @@ const transitionNameBtnStyle = css`
   }
 `
 
-const removeBtnStyle = css`
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+const sideButtonStyle = css`
   flex-shrink: 0;
   padding: 4px 10px;
   display: flex;
@@ -99,7 +100,15 @@ const removeBtnStyle = css`
   }
 `
 
-const binIconStyle = css`
+const removeButtonStyle = cx(
+  sideButtonStyle,
+  css`
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  `,
+)
+
+const buttonIconStyle = css`
   position: relative;
   top: -1px;
   font-size: 1em;
@@ -127,9 +136,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
   barId,
 }) => {
   const [isOpen, setOpen] = useState(false)
-  const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    chordsSlice.selectors.getChord(state, chordId),
-  )!
+  const chord = useChord(chordId)
   const transition = chord?.transitionId
     ? TRANSITION_MAP[chord.transitionId]
     : undefined
@@ -186,8 +193,11 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
             <button className={transitionNameBtnStyle} onClick={toggle}>
               {transition.name}
             </button>
-            <button className={removeBtnStyle} onClick={onTransitionDeleted}>
-              <FiTrash2 className={binIconStyle} />
+            {/* <button className={sideButtonStyle}>
+              <FiRefreshCw className={buttonIconStyle} />
+            </button> */}
+            <button className={removeButtonStyle} onClick={onTransitionDeleted}>
+              <FiTrash2 className={buttonIconStyle} />
             </button>
           </div>
         )}

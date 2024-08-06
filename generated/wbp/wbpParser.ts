@@ -1,4 +1,4 @@
-// Generated from wbp.g4 by ANTLR 4.13.1
+// Generated from wbp.g4 by ANTLR 4.13.2
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
 import {
@@ -42,7 +42,7 @@ export default class wbpParser extends Parser {
 	public static readonly T__23 = 24;
 	public static readonly INTEGER = 25;
 	public static readonly WS = 26;
-	public static readonly EOF = Token.EOF;
+	public static override readonly EOF = Token.EOF;
 	public static readonly RULE_chordReference = 0;
 	public static readonly RULE_direction = 1;
 	public static readonly RULE_sign = 2;
@@ -381,10 +381,10 @@ export default class wbpParser extends Parser {
 			{
 			this.state = 48;
 			this.step();
-			this.state = 51;
+			this.state = 53;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			do {
+			while (_la===22) {
 				{
 				{
 				this.state = 49;
@@ -393,10 +393,10 @@ export default class wbpParser extends Parser {
 				this.step();
 				}
 				}
-				this.state = 53;
+				this.state = 55;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (_la===22);
+			}
 			}
 		}
 		catch (re) {
@@ -421,23 +421,23 @@ export default class wbpParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 55;
-			this.match(wbpParser.T__22);
 			this.state = 56;
+			this.match(wbpParser.T__22);
+			this.state = 57;
 			this.chordType();
-			this.state = 61;
+			this.state = 62;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la===21) {
 				{
 				{
-				this.state = 57;
-				this.match(wbpParser.T__20);
 				this.state = 58;
+				this.match(wbpParser.T__20);
+				this.state = 59;
 				this.chordType();
 				}
 				}
-				this.state = 63;
+				this.state = 64;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -464,21 +464,21 @@ export default class wbpParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 64;
+			this.state = 65;
 			this.match(wbpParser.T__7);
-			this.state = 67;
+			this.state = 68;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 5:
 			case 6:
 				{
-				this.state = 65;
+				this.state = 66;
 				this.signedInt();
 				}
 				break;
 			case 10:
 				{
-				this.state = 66;
+				this.state = 67;
 				this.match(wbpParser.T__9);
 				}
 				break;
@@ -508,17 +508,17 @@ export default class wbpParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 69;
-			this.sourceChord();
 			this.state = 70;
-			this.match(wbpParser.T__23);
+			this.sourceChord();
 			this.state = 71;
-			this.targetChord();
-			this.state = 72;
 			this.match(wbpParser.T__23);
+			this.state = 72;
+			this.targetChord();
 			this.state = 73;
-			this.steps();
+			this.match(wbpParser.T__23);
 			this.state = 74;
+			this.steps();
+			this.state = 75;
 			this.match(wbpParser.T__23);
 			}
 		}
@@ -537,27 +537,27 @@ export default class wbpParser extends Parser {
 		return localctx;
 	}
 
-	public static readonly _serializedATN: number[] = [4,1,26,77,2,0,7,0,2,
+	public static readonly _serializedATN: number[] = [4,1,26,78,2,0,7,0,2,
 	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,
 	10,7,10,2,11,7,11,1,0,1,0,1,1,1,1,1,2,1,2,1,3,1,3,1,4,1,4,1,5,1,5,1,5,1,
-	6,1,6,3,6,40,8,6,1,7,1,7,1,7,1,7,1,7,3,7,47,8,7,1,8,1,8,1,8,4,8,52,8,8,
-	11,8,12,8,53,1,9,1,9,1,9,1,9,5,9,60,8,9,10,9,12,9,63,9,9,1,10,1,10,1,10,
-	3,10,68,8,10,1,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,0,0,12,0,2,4,6,8,10,
-	12,14,16,18,20,22,0,5,1,0,1,2,1,0,3,4,1,0,5,6,1,0,7,9,1,0,10,20,69,0,24,
-	1,0,0,0,2,26,1,0,0,0,4,28,1,0,0,0,6,30,1,0,0,0,8,32,1,0,0,0,10,34,1,0,0,
-	0,12,37,1,0,0,0,14,41,1,0,0,0,16,48,1,0,0,0,18,55,1,0,0,0,20,64,1,0,0,0,
-	22,69,1,0,0,0,24,25,7,0,0,0,25,1,1,0,0,0,26,27,7,1,0,0,27,3,1,0,0,0,28,
-	29,7,2,0,0,29,5,1,0,0,0,30,31,7,3,0,0,31,7,1,0,0,0,32,33,7,4,0,0,33,9,1,
-	0,0,0,34,35,3,4,2,0,35,36,5,25,0,0,36,11,1,0,0,0,37,39,3,6,3,0,38,40,3,
-	10,5,0,39,38,1,0,0,0,39,40,1,0,0,0,40,13,1,0,0,0,41,42,3,0,0,0,42,43,5,
-	21,0,0,43,46,3,12,6,0,44,45,5,21,0,0,45,47,3,2,1,0,46,44,1,0,0,0,46,47,
-	1,0,0,0,47,15,1,0,0,0,48,51,3,14,7,0,49,50,5,22,0,0,50,52,3,14,7,0,51,49,
-	1,0,0,0,52,53,1,0,0,0,53,51,1,0,0,0,53,54,1,0,0,0,54,17,1,0,0,0,55,56,5,
-	23,0,0,56,61,3,8,4,0,57,58,5,21,0,0,58,60,3,8,4,0,59,57,1,0,0,0,60,63,1,
-	0,0,0,61,59,1,0,0,0,61,62,1,0,0,0,62,19,1,0,0,0,63,61,1,0,0,0,64,67,5,8,
-	0,0,65,68,3,10,5,0,66,68,5,10,0,0,67,65,1,0,0,0,67,66,1,0,0,0,68,21,1,0,
-	0,0,69,70,3,18,9,0,70,71,5,24,0,0,71,72,3,20,10,0,72,73,5,24,0,0,73,74,
-	3,16,8,0,74,75,5,24,0,0,75,23,1,0,0,0,5,39,46,53,61,67];
+	6,1,6,3,6,40,8,6,1,7,1,7,1,7,1,7,1,7,3,7,47,8,7,1,8,1,8,1,8,5,8,52,8,8,
+	10,8,12,8,55,9,8,1,9,1,9,1,9,1,9,5,9,61,8,9,10,9,12,9,64,9,9,1,10,1,10,
+	1,10,3,10,69,8,10,1,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,0,0,12,0,2,4,
+	6,8,10,12,14,16,18,20,22,0,5,1,0,1,2,1,0,3,4,1,0,5,6,1,0,7,9,1,0,10,20,
+	70,0,24,1,0,0,0,2,26,1,0,0,0,4,28,1,0,0,0,6,30,1,0,0,0,8,32,1,0,0,0,10,
+	34,1,0,0,0,12,37,1,0,0,0,14,41,1,0,0,0,16,48,1,0,0,0,18,56,1,0,0,0,20,65,
+	1,0,0,0,22,70,1,0,0,0,24,25,7,0,0,0,25,1,1,0,0,0,26,27,7,1,0,0,27,3,1,0,
+	0,0,28,29,7,2,0,0,29,5,1,0,0,0,30,31,7,3,0,0,31,7,1,0,0,0,32,33,7,4,0,0,
+	33,9,1,0,0,0,34,35,3,4,2,0,35,36,5,25,0,0,36,11,1,0,0,0,37,39,3,6,3,0,38,
+	40,3,10,5,0,39,38,1,0,0,0,39,40,1,0,0,0,40,13,1,0,0,0,41,42,3,0,0,0,42,
+	43,5,21,0,0,43,46,3,12,6,0,44,45,5,21,0,0,45,47,3,2,1,0,46,44,1,0,0,0,46,
+	47,1,0,0,0,47,15,1,0,0,0,48,53,3,14,7,0,49,50,5,22,0,0,50,52,3,14,7,0,51,
+	49,1,0,0,0,52,55,1,0,0,0,53,51,1,0,0,0,53,54,1,0,0,0,54,17,1,0,0,0,55,53,
+	1,0,0,0,56,57,5,23,0,0,57,62,3,8,4,0,58,59,5,21,0,0,59,61,3,8,4,0,60,58,
+	1,0,0,0,61,64,1,0,0,0,62,60,1,0,0,0,62,63,1,0,0,0,63,19,1,0,0,0,64,62,1,
+	0,0,0,65,68,5,8,0,0,66,69,3,10,5,0,67,69,5,10,0,0,68,66,1,0,0,0,68,67,1,
+	0,0,0,69,21,1,0,0,0,70,71,3,18,9,0,71,72,5,24,0,0,72,73,3,20,10,0,73,74,
+	5,24,0,0,74,75,3,16,8,0,75,76,5,24,0,0,76,23,1,0,0,0,5,39,46,53,62,68];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {

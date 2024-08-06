@@ -11,7 +11,11 @@ import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
 import { AppDispatch } from '../../state/store'
-import { useActiveProgression } from '../../useActiveProgression'
+import {
+  useActiveProgression,
+  useBar,
+  useConfig,
+} from '../../modelHooks'
 
 export type BarBlockProps = {
   barId: string
@@ -62,7 +66,6 @@ const addChordOverlayStyle = css`
   bottom: 50px;
   border-radius: 10px;
   width: 40px;
-  /* background: linear-gradient(90deg, #00000000 0%, #00000030 100%); ; */
 `
 
 const emptyBarAddButtonStyle = css`
@@ -110,9 +113,7 @@ const trashIconStyle = css`
 export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   const [isHovered, setHovered] = useState(false)
   const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
-  const bar = useSelector<AppState, Bar | undefined>((state) =>
-    barsSlice.selectors.getBar(state, barId),
-  )
+  const bar = useBar(barId)
   const progression = useActiveProgression()
   const firstChord = useSelector<AppState, ChordSymbol | undefined>((state) => {
     if (bar?.chords?.length !== 1) {
@@ -154,13 +155,22 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
     if (!firstChord) {
       return
     }
-    const clonedChord: ChordSymbol = {
+    const noteCount = progression!.noteCount / 2
+    // Update first chord by removing it's transition, and halving note count
+    const updatedChord: ChordSymbol = {
       ...firstChord,
-      id: nanoid(),
+      noteCount,
       transitionId: undefined,
     }
-    dispatch(chordsSlice.actions.createChord({ chord: clonedChord }))
-    dispatch(barsSlice.actions.addChords({ barId, chordIds: [clonedChord.id] }))
+    // Create second chord as a clone of the first one
+    const secondChord: ChordSymbol = {
+      ...updatedChord,
+      id: nanoid(),
+    }
+
+    dispatch(chordsSlice.actions.updateChord({ chord: updatedChord }))
+    dispatch(chordsSlice.actions.createChord({ chord: secondChord }))
+    dispatch(barsSlice.actions.addChords({ barId, chordIds: [secondChord.id] }))
   }
 
   const onMouseEnter = () => setHovered(true)

@@ -16,7 +16,12 @@ import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { useOnEscape } from './useOnEscape'
 import { NOTE_COLORS } from '../colors'
 import { NoteCountPicker } from './NoteCountPicker'
-import { useActiveProgression } from '../../useActiveProgression'
+import {
+  useActiveProgression,
+  useBar,
+  useChord,
+  useNextChord,
+} from '../../modelHooks'
 
 export type ChordBlockProps = {
   barId: string
@@ -79,12 +84,9 @@ const popoverStyle = css`
 
 export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
   const progression = useActiveProgression()
-  const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    chordsSlice.selectors.getChord(state, chordId),
-  )
-  const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progression?.id!, barId, chordId),
-  )
+  const chord = useChord(chordId)
+  const bar = useBar(barId)
+  const nextChord = useNextChord(progression?.id!, barId, chordId)
   const dispatch = useDispatch<AppDispatch>()
   const [isChordPickerOpen, setChordPickerOpen] = useState(false)
   const [isHovered, setHovered] = useState(false)
@@ -96,6 +98,17 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
     dispatch(chordsSlice.actions.updateChord({ chord }))
   }
   const onChordDeleted = () => {
+    if (isNil(bar) || isNil(chord)) {
+      return
+    }
+    const otherChords = bar.chords.filter((id) => id !== chordId)
+    otherChords.forEach((id) => {
+      dispatch(
+        chordsSlice.actions.updateChord({
+          chord: { id, noteCount: undefined },
+        }),
+      )
+    })
     dispatch(barsSlice.actions.removeChords({ barId, chordIds: [chordId] }))
     dispatch(chordsSlice.actions.deleteChord({ chordId }))
   }

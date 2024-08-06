@@ -6,7 +6,7 @@ import { NoScoreView } from './NoScoreView'
 import { AppState } from '../../state/types'
 import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { ProgressionsStatus } from '../../model/types'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 import { Toolbar } from '../Toolbar'
 import { Navigation } from '../Navigation'
 

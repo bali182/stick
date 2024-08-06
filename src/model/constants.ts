@@ -47,6 +47,8 @@ export const INDEX_BY_NOTE: Record<Note, NoteIndex> = {
   B: 11,
 }
 
+export const NOTE_NAMES = Object.keys(INDEX_BY_NOTE) as Note[]
+
 export const NOTE_BY_INDEX: Record<NoteIndex, Note[]> = {
   0: ['C'],
   1: ['C#', 'Db'],
@@ -66,7 +68,7 @@ export const OCTAVES_INDICIES: OctaveIndex[] = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 /** All possible notes to play on a normal bass in the first octave */
 export const NOTES = OCTAVES_INDICIES.flatMap((index) =>
-  Object.keys(INDEX_BY_NOTE).map((note) => `${note}${index}` as PitchedNote),
+  NOTE_NAMES.map((note) => `${note}${index}` as PitchedNote),
 )
 
 /** Note names mapped to their pitched versions */

@@ -8,7 +8,7 @@ import { progressionsSlice } from '../../state/progressions'
 import { Dropdown, MultiDropdown } from './Dropdown'
 import { ChordProgression, Tag } from '../../model/types'
 import { PageProps } from './types'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 
 const TAGS_MAP: Record<Tag, boolean> = {
   CHROMATIC_APPROACH: true,

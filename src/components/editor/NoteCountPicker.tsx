@@ -6,7 +6,7 @@ import { chordsSlice } from '../../state/chords'
 import { css } from '@emotion/css'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { NoteCountSelectorList } from './NoteCountSelectorList'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression, useChord } from '../../modelHooks'
 
 export type NoteCountPickerProps = {
   chordId: string
@@ -35,9 +35,7 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({ chordId }) => {
   const onOpen = () => setOpen(true)
 
   const progression = useActiveProgression()
-  const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    chordsSlice.selectors.getChord(state, chordId),
-  )
+  const chord = useChord(chordId)
   const noteCount = chord?.noteCount ?? progression?.noteCount!
 
   return (

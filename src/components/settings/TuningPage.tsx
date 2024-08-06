@@ -22,7 +22,8 @@ import {
   PiPlusBold,
   PiX,
 } from 'react-icons/pi'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
+import { isNil } from '../../model/isNil'
 
 const sectionStyle = css`
   display: flex;
@@ -118,10 +119,13 @@ const hrStyle = css`
 
 export const TuningPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const progression = useActiveProgression()!
+  const progression = useActiveProgression()
   const tuning = progression?.tuning!
 
   function updateTuning(tuning: PitchedNote[]) {
+    if (isNil(progression)) {
+      return
+    }
     dispatch(
       progressionsSlice.actions.updateProgression({
         progression: {

@@ -4,7 +4,7 @@ import { BarBlock } from './BarBlock'
 import { useSelector } from 'react-redux'
 import { AddBarBlock } from './AddBarBlock'
 import { isNil } from '../../model/isNil'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 
 const chordChartStyle = css`
   display: grid;

@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 import { getNoteRange } from '../../model/getNoteRange'
 import { CHORD_TYPES_TO_NAMES, INDEX_BY_NOTE } from '../../model/constants'
 import { DropdownProxy } from '../DropdownProxy'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 
 export type ChordEditorProps = {
   chord: ChordSymbol

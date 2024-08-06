@@ -15,7 +15,7 @@ import { getAlphaTex } from '../../state/selectors/getAlphaTex'
 import { TbPiano } from 'react-icons/tb'
 import { GiGuitarBassHead } from 'react-icons/gi'
 import { PiMetronomeBold } from 'react-icons/pi'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression, useAlphaTex, useConfig } from '../../modelHooks'
 import { useAlphaTab } from './useAlphaTab'
 
 export type ScoreProps = {
@@ -91,13 +91,8 @@ export const Score: FC = () => {
   }, [])
 
   const progression = useActiveProgression()
-  const tex = useSelector<AppState, string>((state) =>
-    getAlphaTex(state, progression!.id),
-  )
-  const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useSelector<
-    AppState,
-    ConfigState
-  >((state) => state.config)
+  const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useConfig()
+  const tex = useAlphaTex(progression?.id!)
 
   const dispatch = useDispatch<AppDispatch>()
 

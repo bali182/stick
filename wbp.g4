@@ -20,7 +20,7 @@ chordType:
 signedInt: sign INTEGER;
 chordToneReference: chordTone signedInt?;
 step: chordReference ',' chordToneReference (',' direction)?;
-steps: step ('->' step)+;
+steps: step ('->' step)*;
 sourceChord: 'S' chordType (',' chordType)*;
 targetChord: 'T' (signedInt | '?');
 transition: sourceChord ';' targetChord ';' steps ';';

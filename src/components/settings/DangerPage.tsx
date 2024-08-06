@@ -6,7 +6,7 @@ import { progressionsSlice } from '../../state/progressions'
 import { FiTrash2 } from 'react-icons/fi'
 import { PageProps } from './types'
 import { isNil } from '../../model/isNil'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
 

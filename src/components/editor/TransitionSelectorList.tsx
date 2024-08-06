@@ -15,7 +15,8 @@ import { filterCategoriesByTransitions } from '../../model/filterCategoriesByTra
 import { AppState, ConfigState } from '../../state/types'
 import { progressionsSlice } from '../../state/progressions'
 import { ListSelector } from './ListSelector'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression, useChord, useNextChord } from '../../modelHooks'
+import { isNil } from '../../model/isNil'
 
 export type TransitionSelectorListProps = {
   isOpen: boolean
@@ -40,14 +41,14 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   barId,
 }) => {
   const progression = useActiveProgression()!
-  const chord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    chordsSlice.selectors.getChord(state, chordId),
-  )!
+  const chord = useChord(chordId)
   const tuning = progression.tuning
-  const nextChord = useSelector<AppState, ChordSymbol | undefined>((state) =>
-    getNextChord(state, progression.id!, barId, chordId),
-  )!
+  const nextChord = useNextChord(progression.id!, barId, chordId)
+
   const categories = useMemo<TransitionCategory[]>(() => {
+    if (isNil(chord) || isNil(nextChord)) {
+      return []
+    }
     return filterCategoriesByTransitions(TRANSITION_CATEGORIES, (transition) =>
       canTransition(chord, nextChord, tuning, transition),
     )

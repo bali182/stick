@@ -4,7 +4,7 @@ import { IconType } from 'react-icons'
 import { PiMusicNoteSimple, PiPencilLine } from 'react-icons/pi'
 import { Paths } from './paths'
 import { useLocation } from 'react-router'
-import { useActiveProgression } from '../useActiveProgression'
+import { useActiveProgression } from '../modelHooks'
 
 const tabContainerStyle = css`
   display: flex;

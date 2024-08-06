@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ChordProgression } from '../model/types'
+import { ChordProgression, HasId } from '../model/types'
 import { removeByKey } from '../model/utils'
 import { initialState } from './initialState'
 import { ProgressionsState } from './types'
@@ -7,7 +7,9 @@ import { isNil } from '../model/isNil'
 
 export type CrateProgressionPayload = { progression: ChordProgression }
 export type DeleteProgressionPayload = { progressionId: string }
-export type UpdateProgressionPayload = { progression: ChordProgression }
+export type UpdateProgressionPayload = {
+  progression: HasId & Partial<ChordProgression>
+}
 export type AddBarsPayload = { progressionId: string; barIds: string[] }
 export type RemoveBarsPayload = { progressionId: string; barIds: string[] }
 
@@ -25,10 +27,16 @@ export const progressionsSlice = createSlice({
     updateProgression: (
       state,
       { payload }: PayloadAction<UpdateProgressionPayload>,
-    ) => ({
-      ...state,
-      [payload.progression.id]: payload.progression,
-    }),
+    ) => {
+      const progression = state[payload.progression.id]
+      if (!progression) {
+        return state
+      }
+      return {
+        ...state,
+        [payload.progression.id]: { ...progression, ...payload.progression },
+      }
+    },
     deleteProgression: (
       state,
       { payload }: PayloadAction<DeleteProgressionPayload>,

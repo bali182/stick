@@ -7,7 +7,7 @@ import { FiPlusSquare } from 'react-icons/fi'
 import { nanoid } from 'nanoid'
 import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
-import { useActiveProgression } from '../../useActiveProgression'
+import { useActiveProgression } from '../../modelHooks'
 
 const barBlockStyle = css`
   display: flex;
