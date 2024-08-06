@@ -17,14 +17,12 @@ const volumeSliderStyle = css`
   width: 180px;
 
   &::-webkit-slider-runnable-track {
-    position: relative;
     height: 8px;
     background-color: #ffffff60;
     border-radius: 8px;
   }
 
   &::-moz-range-track {
-    position: relative;
     height: 8px;
     background-color: #ffffff60;
     border-radius: 8px;

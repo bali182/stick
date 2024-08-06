@@ -7,7 +7,6 @@ import {
 import { css } from '@emotion/css'
 import { ChordSymbol, ChordType, Note, PitchedNote } from '../../model/types'
 import { getPossiblePitches } from '../../model/utils'
-import { useSelector } from 'react-redux'
 import { getNoteRange } from '../../model/getNoteRange'
 import { CHORD_TYPES_TO_NAMES, INDEX_BY_NOTE } from '../../model/constants'
 import { DropdownProxy } from '../DropdownProxy'
@@ -108,7 +107,7 @@ export const ChordEditor: FC<ChordEditorProps> = ({ chord, onChange }) => {
     [progression?.tuning],
   )
   const possibleRoots = useMemo<PitchedNote[]>(
-    () => getPossiblePitches(chord.name, range).sort(),
+    () => getPossiblePitches(chord.name, range),
     [range, chord.name],
   )
 

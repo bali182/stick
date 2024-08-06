@@ -4,6 +4,7 @@ import {
   Bar,
   ChordSymbol,
   ProgressionsStatus,
+  PitchedNote,
 } from './model/types'
 import { progressionsSlice } from './state/progressions'
 import { useSelector } from 'react-redux'
@@ -13,6 +14,9 @@ import { getNextChord } from './state/selectors/getNextChord'
 import { chordsSlice } from './state/chords'
 import { getProgressionStatus } from './state/selectors/getProgressionStatus'
 import { getAlphaTex } from './state/selectors/getAlphaTex'
+import { useMemo } from 'react'
+import { isNil } from './model/isNil'
+import { getNoteRange } from './model/getNoteRange'
 
 export function useProgression(
   progressionId: string,
@@ -65,4 +69,8 @@ export function useAlphaTex(progressionId: string): string {
   return useSelector<AppState, string>((state) =>
     getAlphaTex(state, progressionId),
   )
+}
+
+export function useNoteRange(tuning: PitchedNote[] | undefined): PitchedNote[] {
+  return useMemo(() => (isNil(tuning) ? [] : getNoteRange(tuning)), [tuning])
 }

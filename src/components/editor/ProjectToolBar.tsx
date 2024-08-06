@@ -9,8 +9,6 @@ import {
   ClearTransitionsAction,
   FillTransitionsAction,
 } from '../../state/actionTypes'
-import { ChordProgression, ProgressionsStatus } from '../../model/types'
-import { getProgressionStatus } from '../../state/selectors/getProgressionStatus'
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
@@ -23,7 +21,6 @@ const toolbarStyle = css`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   background-color: #ffffff20;
   height: 70px;
   width: 100%;

@@ -26,10 +26,12 @@ export function getPossiblePitches(
   note: Note,
   range: PitchedNote[],
 ): PitchedNote[] {
-  return range.filter((pitchedNote) => {
-    const [possibleNote] = getPitchedNoteParts(pitchedNote)
-    return possibleNote === note
-  })
+  return range
+    .filter((pitchedNote) => {
+      const [possibleNote] = getPitchedNoteParts(pitchedNote)
+      return possibleNote === note
+    })
+    .sort()
 }
 
 export function getNoteIndex(note: Note): NoteIndex {

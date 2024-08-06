@@ -28,7 +28,6 @@ const bottomBarStyle = css`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   height: 160px;
   width: 100%;
   background-color: #ffffff15;
