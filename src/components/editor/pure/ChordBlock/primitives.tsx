@@ -12,11 +12,11 @@ const headerStyle = css`
 
 const contentStyle = css`
   position: relative;
-  top: -6px;
+  top: -4px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 `
 
 const footerStyle = css`
@@ -37,7 +37,7 @@ const iconStyle = css`
 
 const spacerStyle = css`
   height: 36px;
-  width: 1px;
+  width: 16px;
 `
 
 export const ChordBlockHeader: FC<PropsWithChildren> = ({ children }) => {

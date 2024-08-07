@@ -24,7 +24,7 @@ const inputStyle = css`
   display: inline;
   font-weight: bold;
   color: #ffffffde;
-  padding: 2px;
+  padding: 0px 2px;
   font-size: 2em;
   text-align: center;
   text-shadow: 0px 0px 0px transparent;
