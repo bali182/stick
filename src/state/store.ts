@@ -1,8 +1,7 @@
 import { configureStore, Middleware } from '@reduxjs/toolkit'
 import { reducer } from './reducer'
 import { AppState } from './types'
-// import { emptyInitialState } from './emptyInitialState'
-import { initialState } from './initialState'
+import { emptyInitialState } from './emptyInitialState'
 
 const STATE_STORAGE_KEY = 'stick-app-data'
 
@@ -16,17 +15,16 @@ function saveState(state: AppState) {
 
 // TODO validate schema
 function loadState(): AppState {
-  return initialState
-  // try {
-  //   const serializedState = localStorage.getItem(STATE_STORAGE_KEY)
-  //   if (serializedState === null) {
-  //     return initialState
-  //   }
-  //   return JSON.parse(serializedState)
-  // } catch (e) {
-  //   console.error('Could not load state', e)
-  //   return initialState
-  // }
+  try {
+    const serializedState = localStorage.getItem(STATE_STORAGE_KEY)
+    if (serializedState === null) {
+      return emptyInitialState
+    }
+    return JSON.parse(serializedState)
+  } catch (e) {
+    console.error('Could not load state', e)
+    return emptyInitialState
+  }
 }
 
 const saveStateMiddleware: Middleware<{}, AppState> =

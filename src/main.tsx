@@ -5,6 +5,7 @@ import { Global } from '@emotion/react'
 import { globalStyles } from './components/globalStyles'
 import { App } from './components/App'
 import { HashRouter } from 'react-router-dom'
+import './state/templates/printTemplate'
 
 const rootDiv = document.getElementById('root')!
 
