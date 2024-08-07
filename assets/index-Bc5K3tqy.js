@@ -704,6 +704,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   color: #ffffffbb;
   border: none;
   background-color: transparent;
+  white-space: nowrap;
   &:hover,
   &:focus {
     border: none;
@@ -724,6 +725,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   color: #ffffffbb;
   border: none;
   background-color: transparent;
+  white-space: nowrap;
   &:hover,
   &:focus {
     border: none;
