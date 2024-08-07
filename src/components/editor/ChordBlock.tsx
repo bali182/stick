@@ -82,9 +82,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
 
   const onNoteAndTypeChange = (name: Note, type: ChordType) => {
     const roots = getPossiblePitches(name, getNoteRange(tuning))
-    const root = roots.includes(chord?.root!)
-      ? chord?.root!
-      : roots[roots.length - 1]!
+    const root = roots.includes(chord?.root!) ? chord?.root! : roots[0]!
     onChordChange({ name, type, root })
   }
 
