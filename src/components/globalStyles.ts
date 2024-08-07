@@ -25,7 +25,6 @@ export const globalStyles = css`
     /* background: linear-gradient(147deg, #000000 0%, #434343 74%); */
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
   }
 
   img,
@@ -77,6 +76,7 @@ export const globalStyles = css`
   *::-webkit-scrollbar-track {
     background: var(--sb-track-color);
     border-radius: 4px;
+    overflow: hidden;
   }
 
   *::-webkit-scrollbar-thumb {

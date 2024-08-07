@@ -3,20 +3,15 @@ import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiFootprintFill } from 'react-icons/ri'
 import { css, cx } from '@emotion/css'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../state/store'
-import { ChordSymbol } from '../../model/types'
-import { chordsSlice } from '../../state/chords'
-import { TRANSITION_MAP } from '../../model/constants'
-import { isNil } from '../../model/isNil'
+import { isNil } from '../../../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
-import { AppState } from '../../state/types'
-import { useOnEscape } from './useOnEscape'
-import { useChord } from '../../modelHooks'
+import { useOnEscape } from '../../useOnEscape'
+import { Transition, TransitionCategory } from '../../../../model/types'
 
 export type TransitionButtonProps = {
-  barId: string
-  chordId: string
+  transition?: Transition
+  categories: TransitionCategory[]
+  onChange: (transition: Transition | undefined) => void
 }
 
 const containerStyle = css`
@@ -126,30 +121,23 @@ const popoverStyle = css`
   background-color: #181818;
   border-radius: 12px;
   width: 280px;
-  height: 340px;
+  height: auto;
+  max-height: 340px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
 
 export const TransitionButton: FC<TransitionButtonProps> = ({
-  chordId,
-  barId,
+  transition,
+  categories,
+  onChange,
 }) => {
   const [isOpen, setOpen] = useState(false)
-  const chord = useChord(chordId)
-  const transition = chord?.transitionId
-    ? TRANSITION_MAP[chord.transitionId]
-    : undefined
 
-  const dispatch = useDispatch<AppDispatch>()
   const close = () => setOpen(false)
   const toggle = () => setOpen(!isOpen)
   const onTransitionDeleted = () => {
-    dispatch(
-      chordsSlice.actions.updateChord({
-        chord: { id: chordId, transitionId: undefined },
-      }),
-    )
+    onChange(undefined)
     close()
   }
 
@@ -171,10 +159,10 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
         >
           <div className={popoverStyle}>
             <TransitionSelectorList
-              isOpen={isOpen}
               setOpen={setOpen}
-              barId={barId}
-              chordId={chordId}
+              onChange={onChange}
+              transition={transition}
+              categories={categories}
             />
           </div>
         </ArrowContainer>

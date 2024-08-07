@@ -7,10 +7,13 @@ import { AppState } from '../types'
 
 export function getNextChord(
   state: AppState,
-  progressionId: string,
-  barId: string,
-  chordId: string,
+  progressionId: string | undefined,
+  barId: string | undefined,
+  chordId: string | undefined,
 ): ChordSymbol | undefined {
+  if (isNil(progressionId) || isNil(barId) || isNil(chordId)) {
+    return undefined
+  }
   const progression = progressionsSlice.selectors.getProgression(
     state,
     progressionId,

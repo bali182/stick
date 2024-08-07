@@ -4,6 +4,7 @@ import {
   NOTE_BY_INDEX,
 } from './constants'
 import { getPitchedNoteParts } from './getPitchedNoteParts'
+import { isNil } from './isNil'
 import { Accidental, BaseNoteName, NoteIndex, Note, PitchedNote } from './types'
 
 export function removeByKey<T>(
@@ -23,9 +24,12 @@ export function removeByKeys<T>(
 }
 
 export function getPossiblePitches(
-  note: Note,
-  range: PitchedNote[],
+  note: Note | undefined,
+  range: PitchedNote[] | undefined,
 ): PitchedNote[] {
+  if (isNil(note) || isNil(range)) {
+    return []
+  }
   return range
     .filter((pitchedNote) => {
       const [possibleNote] = getPitchedNoteParts(pitchedNote)

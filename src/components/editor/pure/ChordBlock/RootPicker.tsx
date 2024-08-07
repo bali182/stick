@@ -1,21 +1,26 @@
 import { FC, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../state/types'
-import { ChordSymbol } from '../../model/types'
-import { chordsSlice } from '../../state/chords'
 import { css } from '@emotion/css'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
-import { NoteCountSelectorList } from './NoteCountSelectorList'
-import { useActiveProgression, useChord } from '../../modelHooks'
+import { PitchedNote } from '../../../../model/types'
+import { RootSelectorList } from './RootSelectorList'
 
-export type NoteCountPickerProps = {
-  chordId: string
+export type RootPickerProps = {
+  root: PitchedNote
+  values: PitchedNote[]
+  onChange: (root: PitchedNote) => void
 }
 
-const noteCountPickerStyle = css`
+const rootPickerStyle = css`
   cursor: pointer;
+  padding: 0px 6px;
+  border-radius: 6px;
   color: #ffffffbb;
-  &:hover {
+  border: none;
+  background-color: transparent;
+  &:hover,
+  &:focus {
+    border: none;
+    background-color: #ffffff40;
     color: #ffffff;
   }
 `
@@ -23,20 +28,21 @@ const noteCountPickerStyle = css`
 const popoverStyle = css`
   background-color: #181818;
   border-radius: 12px;
-  width: 280px;
+  width: 160px;
   height: 140px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
 `
 
-export const NoteCountPicker: FC<NoteCountPickerProps> = ({ chordId }) => {
+export const RootPicker: FC<RootPickerProps> = ({ root, values, onChange }) => {
   const [isOpen, setOpen] = useState(false)
   const onClose = () => setOpen(false)
   const onOpen = () => setOpen(true)
 
-  const progression = useActiveProgression()
-  const chord = useChord(chordId)
-  const noteCount = chord?.noteCount ?? progression?.noteCount!
+  const _onChange = (root: PitchedNote) => {
+    onChange(root)
+    onClose()
+  }
 
   return (
     <Popover
@@ -53,14 +59,18 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({ chordId }) => {
           arrowSize={10}
         >
           <div className={popoverStyle}>
-            <NoteCountSelectorList setOpen={setOpen} chordId={chordId} />
+            <RootSelectorList
+              values={values}
+              root={root}
+              onChange={_onChange}
+            />
           </div>
         </ArrowContainer>
       )}
     >
-      <span className={noteCountPickerStyle} onClick={onOpen}>
-        {noteCount} Notes
-      </span>
+      <button className={rootPickerStyle} onClick={onOpen}>
+        Root: {root}
+      </button>
     </Popover>
   )
 }

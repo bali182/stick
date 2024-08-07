@@ -1,13 +1,6 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../state/store'
-import { Bar } from '../../model/types'
 import { FiPlusSquare } from 'react-icons/fi'
-import { nanoid } from 'nanoid'
-import { barsSlice } from '../../state/bars'
-import { progressionsSlice } from '../../state/progressions'
-import { useActiveProgression } from '../../modelHooks'
 
 const barBlockStyle = css`
   display: flex;
@@ -17,7 +10,7 @@ const barBlockStyle = css`
   border-radius: 10px;
   border: 2px dashed #ffffff30;
   background: transparent;
-  height: 170px;
+  height: 183px;
   overflow: hidden;
   transition: border-color 0.2s ease, background-color 0.2s ease;
   cursor: pointer;
@@ -51,23 +44,13 @@ const addButtonStyle = css`
 
 const addBarIconStyle = css``
 
-export const AddBarBlock: FC = () => {
-  const progression = useActiveProgression()
-  const dispatch = useDispatch<AppDispatch>()
+export type AddBarBlockProps = {
+  onClick: () => void
+}
 
-  const onAddBar = () => {
-    const bar: Bar = { id: nanoid(), chords: [] }
-    dispatch(barsSlice.actions.createBar({ bar }))
-    dispatch(
-      progressionsSlice.actions.addBars({
-        progressionId: progression?.id!,
-        barIds: [bar.id],
-      }),
-    )
-  }
-
+export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
   return (
-    <div className={barBlockStyle} onClick={onAddBar}>
+    <div className={barBlockStyle} onClick={onClick}>
       <div className={addButtonStyle}>
         <FiPlusSquare className={addBarIconStyle} /> Bar
       </div>

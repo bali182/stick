@@ -1,4 +1,5 @@
 import { toAlphaTex } from '../../alphaTex/toAlphaTex'
+import { isNil } from '../../model/isNil'
 import { progressionsSlice } from '../progressions'
 import { AppState } from '../types'
 import { getAlphaTexBass } from './getAlphaTexBass'

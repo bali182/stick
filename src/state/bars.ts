@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { Bar } from '../model/types'
 import { removeByKey } from '../model/utils'
 import { initialState } from './initialState'
+import { isNil } from '../model/isNil'
 
 export type CrateBarPayload = { bar: Bar }
 export type DeleteBarPayload = { barId: string }
@@ -52,7 +53,10 @@ export const barsSlice = createSlice({
     },
   },
   selectors: {
-    getBar: (state, id: string): Bar | undefined => {
+    getBar: (state, id: string | undefined): Bar | undefined => {
+      if (isNil(id)) {
+        return undefined
+      }
       return state[id]
     },
   },

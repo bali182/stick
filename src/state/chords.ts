@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { ChordSymbol, HasId } from '../model/types'
 import { removeByKey, removeByKeys } from '../model/utils'
 import { initialState } from './initialState'
+import { isNil } from '../model/isNil'
 
 export type CreateChordPayload = { chord: ChordSymbol }
 export type UpdateChordPayload = {
@@ -35,7 +36,10 @@ export const chordsSlice = createSlice({
       removeByKeys(payload.chordIds, state),
   },
   selectors: {
-    getChord: (state, id: string): ChordSymbol | undefined => {
+    getChord: (state, id: string | undefined): ChordSymbol | undefined => {
+      if (isNil(id)) {
+        return undefined
+      }
       return state[id]
     },
   },

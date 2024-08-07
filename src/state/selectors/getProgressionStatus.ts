@@ -51,7 +51,7 @@ const ALL_NEGATIVE_RESULT: ProgressionsStatus = {
 
 export function getProgressionStatus(
   state: AppState,
-  progressionId: string,
+  progressionId?: string,
 ): ProgressionsStatus {
   if (isNil(progressionId)) {
     return ALL_NEGATIVE_RESULT
