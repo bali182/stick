@@ -17,6 +17,7 @@ const rootPickerStyle = css`
   color: #ffffffbb;
   border: none;
   background-color: transparent;
+  white-space: nowrap;
   &:hover,
   &:focus {
     border: none;
