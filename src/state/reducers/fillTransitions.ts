@@ -37,8 +37,9 @@ export function fillTransitionsReducer(
         new Set([...(progression.tags ?? []), ...(from.tags ?? [])]),
       )
 
-      const trns = TRANSITIONS.filter((t) => canTransition(from, to, tuning, t))
-        .filter((transition) => transition.steps.length === preferredNoteCount)
+      const trns = TRANSITIONS.filter((t) =>
+        canTransition(from, to, tuning, t, preferredNoteCount),
+      )
         .filter((transition) => tags.every((t) => transition.tags.includes(t)))
         .map((transition): [Transition, number] => {
           const weight =
