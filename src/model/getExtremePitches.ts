@@ -4,7 +4,8 @@ import { DOUBLE_OCTAVE_UP } from './constants'
 
 export function getExtremePitches(pitches: PitchedNote[]): [number, number] {
   if (pitches.length === 0) {
-    throw new Error(`Needs at least one note, was: ${pitches}`)
+    console.error(`Needs at least one note, was: ${pitches}`)
+    return [-1, -1]
   }
 
   const withHz = pitches.map((p): [PitchedNote, number] => [p, Note.freq(p)!])
