@@ -67,7 +67,8 @@ export function useChordAt(
 ): ChordSymbol | undefined {
   return useSelector<AppState, ChordSymbol | undefined>((state) => {
     const bar = barsSlice.selectors.getBar(state, barId)
-    if (bar?.chords?.length ?? -1 <= index) {
+    const length = bar?.chords?.length ?? -1
+    if (index >= length) {
       return undefined
     }
     const chordId = bar?.chords[index]!

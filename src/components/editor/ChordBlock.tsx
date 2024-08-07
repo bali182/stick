@@ -39,6 +39,7 @@ import { getPossiblePitches } from '../../model/utils'
 import { getNoteRange } from '../../model/getNoteRange'
 import { TransitionButton } from './pure/ChordBlock/TransitionButton'
 import { MissingChordBlock } from './pure/ChordBlock/MissingChordBlock'
+import { canTransition } from '../../model/canTransition'
 
 export type ChordBlockProps = {
   barId: string
@@ -69,11 +70,27 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
   }
 
   const onNoteCountChange = (noteCount: number | undefined) => {
-    onChordChange({ noteCount })
+    onChordChange({
+      noteCount,
+      ...(!isNil(transition) && noteCount !== transition?.steps.length
+        ? { transitionId: undefined }
+        : {}),
+    })
   }
 
   const onRootChange = (root: PitchedNote) => {
-    onChordChange({ root })
+    if (isNil(chord)) {
+      return
+    }
+
+    const updated: ChordSymbol = { ...chord, root }
+    if (
+      !isNil(transition) &&
+      !canTransition(updated, nextChord, tuning, transition, noteCnt)
+    ) {
+      updated.transitionId = undefined
+    }
+    onChordChange(updated)
   }
 
   const onTransitionChange = (transition?: Transition) => {
