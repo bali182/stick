@@ -677,11 +677,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   flex-direction: row;
 `,I5=E`
   position: relative;
-  top: -6px;
+  top: -4px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 `,O5=E`
   display: flex;
   width: 100%;
@@ -696,7 +696,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
 `,F5=E`
   height: 36px;
-  width: 1px;
+  width: 16px;
 `,D5=({children:i})=>k.jsx("div",{className:M5,children:i}),A5=({children:i})=>k.jsx("div",{className:O5,children:i}),V5=({children:i})=>k.jsxs("div",{className:I5,children:[" ",i]}),H5=()=>k.jsx("div",{className:F5}),W5=({icon:i,visible:e,onClick:t})=>k.jsx(i,{className:L5,onClick:t,style:{visibility:Q(e)||e?"visible":"hidden"}}),U5=i=>i,z5=i=>"notes",G5=i=>"Select root note",$5=i=>i.toString(),Y5=i=>i,j5=(i,e)=>!0,X5=({onChange:i,values:e})=>{const t=T.useMemo(()=>[e],[e]);return k.jsx(vd,{categories:t,canSearch:!1,canCreate:!1,onItemClick:i,getChildren:U5,getCategoryKey:z5,getCategoryLabel:G5,getItemKey:$5,getItemLabel:Y5,matches:j5,noHitsLabel:""})},q5=E`
   cursor: pointer;
   padding: 0px 6px;
@@ -762,7 +762,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   display: inline;
   font-weight: bold;
   color: #ffffffde;
-  padding: 2px;
+  padding: 0px 2px;
   font-size: 2em;
   text-align: center;
   text-shadow: 0px 0px 0px transparent;
