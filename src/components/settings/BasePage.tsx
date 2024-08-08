@@ -41,9 +41,9 @@ export const BasePage: FC<PageProps> = () => {
     )
   }
 
-  const onNameChange = (name: string) => {
-    updateProgression({ name })
-  }
+  // const onNameChange = (name: string) => {
+  //   updateProgression({ name })
+  // }
 
   const onBpmChange = (bpm: string) => {
     updateProgression({ bpm: parseInt(bpm) })
@@ -59,13 +59,13 @@ export const BasePage: FC<PageProps> = () => {
 
   return (
     <>
-      <InputSection
+      {/* <InputSection
         name="Progression name"
         description="Name of your progression, helps you identify and find it later."
         Editor={TextInput}
         onChange={onNameChange}
         value={progression?.name ?? ''}
-      />
+      /> */}
       <InputSection
         name="Tempo"
         description="Tempo of the project in BPM (beats per minute)"

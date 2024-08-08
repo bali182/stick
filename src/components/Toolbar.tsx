@@ -8,7 +8,7 @@ const toolbarStyle = css`
   align-items: center;
   height: 100px;
   width: 100%;
-  padding: 14px 50px;
+  padding: 14px 60px;
 `
 
 export const Toolbar: FC<PropsWithChildren> = ({ children }) => {
