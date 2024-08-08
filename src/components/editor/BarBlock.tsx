@@ -1,12 +1,8 @@
-import { css } from '@emotion/css'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { ChordBlock } from './ChordBlock'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ChordSymbol } from '../../model/types'
-import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
-import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { nanoid } from 'nanoid'
-import { AppState } from '../../state/types'
 import { barsSlice } from '../../state/bars'
 import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
@@ -15,6 +11,8 @@ import { useActiveProgression, useBar, useChordAt } from '../../modelHooks'
 import { PureBarBlock } from './pure/BarBlock/PureBarBlock'
 import { isNil } from '../../model/isNil'
 import { MissingBarBlock } from './pure/BarBlock/MissingBarBlock'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 export type BarBlockProps = {
   barId: string
@@ -27,6 +25,14 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   const firstChord = useChordAt(barId, 0)
 
   const dispatch = useDispatch<AppDispatch>()
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: barId })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
 
   const onDeleteBar = () => {
     const chordIds = bar?.chords ?? []
@@ -86,6 +92,10 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
       onAddFirst={onAddFirstChord}
       onAddSecond={onAddSecondChord}
       onDelete={onDeleteBar}
+      ref={setNodeRef}
+      listeners={listeners}
+      attributes={attributes}
+      style={style}
     >
       {(bar?.chords ?? []).map((chordId, i) => (
         <ChordBlock barId={barId} chordId={chordId} key={i} />

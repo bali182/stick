@@ -1,11 +1,14 @@
+import { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core'
 import { css } from '@emotion/css'
-import { FC, useState, ReactNode, Children } from 'react'
+import { useState, Children, forwardRef, HTMLProps } from 'react'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
+import { RiDraggable } from 'react-icons/ri'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
 
-export type PureBarBlockProps = {
+export type PureBarBlockProps = HTMLProps<HTMLDivElement> & {
   count: number
-  children: ReactNode
+  attributes: DraggableAttributes
+  listeners: DraggableSyntheticListeners
   onDelete: () => void
   onAddFirst: () => void
   onAddSecond: () => void
@@ -36,13 +39,30 @@ const chordsContainerStyle = css`
   position: relative;
 `
 
-const barCountContainerStyle = css`
+const footerStyle = css`
   display: flex;
   padding: 6px 10px;
   align-items: center;
   justify-content: space-between;
   color: #fff;
   font-size: 1em;
+`
+
+const dragAreaStyle = css`
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 3px;
+  cursor: move;
+  &:hover {
+    background-color: #ffffff20;
+  }
+`
+
+const dragIconStyle = css`
+  transform: rotate(90deg);
 `
 
 const addChordOverlayStyle = css`
@@ -99,55 +119,75 @@ const trashIconStyle = css`
   }
 `
 
-export const PureBarBlock: FC<PureBarBlockProps> = ({
-  count,
-  children: _children,
-  onAddFirst,
-  onAddSecond,
-  onDelete,
-}) => {
-  const [isHovered, setHovered] = useState(false)
-  const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
+export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
+  (
+    {
+      count,
+      children: _children,
+      onAddFirst,
+      onAddSecond,
+      onDelete,
+      listeners,
+      attributes,
+      style,
+    },
+    ref,
+  ) => {
+    const [isHovered, setHovered] = useState(false)
+    const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
 
-  const onMouseEnter = () => setHovered(true)
-  const onMouseLeave = () => setHovered(false)
-  const onChordsAreaMouseEnter = () => setChordsAreaHovered(true)
-  const onChordsAreaMouseLeave = () => setChordsAreaHovered(false)
+    const onMouseEnter = () => setHovered(true)
+    const onMouseLeave = () => setHovered(false)
+    const onChordsAreaMouseEnter = () => setChordsAreaHovered(true)
+    const onChordsAreaMouseLeave = () => setChordsAreaHovered(false)
 
-  const children = Children.toArray(_children)
+    const children = Children.toArray(_children)
 
-  return (
-    <div
-      className={barBlockStyle}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+    return (
       <div
-        className={chordsContainerStyle}
-        onMouseEnter={onChordsAreaMouseEnter}
-        onMouseLeave={onChordsAreaMouseLeave}
+        ref={ref}
+        className={barBlockStyle}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        style={style}
+        {...attributes}
       >
-        {children}
-        {children.length === 1 && isChordsAreaHovered ? (
-          <div className={addChordOverlayStyle}>
-            <LuSplitSquareHorizontal
-              className={addChordCloneStyle}
-              onClick={onAddSecond}
-            />
+        <div
+          className={chordsContainerStyle}
+          onMouseEnter={onChordsAreaMouseEnter}
+          onMouseLeave={onChordsAreaMouseLeave}
+        >
+          {children}
+          {children.length === 1 && isChordsAreaHovered ? (
+            <div className={addChordOverlayStyle}>
+              <LuSplitSquareHorizontal
+                className={addChordCloneStyle}
+                onClick={onAddSecond}
+              />
+            </div>
+          ) : null}
+          {children.length === 0 ? (
+            <div className={emptyBarAddButtonStyle} onClick={onAddFirst}>
+              <FiPlusSquare className={addFirstChordStyle} /> Chord
+            </div>
+          ) : null}
+        </div>
+        <div className={footerStyle}>
+          <span>&#65283;{count}</span>
+          <div
+            style={{ opacity: isHovered ? 1 : 0 }}
+            className={dragAreaStyle}
+            {...listeners}
+          >
+            <RiDraggable className={dragIconStyle} />
           </div>
-        ) : null}
-        {children.length === 0 ? (
-          <div className={emptyBarAddButtonStyle} onClick={onAddFirst}>
-            <FiPlusSquare className={addFirstChordStyle} /> Chord
-          </div>
-        ) : null}
+          <FiTrash2
+            style={{ visibility: isHovered ? 'visible' : 'hidden' }}
+            className={trashIconStyle}
+            onClick={onDelete}
+          />
+        </div>
       </div>
-      <div className={barCountContainerStyle}>
-        <span>&#65283;{count}</span>
-        {isHovered ? (
-          <FiTrash2 className={trashIconStyle} onClick={onDelete} />
-        ) : null}
-      </div>
-    </div>
-  )
-}
+    )
+  },
+)
