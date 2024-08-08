@@ -94,13 +94,14 @@ const nameInputStyle = css`
     background-color: #ffffff30;
   }
   &:focus {
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #ffffff50;
   }
 `
 
 const buttonIconStyle = css`
   font-size: 1.2em;
+  flex-shrink: 0;
 `
 
 export const ProjectToolBar: FC = () => {
@@ -151,7 +152,7 @@ export const ProjectToolBar: FC = () => {
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      (e.target as HTMLInputElement).blur()
+      ;(e.target as HTMLInputElement).blur()
     }
   }
 

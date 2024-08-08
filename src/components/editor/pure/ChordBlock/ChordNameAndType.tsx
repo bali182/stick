@@ -100,7 +100,10 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
   onChange,
   chords = ALL_CHORD_NAMES,
 }) => {
-  const fireOnChange = (value: string) => {
+  const fireOnChange = (value: string | undefined) => {
+    if (isNil(value)) {
+      return
+    }
     const match = chords.find((c) => c.toLowerCase() === value.toLowerCase())
     if (isNil(match)) {
       setText(chord)

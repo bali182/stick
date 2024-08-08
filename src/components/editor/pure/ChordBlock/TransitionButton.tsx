@@ -170,7 +170,11 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
     >
       <div className={containerStyle}>
         {isNil(transition) && (
-          <button className={transitionButtonStyle} onClick={toggle}>
+          <button
+            className={transitionButtonStyle}
+            onClick={toggle}
+            tabIndex={-1}
+          >
             <div className={walkStyle}>
               <RiFootprintFill className={addTransitionIconStyle} /> Walk
             </div>
@@ -178,13 +182,18 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
         )}
         {!isNil(transition) && (
           <div className={transitionButtonStyle}>
-            <button className={transitionNameBtnStyle} onClick={toggle}>
+            <button
+              className={transitionNameBtnStyle}
+              onClick={toggle}
+              tabIndex={-1}
+            >
               {transition.name}
             </button>
-            {/* <button className={sideButtonStyle}>
-              <FiRefreshCw className={buttonIconStyle} />
-            </button> */}
-            <button className={removeButtonStyle} onClick={onTransitionDeleted}>
+            <button
+              className={removeButtonStyle}
+              onClick={onTransitionDeleted}
+              tabIndex={-1}
+            >
               <FiTrash2 className={buttonIconStyle} />
             </button>
           </div>
