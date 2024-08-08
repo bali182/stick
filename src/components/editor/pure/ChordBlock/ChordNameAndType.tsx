@@ -13,8 +13,10 @@ import { css, cx } from '@emotion/css'
 import { RiSearchLine } from 'react-icons/ri'
 import { ChordType, Note } from '../../../../model/types'
 import { isNil } from '../../../../model/isNil'
+import { EditorIds } from '../../EditorIds'
 
 export type ChordNameAndTypeProps = {
+  chordId: string
   chord: string
   onChange: (name: Note, type: ChordType) => void
   chords?: string[]
@@ -94,6 +96,7 @@ const getText = (chord: string) => [chord]
 
 export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
   chord,
+  chordId,
   onChange,
   chords = ALL_CHORD_NAMES,
 }) => {
@@ -132,6 +135,7 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
     getInputProps,
     getMenuProps,
     getItemProps,
+    closeMenu,
   } = useCombobox({
     inputValue: text,
     items: filteredChords,
@@ -147,6 +151,7 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
 
   const onBlur = () => {
     fireOnChange(text)
+    closeMenu()
   }
 
   const onEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -164,7 +169,10 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
     <div className={containerStyle}>
       <div className={inputContainerStyle}>
         <input
-          {...getInputProps({ onKeyDown: onEnter })}
+          {...getInputProps({
+            onKeyDown: onEnter,
+            id: EditorIds.chordAndTypeInput(chordId),
+          })}
           className={inputStyle}
           onBlur={onBlur}
           onFocus={onFocus}

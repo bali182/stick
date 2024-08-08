@@ -144,6 +144,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
       </ChordBlockHeader>
       <ChordBlockContent>
         <ChordNameAndType
+          chordId={chordId}
           chord={getChordSymbolName(chord)}
           onChange={onNoteAndTypeChange}
         />

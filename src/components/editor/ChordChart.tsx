@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -28,6 +28,7 @@ import { progressionsSlice } from '../../state/progressions'
 import { AddBarBlock } from './pure/ChordChart/AddBarBlock'
 import { BarDragFeedback } from './pure/BarBlock/BarDragFeedback'
 import { PureChordChart } from './pure/ChordChart/PureChordChart'
+import { EditorIds } from './EditorIds'
 
 export const ChordChart: FC = () => {
   const progression = useActiveProgression()
@@ -42,6 +43,14 @@ export const ChordChart: FC = () => {
   )
 
   const [activeId, setActiveId] = useState<string>()
+  const [newBarId, setNewBarId] = useState<string>()
+
+  useEffect(() => {
+    if (!isNil(newBarId)) {
+      document.getElementById(EditorIds.addChordButton(newBarId))?.focus()
+      setNewBarId(undefined)
+    }
+  }, [newBarId])
 
   const onAddBar = () => {
     if (isNil(progression)) {
@@ -55,6 +64,7 @@ export const ChordChart: FC = () => {
         updates: { bars: [...progression.bars, bar.id] },
       }),
     )
+    setNewBarId(bar.id)
   }
 
   const onDragEnd = (event: DragEndEvent) => {

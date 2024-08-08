@@ -1,6 +1,7 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { FiPlusSquare } from 'react-icons/fi'
+import { EditorIds } from '../../EditorIds'
 
 const barBlockStyle = css`
   display: flex;
@@ -50,7 +51,11 @@ export type AddBarBlockProps = {
 
 export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
   return (
-    <button className={barBlockStyle} onClick={onClick}>
+    <button
+      className={barBlockStyle}
+      onClick={onClick}
+      id={EditorIds.addBarButton}
+    >
       <div className={addButtonStyle}>
         <FiPlusSquare className={addBarIconStyle} /> Bar
       </div>

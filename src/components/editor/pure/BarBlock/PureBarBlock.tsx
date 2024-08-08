@@ -5,8 +5,10 @@ import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
 import { RiDraggable } from 'react-icons/ri'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { PiCopyBold } from 'react-icons/pi'
+import { EditorIds } from '../../EditorIds'
 
 export type PureBarBlockProps = HTMLProps<HTMLDivElement> & {
+  barId: string
   count: number
   attributes: DraggableAttributes
   listeners: DraggableSyntheticListeners
@@ -109,10 +111,15 @@ const emptyBarAddButtonStyle = css`
   border: 2px dashed #ffffff30;
   background-color: #ffffff15;
   cursor: pointer;
+  &:focus,
   &:hover {
     color: #ffffffcc;
     background: #ffffff25;
     border-color: #ffffff60;
+  }
+
+  &:focus {
+    outline: 1px solid white;
   }
 `
 
@@ -143,6 +150,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
   (
     {
       count,
+      barId,
       children: _children,
       onAddFirst,
       onAddSecond,
@@ -189,7 +197,11 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
             </div>
           ) : null}
           {children.length === 0 ? (
-            <button className={emptyBarAddButtonStyle} onClick={onAddFirst}>
+            <button
+              className={emptyBarAddButtonStyle}
+              onClick={onAddFirst}
+              id={EditorIds.addChordButton(barId)}
+            >
               <FiPlusSquare className={addFirstChordStyle} /> Chord
             </button>
           ) : null}

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { ChordBlock } from './ChordBlock'
 import { useDispatch } from 'react-redux'
 import { ChordSymbol } from '../../model/types'
@@ -13,6 +13,7 @@ import { MissingBarBlock } from './pure/BarBlock/MissingBarBlock'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CloneBarAction, DeleteBarsAction } from '../../state/actionTypes'
+import { EditorIds } from './EditorIds'
 
 export type BarBlockProps = {
   barId: string
@@ -33,6 +34,15 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
     transform: CSS.Transform.toString(transform),
     transition,
   }
+
+  const [newChordId, setNewChordId] = useState<string>()
+
+  useEffect(() => {
+    if (!isNil(newChordId)) {
+      document.getElementById(EditorIds.chordAndTypeInput(newChordId))?.focus()
+      setNewChordId(undefined)
+    }
+  }, [newChordId])
 
   const onDeleteBar = () => {
     const action: DeleteBarsAction = {
@@ -59,6 +69,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
         updates: { chords: [...bar.chords, chord.id] },
       }),
     )
+    setNewChordId(chord.id)
   }
 
   const onAddSecondChord = () => {
@@ -91,6 +102,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
         updates: { chords: [...bar.chords, secondChord.id] },
       }),
     )
+    setNewChordId(secondChord.id)
   }
 
   const onClone = () => {
@@ -110,6 +122,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
 
   return (
     <PureBarBlock
+      barId={barId}
       count={count}
       onAddFirst={onAddFirstChord}
       onAddSecond={onAddSecondChord}
