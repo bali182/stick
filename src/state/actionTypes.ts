@@ -20,6 +20,15 @@ export type ClearTransitionsPayload = {
 export type CreateProgressionFromTemplatePayload = {
   template: ProgressionTemplate
 }
+export type DeleteChordsPayload = {
+  chordIds: string[]
+}
+export type DeleteBarsPayload = {
+  barIds: string[]
+}
+export type DeleteProgressionsPayload = {
+  progressionIds: string[]
+}
 export type FillTransitionsAction = PayloadAction<
   FillTransitionsPayload,
   'global/fillTransitions'
@@ -32,6 +41,18 @@ export type CreateProgressionFromTemplateAction = PayloadAction<
   CreateProgressionFromTemplatePayload,
   'global/createProgressionFromTemplate'
 >
+export type DeleteChordsAction = PayloadAction<
+  DeleteChordsPayload,
+  'global/deleteChords'
+>
+export type DeleteBarsAction = PayloadAction<
+  DeleteBarsPayload,
+  'global/deleteBars'
+>
+export type DeleteProgressionsAction = PayloadAction<
+  DeleteProgressionsPayload,
+  'global/deleteProgressions'
+>
 export type GlobalActionTypes =
   | FillTransitionsAction
   | ClearTransitionsAction
@@ -43,3 +64,6 @@ export type AppActions =
   | ConfigActions
   | ProgressionsActions
   | GlobalActionTypes
+  | DeleteChordsAction
+  | DeleteBarsAction
+  | DeleteProgressionsAction

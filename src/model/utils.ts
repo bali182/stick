@@ -23,6 +23,23 @@ export function removeByKeys<T>(
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
 
+export function mapObject<I, O>(
+  data: Record<string, I>,
+  transform: (
+    input: I,
+    index: number,
+    key: string,
+    data: Record<string, I>,
+  ) => O,
+): Record<string, O> {
+  return Object.entries(data ?? {})
+    .map(([key, value], index): [string, O] => [
+      key,
+      transform(value, index, key, data),
+    ])
+    .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
+}
+
 export function getPossiblePitches(
   note: Note | undefined,
   range: PitchedNote[] | undefined,

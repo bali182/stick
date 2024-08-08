@@ -9,6 +9,7 @@ import { isNil } from '../../model/isNil'
 import { useActiveProgression } from '../../modelHooks'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
+import { DeleteProgressionsAction } from '../../state/actionTypes'
 
 const sectionStyle = css`
   display: flex;
@@ -69,11 +70,11 @@ export const DangerPage: FC<PageProps> = () => {
     if (isNil(progression)) {
       return
     }
-    dispatch(
-      progressionsSlice.actions.deleteProgression({
-        progressionId: progression.id,
-      }),
-    )
+    const action: DeleteProgressionsAction = {
+      type: 'global/deleteProgressions',
+      payload: { progressionIds: [progression.id] },
+    }
+    dispatch(action)
     navigate(Paths.home())
   }
 

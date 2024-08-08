@@ -40,6 +40,7 @@ import { getNoteRange } from '../../model/getNoteRange'
 import { TransitionButton } from './pure/ChordBlock/TransitionButton'
 import { MissingChordBlock } from './pure/ChordBlock/MissingChordBlock'
 import { canTransition } from '../../model/canTransition'
+import { DeleteChordsAction } from '../../state/actionTypes'
 
 export type ChordBlockProps = {
   barId: string
@@ -114,8 +115,11 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
         )
       })
     }
-    dispatch(barsSlice.actions.removeChords({ barId, chordIds: [chordId] }))
-    dispatch(chordsSlice.actions.deleteChord({ chordId }))
+    const action: DeleteChordsAction = {
+      type: 'global/deleteChords',
+      payload: { chordIds: [chordId] },
+    }
+    dispatch(action)
   }
 
   const color = chord?.name ? NOTE_COLORS[chord?.name] : 'transparent'

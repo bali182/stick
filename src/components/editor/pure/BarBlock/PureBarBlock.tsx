@@ -78,6 +78,7 @@ const addChordOverlayStyle = css`
 `
 
 const emptyBarAddButtonStyle = css`
+  height: 138px;
   font-weight: bold;
   color: #ffffffaa;
   padding: 0px 15px;

@@ -64,7 +64,7 @@ function sanitizeIds(template: ProgressionTemplate): ProgressionTemplate {
             id: newId,
             chords: value.chords
               .map((chordId) => keys.get(chordId))
-              .filter((key) => !isNil(key)),
+              .filter((key): key is string => !isNil(key)),
           },
         ]
       },
@@ -76,7 +76,7 @@ function sanitizeIds(template: ProgressionTemplate): ProgressionTemplate {
     id: progId,
     bars: template.progression.bars
       .map((barId) => keys.get(barId))
-      .filter((key) => !isNil(key)),
+      .filter((key): key is string => !isNil(key)),
   }
 
   return { progression, bars, chords }

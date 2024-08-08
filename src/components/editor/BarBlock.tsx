@@ -13,6 +13,7 @@ import { isNil } from '../../model/isNil'
 import { MissingBarBlock } from './pure/BarBlock/MissingBarBlock'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { DeleteBarsAction } from '../../state/actionTypes'
 
 export type BarBlockProps = {
   barId: string
@@ -35,15 +36,11 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   }
 
   const onDeleteBar = () => {
-    const chordIds = bar?.chords ?? []
-    dispatch(
-      progressionsSlice.actions.removeBars({
-        progressionId: progression?.id!,
-        barIds: [barId],
-      }),
-    )
-    dispatch(barsSlice.actions.deleteBar({ barId }))
-    dispatch(chordsSlice.actions.deleteChords({ chordIds }))
+    const action: DeleteBarsAction = {
+      type: 'global/deleteBars',
+      payload: { barIds: [barId] },
+    }
+    dispatch(action)
   }
 
   const onAddFirstChord = () => {
