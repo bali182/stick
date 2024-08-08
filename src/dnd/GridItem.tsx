@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from 'react'
 import {
   StateType,
   useGestureResponder,
-  ResponderEvent
-} from "react-gesture-responder";
-import { animated, interpolate, useSpring } from "react-spring";
-import { GridItemContext } from "./GridItemContext";
+  ResponderEvent,
+} from './gesture-responder'
+import { animated, to, useSpring } from 'react-spring'
+import { GridItemContext } from './GridItemContext'
 
 interface GridItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function GridItem({
@@ -17,12 +17,12 @@ export function GridItem({
   className,
   ...other
 }: GridItemProps) {
-  const context = React.useContext(GridItemContext);
+  const context = React.useContext(GridItemContext)
 
   if (!context) {
     throw Error(
-      "Unable to find GridItem context. Please ensure that GridItem is used as a child of GridDropZone"
-    );
+      'Unable to find GridItem context. Please ensure that GridItem is used as a child of GridDropZone',
+    )
   }
 
   const {
@@ -36,91 +36,91 @@ export function GridItem({
     onMove,
     onEnd,
     grid,
-    dragging: isDragging
-  } = context;
+    dragging: isDragging,
+  } = context
 
-  const { columnWidth, rowHeight } = grid;
-  const dragging = React.useRef(false);
-  const startCoords = React.useRef([left, top]);
+  const { columnWidth, rowHeight } = grid
+  const dragging = React.useRef(false)
+  const startCoords = React.useRef([left, top])
 
   const [styles, set] = useSpring(() => {
     if (mountWithTraverseTarget) {
       // this feels really brittle. unsure of a better
       // solution for now.
 
-      const mountXY = mountWithTraverseTarget;
+      const mountXY = mountWithTraverseTarget
 
-      endTraverse();
+      endTraverse()
 
       return {
         xy: mountXY,
         immediate: true,
-        zIndex: "1",
+        zIndex: '1',
         scale: 1.1,
-        opacity: 0.8
-      };
+        opacity: 0.8,
+      }
     }
 
     return {
       xy: [left, top],
       immediate: true,
-      zIndex: "0",
+      zIndex: '0',
       scale: 1,
-      opacity: 1
-    };
-  });
+      opacity: 1,
+    }
+  })
 
   // handle move updates imperatively
-  function handleMove(state: StateType, e: ResponderEvent) {
-    const x = startCoords.current[0] + state.delta[0];
-    const y = startCoords.current[1] + state.delta[1];
+  function handleMove(state: StateType, _e: ResponderEvent) {
+    const x = startCoords.current[0] ?? 0 + state.delta[0]
+    const y = startCoords.current[1] ?? 0 + state.delta[1]
     set({
       xy: [x, y],
-      zIndex: "1",
+      zIndex: '1',
       immediate: true,
       opacity: 0.8,
-      scale: 1.1
-    });
+      scale: 1.1,
+    })
 
-    onMove(state, x, y);
+    onMove(state, x, y)
   }
 
   // handle end of drag
   function handleEnd(state: StateType) {
-    const x = startCoords.current[0] + state.delta[0];
-    const y = startCoords.current[1] + state.delta[1];
-    dragging.current = false;
-    onEnd(state, x, y);
+    const x = startCoords.current[0] ?? 0 + state.delta[0]
+    const y = startCoords.current[1] ?? 0 + state.delta[1]
+    dragging.current = false
+    onEnd(state, x, y)
   }
 
   const { bind } = useGestureResponder(
     {
-      onMoveShouldSet: state => {
+      onMoveShouldSet: (_state) => {
         if (disableDrag) {
-          return false;
+          return false
         }
 
-        onStart();
+        onStart()
 
-        startCoords.current = [left, top];
-        dragging.current = true;
-        return true;
+        startCoords.current = [left, top]
+        dragging.current = true
+        return true
       },
       onMove: handleMove,
       onTerminationRequest: () => {
         if (dragging.current) {
-          return false;
+          return false
         }
 
-        return true;
+        return true
       },
       onTerminate: handleEnd,
-      onRelease: handleEnd
+      onRelease: handleEnd,
     },
     {
-      enableMouse: true
-    }
-  );
+      enableMouse: true,
+    },
+  )
 
   /**
    * Update our position when left or top
@@ -131,49 +131,49 @@ export function GridItem({
     if (!dragging.current) {
       set({
         xy: [left, top],
-        zIndex: "0",
+        zIndex: '0',
         opacity: 1,
         scale: 1,
-        immediate: false
-      });
+        immediate: false,
+      })
     }
-  }, [dragging.current, left, top]);
+  }, [dragging.current, left, top])
 
   const props = {
     className:
-      "GridItem" +
-      (isDragging ? " dragging" : "") +
-      (!!disableDrag ? " disabled" : "") +
+      'GridItem' +
+      (isDragging ? ' dragging' : '') +
+      (!!disableDrag ? ' disabled' : '') +
       className
         ? ` ${className}`
-        : "",
+        : '',
     ...bind,
     style: {
-      cursor: !!disableDrag ? "grab" : undefined,
+      cursor: !!disableDrag ? 'grab' : undefined,
       zIndex: styles.zIndex,
-      position: "absolute",
-      width: columnWidth + "px",
+      position: 'absolute',
+      width: columnWidth + 'px',
       opacity: styles.opacity,
-      height: rowHeight + "px",
-      boxSizing: "border-box",
-      transform: interpolate(
+      height: rowHeight + 'px',
+      boxSizing: 'border-box',
+      transform: to(
         [styles.xy, styles.scale],
         (xy: any, s: any) =>
-          `translate3d(${xy[0]}px, ${xy[1]}px, 0) scale(${s})`
+          `translate3d(${xy[0]}px, ${xy[1]}px, 0) scale(${s})`,
       ),
-      ...style
+      ...style,
     },
-    ...other
-  };
+    ...other,
+  } as const
 
-  return typeof children === "function" ? (
-    children(animated.div, props, {
+  if (typeof children === 'function') {
+    return (children as Function)(animated.div, props, {
       dragging: isDragging,
       disabled: !!disableDrag,
       i,
-      grid
+      grid,
     })
-  ) : (
-    <animated.div {...props}>{children}</animated.div>
-  );
+  }
+
+  return <animated.div {...props}>{children}</animated.div>
 }

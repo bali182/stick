@@ -1,4 +1,4 @@
-import { GridSettings } from "./grid-types";
+import { GridSettings } from './grid-types'
 
 /**
  * Get the active drag position given its initial
@@ -14,17 +14,17 @@ export function getDragPosition(
   grid: GridSettings,
   dx: number,
   dy: number,
-  center?: boolean
+  center?: boolean,
 ) {
   const {
-    xy: [left, top]
-  } = getPositionForIndex(index, grid);
+    xy: [left, top],
+  } = getPositionForIndex(index, grid)
   return {
     xy: [
-      left + dx + (center ? grid.columnWidth / 2 : 0),
-      top + dy + (center ? grid.rowHeight / 2 : 0)
-    ]
-  };
+      left ?? 0 + dx + (center ? grid.columnWidth / 2 : 0),
+      top ?? 0 + dy + (center ? grid.rowHeight / 2 : 0),
+    ],
+  }
 }
 
 /**
@@ -38,15 +38,15 @@ export function getDragPosition(
 export function getPositionForIndex(
   i: number,
   { boxesPerRow, rowHeight, columnWidth }: GridSettings,
-  traverseIndex?: number | false | null
+  traverseIndex?: number | false | null,
 ) {
   const index =
-    typeof traverseIndex == "number" ? (i >= traverseIndex ? i + 1 : i) : i;
-  const x = (index % boxesPerRow) * columnWidth;
-  const y = Math.floor(index / boxesPerRow) * rowHeight;
+    typeof traverseIndex == 'number' ? (i >= traverseIndex ? i + 1 : i) : i
+  const x = (index % boxesPerRow) * columnWidth
+  const y = Math.floor(index / boxesPerRow) * rowHeight
   return {
-    xy: [x, y]
-  };
+    xy: [x, y],
+  }
 }
 
 /**
@@ -61,11 +61,11 @@ export function getIndexFromCoordinates(
   x: number,
   y: number,
   { rowHeight, boxesPerRow, columnWidth }: GridSettings,
-  count: number
+  count: number,
 ) {
   const index =
-    Math.floor(y / rowHeight) * boxesPerRow + Math.floor(x / columnWidth);
-  return index >= count ? count : index;
+    Math.floor(y / rowHeight) * boxesPerRow + Math.floor(x / columnWidth)
+  return index >= count ? count : index
 }
 
 /**
@@ -82,10 +82,10 @@ export function getTargetIndex(
   grid: GridSettings,
   count: number,
   dx: number,
-  dy: number
+  dy: number,
 ) {
   const {
-    xy: [cx, cy]
-  } = getDragPosition(startIndex, grid, dx, dy, true);
-  return getIndexFromCoordinates(cx, cy, grid, count);
+    xy: [cx, cy],
+  } = getDragPosition(startIndex, grid, dx, dy, true)
+  return getIndexFromCoordinates(cx ?? 0, cy ?? 0, grid, count)
 }

@@ -1,45 +1,45 @@
-import * as React from "react";
-import { Bounds } from "./use-measure";
-import { GridSettings, TraverseType } from "./grid-types";
-import { getPositionForIndex, getIndexFromCoordinates } from "./helpers";
+import * as React from 'react'
+import { Bounds } from './use-measure'
+import { GridSettings, TraverseType } from './grid-types'
+import { getPositionForIndex, getIndexFromCoordinates } from './helpers'
 
 interface RegisterOptions extends Bounds {
   /** The number of documents in each grid */
-  count: number;
+  count: number
   /** grid info (boxes per row) */
-  grid: GridSettings;
+  grid: GridSettings
   /** whether the dropzone is disabled for dropping */
-  disableDrop: boolean;
-  remeasure: () => void;
+  disableDrop: boolean
+  remeasure: () => void
 }
 
 interface GridContextType {
-  register: (id: string, options: RegisterOptions) => void;
-  remove: (id: string) => void;
-  measureAll: () => void;
-  getActiveDropId: (sourceId: string, x: number, y: number) => string | null;
+  register: (id: string, options: RegisterOptions) => void
+  remove: (id: string) => void
+  measureAll: () => void
+  getActiveDropId: (sourceId: string, x: number, y: number) => string | null
   startTraverse: (
     sourceId: string,
     targetId: string,
     x: number,
     y: number,
-    sourceIndex: number
-  ) => void;
-  traverse: TraverseType | null;
-  endTraverse: () => void;
+    sourceIndex: number,
+  ) => void
+  traverse: TraverseType | null
+  endTraverse: () => void
   onChange: (
     sourceId: string,
     sourceIndex: number,
     targetIndex: number,
-    targetId?: string
-  ) => void;
+    targetId?: string,
+  ) => void
 }
 
 const noop = () => {
   throw new Error(
-    "Make sure that you have wrapped your drop zones with GridContext"
-  );
-};
+    'Make sure that you have wrapped your drop zones with GridContext',
+  )
+}
 
 export const GridContext = React.createContext<GridContextType>({
   register: noop,
@@ -49,25 +49,25 @@ export const GridContext = React.createContext<GridContextType>({
   measureAll: noop,
   traverse: null,
   endTraverse: noop,
-  onChange: noop
-});
+  onChange: noop,
+})
 
 interface GridContextProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   onChange: (
     sourceId: string,
     sourceIndex: number,
     targetIndex: number,
-    targetId?: string
-  ) => void;
+    targetId?: string,
+  ) => void
 }
 
 export function GridContextProvider({
   children,
-  onChange
+  onChange,
 }: GridContextProviderProps) {
-  const [traverse, setTraverse] = React.useState<TraverseType | null>(null);
-  const dropRefs = React.useRef<Map<string, RegisterOptions>>(new Map());
+  const [traverse, setTraverse] = React.useState<TraverseType | null>(null)
+  const dropRefs = React.useRef<Map<string, RegisterOptions>>(new Map())
 
   /**
    * Register a drop zone with relevant information
@@ -76,7 +76,7 @@ export function GridContextProvider({
    */
 
   function register(id: string, options: RegisterOptions) {
-    dropRefs.current.set(id, options);
+    dropRefs.current.set(id, options)
   }
 
   /**
@@ -85,7 +85,7 @@ export function GridContextProvider({
    */
 
   function remove(id: string) {
-    dropRefs.current.delete(id);
+    dropRefs.current.delete(id)
   }
 
   /**
@@ -96,22 +96,22 @@ export function GridContextProvider({
    */
 
   function getFixedPosition(sourceId: string, rx: number, ry: number) {
-    const item = dropRefs.current.get(sourceId)!;
+    const item = dropRefs.current.get(sourceId)!
 
     // When items are removed from the DOM, the left and top values could be undefined.
     if (!item) {
       return {
         x: rx,
-        y: ry
-      };
+        y: ry,
+      }
     }
 
-    const { left, top } = item;
+    const { left, top } = item
 
     return {
       x: left + rx,
-      y: top + ry
-    };
+      y: top + ry,
+    }
   }
 
   /**
@@ -123,11 +123,11 @@ export function GridContextProvider({
    */
 
   function getRelativePosition(targetId: string, fx: number, fy: number) {
-    const { left, top } = dropRefs.current.get(targetId)!;
+    const { left, top } = dropRefs.current.get(targetId)!
     return {
       x: fx - left,
-      y: fy - top
-    };
+      y: fy - top,
+    }
   }
 
   /**
@@ -138,13 +138,13 @@ export function GridContextProvider({
    */
 
   function diffDropzones(sourceId: string, targetId: string) {
-    const sBounds = dropRefs.current.get(sourceId)!;
-    const tBounds = dropRefs.current.get(targetId)!;
+    const sBounds = dropRefs.current.get(sourceId)!
+    const tBounds = dropRefs.current.get(targetId)!
 
     return {
       x: tBounds.left - sBounds.left,
-      y: tBounds.top - sBounds.top
-    };
+      y: tBounds.top - sBounds.top,
+    }
   }
 
   /**
@@ -155,7 +155,7 @@ export function GridContextProvider({
    */
 
   function getActiveDropId(sourceId: string, x: number, y: number) {
-    const { x: fx, y: fy } = getFixedPosition(sourceId, x, y);
+    const { x: fx, y: fy } = getFixedPosition(sourceId, x, y)
 
     // probably faster just using an array for dropRefs
     for (const [key, bounds] of dropRefs.current.entries()) {
@@ -166,11 +166,11 @@ export function GridContextProvider({
         fy > bounds.top &&
         fy < bounds.bottom
       ) {
-        return key;
+        return key
       }
     }
 
-    return null;
+    return null
   }
 
   /**
@@ -188,24 +188,24 @@ export function GridContextProvider({
     targetId: string,
     x: number,
     y: number,
-    sourceIndex: number
+    sourceIndex: number,
   ) {
-    const { x: fx, y: fy } = getFixedPosition(sourceId, x, y);
-    const { x: rx, y: ry } = getRelativePosition(targetId, fx, fy);
-    const { grid: targetGrid, count } = dropRefs.current.get(targetId)!;
+    const { x: fx, y: fy } = getFixedPosition(sourceId, x, y)
+    const { x: rx, y: ry } = getRelativePosition(targetId, fx, fy)
+    const { grid: targetGrid, count } = dropRefs.current.get(targetId)!
 
     const targetIndex = getIndexFromCoordinates(
       rx + targetGrid.columnWidth / 2,
       ry + targetGrid.rowHeight / 2,
       targetGrid,
-      count
-    );
+      count,
+    )
 
     const {
-      xy: [px, py]
-    } = getPositionForIndex(targetIndex, targetGrid);
+      xy: [px, py],
+    } = getPositionForIndex(targetIndex, targetGrid)
 
-    const { x: dx, y: dy } = diffDropzones(sourceId, targetId);
+    const { x: dx, y: dy } = diffDropzones(sourceId, targetId)
 
     // only update traverse if targetId or targetIndex have changed
     if (
@@ -217,15 +217,15 @@ export function GridContextProvider({
       )
     ) {
       setTraverse({
-        rx: px + dx,
-        ry: py + dy,
+        rx: px ?? 0 + dx,
+        ry: py ?? 0 + dy,
         tx: rx,
         ty: ry,
         sourceId,
         targetId,
         sourceIndex,
-        targetIndex
-      });
+        targetIndex,
+      })
     }
   }
 
@@ -234,7 +234,7 @@ export function GridContextProvider({
    */
 
   function endTraverse() {
-    setTraverse(null);
+    setTraverse(null)
   }
 
   /**
@@ -247,7 +247,7 @@ export function GridContextProvider({
     sourceId: string,
     sourceIndex: number,
     targetIndex: number,
-    targetId?: string
+    targetId?: string,
   ) {
     // this is a bit hacky, but seems to work for now. The idea
     // is that we want our newly mounted traversed grid item
@@ -277,16 +277,16 @@ export function GridContextProvider({
 
     setTraverse({
       ...traverse!,
-      execute: true
-    });
+      execute: true,
+    })
 
-    onChange(sourceId, sourceIndex, targetIndex, targetId);
+    onChange(sourceId, sourceIndex, targetIndex, targetId)
   }
 
   function measureAll() {
-    dropRefs.current.forEach(ref => {
-      ref.remeasure();
-    });
+    dropRefs.current.forEach((ref) => {
+      ref.remeasure()
+    })
   }
 
   return (
@@ -299,10 +299,10 @@ export function GridContextProvider({
         traverse,
         measureAll,
         endTraverse,
-        onChange: onSwitch
+        onChange: onSwitch,
       }}
     >
       {children}
     </GridContext.Provider>
-  );
+  )
 }

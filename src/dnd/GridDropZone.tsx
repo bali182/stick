@@ -1,26 +1,26 @@
-import * as React from "react";
-import { StateType } from "react-gesture-responder";
-import { useMeasure } from "./use-measure";
-import { GridContext } from "./GridContext";
-import { GridSettings, ChildRender } from "./grid-types";
-import { swap } from "./swap";
-import { getPositionForIndex, getTargetIndex } from "./helpers";
-import { GridItemContext } from "./GridItemContext";
+import * as React from 'react'
+import { useMeasure } from './use-measure'
+import { GridContext } from './GridContext'
+import { GridSettings } from './grid-types'
+import { swap } from './swap'
+import { getPositionForIndex, getTargetIndex } from './helpers'
+import { GridItemContext } from './GridItemContext'
+import { StateType } from './gesture-responder'
 
 export interface GridDropZoneProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  boxesPerRow: number;
-  rowHeight: number;
-  id: string;
-  children: React.ReactNodeArray;
-  disableDrag?: boolean;
-  disableDrop?: boolean;
-  style?: React.CSSProperties;
+  boxesPerRow: number
+  rowHeight: number
+  id: string
+  children: React.ReactNodeArray
+  disableDrag?: boolean
+  disableDrop?: boolean
+  style?: React.CSSProperties
 }
 
 interface PlaceholderType {
-  startIndex: number;
-  targetIndex: number;
+  startIndex: number
+  targetIndex: number
 }
 
 export function GridDropZone({
@@ -41,28 +41,28 @@ export function GridDropZone({
     measureAll,
     onChange,
     remove,
-    getActiveDropId
-  } = React.useContext(GridContext);
+    getActiveDropId,
+  } = React.useContext(GridContext)
 
-  const ref = React.useRef<HTMLDivElement>(null);
-  const { bounds, remeasure } = useMeasure(ref);
-  const [draggingIndex, setDraggingIndex] = React.useState<number | null>(null);
+  const ref = React.useRef<HTMLDivElement>(null)
+  const { bounds, remeasure } = useMeasure(ref)
+  const [draggingIndex, setDraggingIndex] = React.useState<number | null>(null)
   const [placeholder, setPlaceholder] = React.useState<PlaceholderType | null>(
-    null
-  );
+    null,
+  )
 
   const traverseIndex =
     traverse && !traverse.execute && traverse.targetId === id
       ? traverse.targetIndex
-      : null;
+      : null
 
   const grid: GridSettings = {
     columnWidth: bounds.width / boxesPerRow,
     boxesPerRow,
-    rowHeight
-  };
+    rowHeight,
+  }
 
-  const childCount = React.Children.count(children);
+  const childCount = React.Children.count(children)
 
   /**
    * Register our dropzone with our grid context
@@ -79,28 +79,28 @@ export function GridDropZone({
       count: childCount,
       grid,
       disableDrop,
-      remeasure
-    });
-  }, [childCount, disableDrop, bounds, id, grid]);
+      remeasure,
+    })
+  }, [childCount, disableDrop, bounds, id, grid])
 
   /**
    * Unregister when unmounting
    */
 
   React.useEffect(() => {
-    return () => remove(id);
-  }, [id]);
+    return () => remove(id)
+  }, [id])
 
   // keep an initial list of our item indexes. We use this
   // when animating swap positions on drag events
-  const itemsIndexes = React.Children.map(children, (_, i) => i);
+  const itemsIndexes = React.Children.map(children, (_, i) => i)!
 
   return (
     <div
       ref={ref}
       style={{
-        position: "relative",
-        ...style
+        position: 'relative',
+        ...style,
       }}
       {...other}
     >
@@ -108,23 +108,21 @@ export function GridDropZone({
         ? null
         : React.Children.map(children, (child, i) => {
             const isTraverseTarget =
-              traverse &&
-              traverse.targetId === id &&
-              traverse.targetIndex === i;
+              traverse && traverse.targetId === id && traverse.targetIndex === i
 
             const order = placeholder
               ? swap(
                   itemsIndexes,
                   placeholder.startIndex,
-                  placeholder.targetIndex
+                  placeholder.targetIndex,
                 )
-              : itemsIndexes;
+              : itemsIndexes
 
             const pos = getPositionForIndex(
               order.indexOf(i),
               grid,
-              traverseIndex
-            );
+              traverseIndex,
+            )
 
             /**
              * Handle a child being dragged
@@ -134,22 +132,22 @@ export function GridDropZone({
              */
 
             function onMove(state: StateType, x: number, y: number) {
-              if (!ref.current) return;
+              if (!ref.current) return
 
               if (draggingIndex !== i) {
-                setDraggingIndex(i);
+                setDraggingIndex(i)
               }
 
               const targetDropId = getActiveDropId(
                 id,
                 x + grid.columnWidth / 2,
-                y + grid.rowHeight / 2
-              );
+                y + grid.rowHeight / 2,
+              )
 
               if (targetDropId && targetDropId !== id) {
-                startTraverse(id, targetDropId, x, y, i);
+                startTraverse(id, targetDropId, x, y, i)
               } else {
-                endTraverse();
+                endTraverse()
               }
 
               const targetIndex =
@@ -160,8 +158,8 @@ export function GridDropZone({
                       grid,
                       childCount,
                       state.delta[0],
-                      state.delta[1]
-                    );
+                      state.delta[1],
+                    )
 
               if (targetIndex !== i) {
                 if (
@@ -170,11 +168,11 @@ export function GridDropZone({
                 ) {
                   setPlaceholder({
                     targetIndex,
-                    startIndex: i
-                  });
+                    startIndex: i,
+                  })
                 }
               } else if (placeholder) {
-                setPlaceholder(null);
+                setPlaceholder(null)
               }
             }
 
@@ -186,8 +184,8 @@ export function GridDropZone({
               const targetDropId = getActiveDropId(
                 id,
                 x + grid.columnWidth / 2,
-                y + grid.rowHeight / 2
-              );
+                y + grid.rowHeight / 2,
+              )
 
               const targetIndex =
                 targetDropId !== id
@@ -197,8 +195,8 @@ export function GridDropZone({
                       grid,
                       childCount,
                       state.delta[0],
-                      state.delta[1]
-                    );
+                      state.delta[1],
+                    )
 
               // traverse?
               if (traverse) {
@@ -206,42 +204,42 @@ export function GridDropZone({
                   traverse.sourceId,
                   traverse.sourceIndex,
                   traverse.targetIndex,
-                  traverse.targetId
-                );
+                  traverse.targetId,
+                )
               } else {
-                onChange(id, i, targetIndex);
+                onChange(id, i, targetIndex)
               }
 
-              setPlaceholder(null);
-              setDraggingIndex(null);
+              setPlaceholder(null)
+              setDraggingIndex(null)
             }
 
             function onStart() {
-              measureAll();
+              measureAll()
             }
 
             return (
               <GridItemContext.Provider
                 value={{
-                  top: pos.xy[1],
+                  top: pos.xy[1]!,
                   disableDrag,
                   endTraverse,
                   mountWithTraverseTarget: isTraverseTarget
                     ? [traverse!.tx, traverse!.ty]
                     : undefined,
-                  left: pos.xy[0],
+                  left: pos.xy[0]!,
                   i,
                   onMove,
                   onEnd,
                   onStart,
                   grid,
-                  dragging: i === draggingIndex
+                  dragging: i === draggingIndex,
                 }}
               >
                 {child}
               </GridItemContext.Provider>
-            );
+            )
           })}
     </div>
-  );
+  )
 }
