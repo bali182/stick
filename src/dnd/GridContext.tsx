@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Bounds } from './use-measure'
-import { GridSettings, TraverseType } from './grid-types'
+import { Bounds } from './useMeasure'
+import { GridSettings, TraverseType } from './gridTypes'
 import { getPositionForIndex, getIndexFromCoordinates } from './helpers'
 
 interface RegisterOptions extends Bounds {

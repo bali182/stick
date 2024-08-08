@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { GridSettings } from './grid-types'
-import { StateType } from './gesture-responder'
+import { GridSettings } from './gridTypes'
+import { StateType } from './useGestureResponder'
 
 export interface GridItemContextType {
   top: number

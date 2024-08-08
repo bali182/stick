@@ -1,4 +1,4 @@
-import { GridSettings } from './grid-types'
+import { GridSettings } from './gridTypes'
 
 /**
  * Get the active drag position given its initial

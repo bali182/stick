@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isMouseEnabled } from './mouse-enabled'
+import { isMouseEnabled } from './isMouseEnabled'
 
 /**
  * The responder takes its inspiration from react-native's

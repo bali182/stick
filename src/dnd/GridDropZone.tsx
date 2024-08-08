@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { useMeasure } from './use-measure'
+import { useMeasure } from './useMeasure'
 import { GridContext } from './GridContext'
-import { GridSettings } from './grid-types'
+import { GridSettings } from './gridTypes'
 import { swap } from './swap'
 import { getPositionForIndex, getTargetIndex } from './helpers'
 import { GridItemContext } from './GridItemContext'
-import { StateType } from './gesture-responder'
+import { StateType } from './useGestureResponder'
 
 export interface GridDropZoneProps
   extends React.HTMLAttributes<HTMLDivElement> {
