@@ -128,10 +128,8 @@ export const TuningPage: FC = () => {
     }
     dispatch(
       progressionsSlice.actions.updateProgression({
-        progression: {
-          ...progression,
-          tuning,
-        },
+        progressionId: progression.id,
+        updates: { tuning },
       }),
     )
   }

@@ -44,12 +44,15 @@ export const ChordChart: FC = () => {
   const [activeId, setActiveId] = useState<string>()
 
   const onAddBar = () => {
+    if (isNil(progression)) {
+      return
+    }
     const bar: Bar = { id: nanoid(), chords: [] }
     dispatch(barsSlice.actions.createBar({ bar }))
     dispatch(
-      progressionsSlice.actions.addBars({
-        progressionId: progression?.id!,
-        barIds: [bar.id],
+      progressionsSlice.actions.updateProgression({
+        progressionId: progression.id,
+        updates: { bars: [...progression.bars, bar.id] },
       }),
     )
   }
@@ -68,7 +71,8 @@ export const ChordChart: FC = () => {
 
     dispatch(
       progressionsSlice.actions.updateProgression({
-        progression: { ...progression, bars: newBars },
+        progressionId: progression.id,
+        updates: { ...progression, bars: newBars },
       }),
     )
   }

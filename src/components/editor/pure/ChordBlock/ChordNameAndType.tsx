@@ -1,4 +1,11 @@
-import { FC, FocusEvent, useEffect, useMemo, useState } from 'react'
+import {
+  FC,
+  FocusEvent,
+  KeyboardEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { ALL_CHORD_NAMES, CHORD_NAMES_TO_PARTS } from '../../../../chords'
 import { useCombobox } from 'downshift'
 import createSearch from '@nozbe/microfuzz'
@@ -91,8 +98,14 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
   chords = ALL_CHORD_NAMES,
 }) => {
   const fireOnChange = (value: string) => {
-    const data = CHORD_NAMES_TO_PARTS.get(value.toLowerCase())
+    const match = chords.find((c) => c.toLowerCase() === value.toLowerCase())
+    if (isNil(match)) {
+      setText(chord)
+      return
+    }
+    const data = CHORD_NAMES_TO_PARTS.get(match.toLowerCase())
     if (isNil(data)) {
+      setText(chord)
       return
     }
     const [note, type] = data
@@ -133,12 +146,12 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
   })
 
   const onBlur = () => {
-    const match = chords.find((c) => c.toLowerCase() === text.toLowerCase())
-    if (match && chord !== match) {
-      fireOnChange(match)
-      setText(match)
-    } else {
-      setText(chord)
+    fireOnChange(text)
+  }
+
+  const onEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      fireOnChange(text)
     }
   }
 
@@ -151,7 +164,7 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
     <div className={containerStyle}>
       <div className={inputContainerStyle}>
         <input
-          {...getInputProps()}
+          {...getInputProps({ onKeyDown: onEnter })}
           className={inputStyle}
           onBlur={onBlur}
           onFocus={onFocus}

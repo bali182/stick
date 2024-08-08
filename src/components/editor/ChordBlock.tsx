@@ -62,12 +62,11 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
 
   const [isHovered, setHovered] = useState(false)
 
-  const onChordChange = (changes: Partial<ChordSymbol>) => {
+  const onChordChange = (updates: Partial<ChordSymbol>) => {
     if (isNil(chord)) {
       return
     }
-    const update: HasId & Partial<ChordSymbol> = { id: chord.id, ...changes }
-    dispatch(chordsSlice.actions.updateChord({ chord: update }))
+    dispatch(chordsSlice.actions.updateChord({ chordId, updates }))
   }
 
   const onNoteCountChange = (noteCount: number | undefined) => {
@@ -110,7 +109,8 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
       otherChords.forEach((id) => {
         dispatch(
           chordsSlice.actions.updateChord({
-            chord: { id, noteCount: undefined },
+            chordId: id,
+            updates: { noteCount: undefined },
           }),
         )
       })

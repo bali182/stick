@@ -29,23 +29,28 @@ export const BasePage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useActiveProgression()
 
-  function updateProgression(prog: ChordProgression): void {
+  function updateProgression(updates: Partial<ChordProgression>): void {
     if (isNil(progression)) {
       return
     }
-    dispatch(progressionsSlice.actions.updateProgression({ progression: prog }))
+    dispatch(
+      progressionsSlice.actions.updateProgression({
+        progressionId: progression.id,
+        updates,
+      }),
+    )
   }
 
   const onNameChange = (name: string) => {
-    updateProgression({ ...progression!, name })
+    updateProgression({ name })
   }
 
   const onNoteCountChange = (amount: string) => {
-    updateProgression({ ...progression!, noteCount: parseInt(amount) })
+    updateProgression({ noteCount: parseInt(amount) })
   }
 
   const onTagsChange = (tags: string[]) => {
-    updateProgression({ ...progression!, tags: tags as Tag[] })
+    updateProgression({ tags: tags as Tag[] })
   }
 
   return (

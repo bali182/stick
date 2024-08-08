@@ -40,6 +40,21 @@ export function mapObject<I, O>(
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
 
+export function updatePartial<T>(
+  data: Record<string, T>,
+  id: string,
+  updates: Partial<T>,
+): Record<string, T> {
+  const item = data[id]
+  if (isNil(item)) {
+    return data
+  }
+  return {
+    ...data,
+    [id]: { ...item, ...updates },
+  }
+}
+
 export function getPossiblePitches(
   note: Note | undefined,
   range: PitchedNote[] | undefined,

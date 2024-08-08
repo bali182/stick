@@ -11,48 +11,46 @@ export type BarsActions = ActionType<typeof barsSlice.actions>
 export type ConfigActions = ActionType<typeof configSlice.actions>
 export type ProgressionsActions = ActionType<typeof progressionsSlice.actions>
 
-export type FillTransitionsPayload = {
+export type ProgressionPayload = {
   progressionId: string
 }
-export type ClearTransitionsPayload = {
-  progressionId: string
-}
-export type CreateProgressionFromTemplatePayload = {
+export type TemplatePayload = {
   template: ProgressionTemplate
 }
-export type DeleteChordsPayload = {
+export type ChordsPayload = {
   chordIds: string[]
 }
-export type DeleteBarsPayload = {
+export type BarPayload = {
+  barId: string
+}
+export type BarsPayload = {
   barIds: string[]
 }
-export type DeleteProgressionsPayload = {
+export type ProgressionsPayload = {
   progressionIds: string[]
 }
 export type FillTransitionsAction = PayloadAction<
-  FillTransitionsPayload,
+  ProgressionPayload,
   'global/fillTransitions'
 >
 export type ClearTransitionsAction = PayloadAction<
-  ClearTransitionsPayload,
+  ProgressionPayload,
   'global/clearTransitions'
 >
 export type CreateProgressionFromTemplateAction = PayloadAction<
-  CreateProgressionFromTemplatePayload,
+  TemplatePayload,
   'global/createProgressionFromTemplate'
 >
 export type DeleteChordsAction = PayloadAction<
-  DeleteChordsPayload,
+  ChordsPayload,
   'global/deleteChords'
 >
-export type DeleteBarsAction = PayloadAction<
-  DeleteBarsPayload,
-  'global/deleteBars'
->
+export type DeleteBarsAction = PayloadAction<BarsPayload, 'global/deleteBars'>
 export type DeleteProgressionsAction = PayloadAction<
-  DeleteProgressionsPayload,
+  ProgressionsPayload,
   'global/deleteProgressions'
 >
+export type CloneBarAction = PayloadAction<BarPayload, 'global/cloneBar'>
 export type GlobalActionTypes =
   | FillTransitionsAction
   | ClearTransitionsAction

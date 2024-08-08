@@ -1,11 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ChordSymbol, HasId } from '../model/types'
+import { ChordSymbol } from '../model/types'
 import { initialState } from './initialState'
 import { isNil } from '../model/isNil'
+import { updatePartial } from '../model/utils'
 
 export type CreateChordPayload = { chord: ChordSymbol }
 export type UpdateChordPayload = {
-  chord: HasId & Partial<ChordSymbol>
+  chordId: string
+  updates: Partial<ChordSymbol>
 }
 
 export const chordsSlice = createSlice({
@@ -16,16 +18,8 @@ export const chordsSlice = createSlice({
       ...state,
       [payload.chord.id]: payload.chord,
     }),
-    updateChord: (state, { payload }: PayloadAction<UpdateChordPayload>) => {
-      const chord = state[payload.chord.id]
-      if (!chord) {
-        return state
-      }
-      return {
-        ...state,
-        [payload.chord.id]: { ...chord, ...payload.chord },
-      }
-    },
+    updateChord: (state, action: PayloadAction<UpdateChordPayload>) =>
+      updatePartial(state, action.payload.chordId, action.payload.updates),
   },
   selectors: {
     getChord: (state, id: string | undefined): ChordSymbol | undefined => {

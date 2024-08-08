@@ -44,7 +44,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   }
 
   const onAddFirstChord = () => {
-    if (!isNil(firstChord)) {
+    if (!isNil(firstChord) || isNil(bar)) {
       return
     }
     const chord: ChordSymbol = {
@@ -54,11 +54,16 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
       root: 'C2',
     }
     dispatch(chordsSlice.actions.createChord({ chord }))
-    dispatch(barsSlice.actions.addChords({ barId, chordIds: [chord.id] }))
+    dispatch(
+      barsSlice.actions.updateBar({
+        barId,
+        updates: { chords: [...bar.chords, chord.id] },
+      }),
+    )
   }
 
   const onAddSecondChord = () => {
-    if (isNil(firstChord)) {
+    if (isNil(firstChord) || isNil(bar)) {
       return
     }
     const noteCount = progression!.noteCount / 2
@@ -74,9 +79,19 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
       id: nanoid(),
     }
 
-    dispatch(chordsSlice.actions.updateChord({ chord: updatedChord }))
+    dispatch(
+      chordsSlice.actions.updateChord({
+        chordId: updatedChord.id,
+        updates: updatedChord,
+      }),
+    )
     dispatch(chordsSlice.actions.createChord({ chord: secondChord }))
-    dispatch(barsSlice.actions.addChords({ barId, chordIds: [secondChord.id] }))
+    dispatch(
+      barsSlice.actions.updateBar({
+        barId,
+        updates: { chords: [...bar.chords, secondChord.id] },
+      }),
+    )
   }
 
   if (isNil(bar)) {
