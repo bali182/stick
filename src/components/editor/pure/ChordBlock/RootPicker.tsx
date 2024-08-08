@@ -69,7 +69,7 @@ export const RootPicker: FC<RootPickerProps> = ({ root, values, onChange }) => {
         </ArrowContainer>
       )}
     >
-      <button className={rootPickerStyle} onClick={onOpen}>
+      <button className={rootPickerStyle} onClick={onOpen} tabIndex={-1}>
         Root: {root}
       </button>
     </Popover>

@@ -20,7 +20,8 @@ export type TemplatePayload = {
 export type ChordsPayload = {
   chordIds: string[]
 }
-export type BarPayload = {
+export type CloneBarPayload = {
+  progressionId: string
   barId: string
 }
 export type BarsPayload = {
@@ -50,7 +51,7 @@ export type DeleteProgressionsAction = PayloadAction<
   ProgressionsPayload,
   'global/deleteProgressions'
 >
-export type CloneBarAction = PayloadAction<BarPayload, 'global/cloneBar'>
+export type CloneBarAction = PayloadAction<CloneBarPayload, 'global/cloneBar'>
 export type GlobalActionTypes =
   | FillTransitionsAction
   | ClearTransitionsAction
@@ -65,3 +66,4 @@ export type AppActions =
   | DeleteChordsAction
   | DeleteBarsAction
   | DeleteProgressionsAction
+  | CloneBarAction

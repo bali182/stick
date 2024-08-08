@@ -1,15 +1,17 @@
 import { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core'
-import { css } from '@emotion/css'
+import { css, cx } from '@emotion/css'
 import { useState, Children, forwardRef, HTMLProps } from 'react'
 import { FiPlusSquare, FiTrash2 } from 'react-icons/fi'
 import { RiDraggable } from 'react-icons/ri'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
+import { PiCopyBold } from 'react-icons/pi'
 
 export type PureBarBlockProps = HTMLProps<HTMLDivElement> & {
   count: number
   attributes: DraggableAttributes
   listeners: DraggableSyntheticListeners
   onDelete: () => void
+  onClone: () => void
   onAddFirst: () => void
   onAddSecond: () => void
 }
@@ -40,12 +42,21 @@ const chordsContainerStyle = css`
 `
 
 const footerStyle = css`
-  display: flex;
-  padding: 6px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
+  padding: 0px 10px;
   color: #fff;
   font-size: 1em;
+  height: 35px;
+`
+
+const footerBlockStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  justify-self: start;
 `
 
 const dragAreaStyle = css`
@@ -56,6 +67,7 @@ const dragAreaStyle = css`
   border-radius: 6px;
   padding: 3px;
   cursor: move;
+  justify-self: center;
   &:hover {
     background-color: #ffffff20;
   }
@@ -112,13 +124,20 @@ const addChordCloneStyle = css`
 
 const addFirstChordStyle = css``
 
-const trashIconStyle = css`
+const iconStyle = css`
   color: #ffffffbb;
   cursor: pointer;
   &:hover {
     color: #ffffff;
   }
 `
+
+const binIconStyle = cx(
+  iconStyle,
+  css`
+    justify-self: end;
+  `,
+)
 
 export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
   (
@@ -128,6 +147,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
       onAddFirst,
       onAddSecond,
       onDelete,
+      onClone,
       listeners,
       attributes,
       style,
@@ -152,6 +172,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
         onMouseLeave={onMouseLeave}
         style={style}
         {...attributes}
+        tabIndex={-1}
       >
         <div
           className={chordsContainerStyle}
@@ -168,13 +189,20 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
             </div>
           ) : null}
           {children.length === 0 ? (
-            <div className={emptyBarAddButtonStyle} onClick={onAddFirst}>
+            <button className={emptyBarAddButtonStyle} onClick={onAddFirst}>
               <FiPlusSquare className={addFirstChordStyle} /> Chord
-            </div>
+            </button>
           ) : null}
         </div>
         <div className={footerStyle}>
-          <span>&#65283;{count}</span>
+          <div className={footerBlockStyle}>
+            <span>&#65283;{count}</span>
+            <PiCopyBold
+              style={{ visibility: isHovered ? 'visible' : 'hidden' }}
+              className={iconStyle}
+              onClick={onClone}
+            />
+          </div>
           <div
             style={{ opacity: isHovered ? 1 : 0 }}
             className={dragAreaStyle}
@@ -184,7 +212,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
           </div>
           <FiTrash2
             style={{ visibility: isHovered ? 'visible' : 'hidden' }}
-            className={trashIconStyle}
+            className={binIconStyle}
             onClick={onDelete}
           />
         </div>

@@ -50,10 +50,10 @@ export type AddBarBlockProps = {
 
 export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
   return (
-    <div className={barBlockStyle} onClick={onClick}>
+    <button className={barBlockStyle} onClick={onClick}>
       <div className={addButtonStyle}>
         <FiPlusSquare className={addBarIconStyle} /> Bar
       </div>
-    </div>
+    </button>
   )
 }

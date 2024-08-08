@@ -92,7 +92,7 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({
         </ArrowContainer>
       )}
     >
-      <button className={style} onClick={onOpen}>
+      <button className={style} onClick={onOpen} tabIndex={-1}>
         {noteCountComputed} Notes
       </button>
     </Popover>

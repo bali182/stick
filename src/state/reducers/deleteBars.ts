@@ -1,6 +1,6 @@
 import { isNil } from '../../model/isNil'
 import { Bar, ChordProgression } from '../../model/types'
-import { mapObject, removeByKeys } from '../../model/utils'
+import { mapRecord, removeByKeys } from '../../model/utils'
 import { DeleteBarsAction } from '../actionTypes'
 import { AppState } from '../types'
 
@@ -16,7 +16,7 @@ export function deleteBars(
 
   const bars = removeByKeys(barIds, state.bars)
   const chords = removeByKeys(chordIds, state.chords)
-  const progressions = mapObject(
+  const progressions = mapRecord(
     state.progressions,
     (prog): ChordProgression => {
       if (prog.bars.some((barId) => barIds.includes(barId))) {

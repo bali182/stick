@@ -5,7 +5,14 @@ import {
 } from './constants'
 import { getPitchedNoteParts } from './getPitchedNoteParts'
 import { isNil } from './isNil'
-import { Accidental, BaseNoteName, NoteIndex, Note, PitchedNote } from './types'
+import {
+  Accidental,
+  BaseNoteName,
+  NoteIndex,
+  Note,
+  PitchedNote,
+  HasId,
+} from './types'
 
 export function removeByKey<T>(
   key: string,
@@ -23,7 +30,7 @@ export function removeByKeys<T>(
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
 
-export function mapObject<I, O>(
+export function mapRecord<I, O>(
   data: Record<string, I>,
   transform: (
     input: I,
@@ -40,6 +47,20 @@ export function mapObject<I, O>(
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
 
+export function appendRecord<T extends HasId>(
+  data: Record<string, T>,
+  items: T[],
+): Record<string, T> {
+  if (items.length === 0) {
+    return data
+  }
+  const clone: Record<string, T> = { ...data }
+  for (let item of items) {
+    clone[item.id] = item
+  }
+  return clone
+}
+
 export function updatePartial<T>(
   data: Record<string, T>,
   id: string,
@@ -53,6 +74,10 @@ export function updatePartial<T>(
     ...data,
     [id]: { ...item, ...updates },
   }
+}
+
+export function insertAt<T>(array: T[], item: T, index: number): T[] {
+  return [...array.slice(0, index), item, ...array.slice(index)]
 }
 
 export function getPossiblePitches(

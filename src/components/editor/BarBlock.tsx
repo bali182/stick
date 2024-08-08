@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { ChordSymbol } from '../../model/types'
 import { nanoid } from 'nanoid'
 import { barsSlice } from '../../state/bars'
-import { progressionsSlice } from '../../state/progressions'
 import { chordsSlice } from '../../state/chords'
 import { AppDispatch } from '../../state/store'
 import { useActiveProgression, useBar, useChordAt } from '../../modelHooks'
@@ -13,7 +12,7 @@ import { isNil } from '../../model/isNil'
 import { MissingBarBlock } from './pure/BarBlock/MissingBarBlock'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { DeleteBarsAction } from '../../state/actionTypes'
+import { CloneBarAction, DeleteBarsAction } from '../../state/actionTypes'
 
 export type BarBlockProps = {
   barId: string
@@ -94,6 +93,17 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
     )
   }
 
+  const onClone = () => {
+    if (isNil(progression)) {
+      return
+    }
+    const action: CloneBarAction = {
+      type: 'global/cloneBar',
+      payload: { progressionId: progression.id, barId },
+    }
+    dispatch(action)
+  }
+
   if (isNil(bar)) {
     return <MissingBarBlock onDelete={onDeleteBar} />
   }
@@ -104,6 +114,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
       onAddFirst={onAddFirstChord}
       onAddSecond={onAddSecondChord}
       onDelete={onDeleteBar}
+      onClone={onClone}
       ref={setNodeRef}
       listeners={listeners}
       attributes={attributes}

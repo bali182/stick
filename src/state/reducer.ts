@@ -11,6 +11,7 @@ import { createProgressionFromTemplate } from './reducers/createProgressionFromT
 import { deleteChords } from './reducers/deleteChords'
 import { deleteBars } from './reducers/deleteBars'
 import { deleteProgressions } from './reducers/deleteProgressions'
+import { cloneBar } from './reducers/cloneBar'
 
 const slicesReducer = combineReducers({
   bars: barsSlice.reducer,
@@ -33,6 +34,8 @@ export function reducer(state: AppState, action: AppActions): AppState {
       return deleteBars(state, action)
     case 'global/deleteProgressions':
       return deleteProgressions(state, action)
+    case 'global/cloneBar':
+      return cloneBar(state, action)
     default:
       return slicesReducer(state, action)
   }
