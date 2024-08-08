@@ -17,9 +17,11 @@ export type UseAlphaTabConfig = {
   chordsVolume: number
   metronomeVolume: number
   isLooping: boolean
+  bpm: number
 }
 
 export function useAlphaTab({
+  bpm,
   tex,
   root,
   scrollArea,
@@ -43,6 +45,12 @@ export function useAlphaTab({
       api.isLooping = isLooping
     }
   }, [api, isLooping])
+
+  useEffect(() => {
+    if (!isNil(api) && !isNil(api.score)) {
+      // TODO change tempo
+    }
+  }, [api, bpm])
 
   useTrackVolume(api, 0, bassVolume)
   useTrackVolume(api, 1, chordsVolume)

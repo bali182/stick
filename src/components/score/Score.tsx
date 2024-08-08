@@ -1,37 +1,17 @@
-import { useRef, useEffect, FC, useState, useCallback } from 'react'
-import { AlphaTabApi, synth } from '@coderline/alphatab'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../state/store'
-import { alphaTabConfig } from './alphaTabConfig'
+import { FC, useState, useCallback } from 'react'
 import { css } from '@emotion/css'
-import { AlphaTabLogo } from './AlphaTabLogo'
-import { LoopButton, PlayButton, StopButton } from './ScoreControls'
 import { ScoreOverlay } from './ScoreOverlay'
-import { VolumeSlider } from './VolumeSlider'
-import { isNil } from '../../model/isNil'
-import { AppState, ConfigState } from '../../state/types'
-import { configSlice } from '../../state/config'
-import { getAlphaTex } from '../../state/selectors/getAlphaTex'
-import { TbPiano } from 'react-icons/tb'
-import { GiGuitarBassHead } from 'react-icons/gi'
-import { PiMetronomeBold } from 'react-icons/pi'
 import { useActiveProgression, useAlphaTex, useConfig } from '../../modelHooks'
 import { useAlphaTab } from './useAlphaTab'
+import { PlayerControls } from './PlayerControls'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../state/store'
+import { configSlice } from '../../state/config'
+import { progressionsSlice } from '../../state/progressions'
 
 export type ScoreProps = {
   progressionId: string
 }
-
-const bottomBarStyle = css`
-  padding: 0px 40px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: 160px;
-  width: 100%;
-  background-color: #ffffff15;
-`
 
 const wrapStyle = css`
   //.at-wrap
@@ -63,20 +43,6 @@ const viewportStyle = css`
   padding: 20px;
 `
 
-const volumeContainerStyle = css`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
-
-const controlsContainerStyle = css`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-`
-
 export const Score: FC = () => {
   const [scrollArea, setScrollArea] = useState<HTMLElement>()
   const [root, setRoot] = useState<HTMLElement>()
@@ -90,20 +56,11 @@ export const Score: FC = () => {
   }, [])
 
   const progression = useActiveProgression()
+  const bpm = progression?.bpm ?? 120
   const { isLooping, bassVolume, metronomeVolume, chordsVolume } = useConfig()
   const tex = useAlphaTex(progression?.id!)
 
   const dispatch = useDispatch<AppDispatch>()
-
-  const { api, isPlaying, isLoading } = useAlphaTab({
-    tex,
-    bassVolume,
-    chordsVolume,
-    isLooping,
-    metronomeVolume,
-    root,
-    scrollArea,
-  })
 
   const onPlayPause = () => api?.playPause()
   const onLoop = () =>
@@ -115,6 +72,25 @@ export const Score: FC = () => {
     dispatch(configSlice.actions.updateConfig({ chordsVolume }))
   const onMetronomeVolumeChange = (metronomeVolume: number) =>
     dispatch(configSlice.actions.updateConfig({ metronomeVolume }))
+  const onTempoChange = (bpm: number) => {
+    dispatch(
+      progressionsSlice.actions.updateProgression({
+        progressionId: progression?.id!,
+        updates: { bpm },
+      }),
+    )
+  }
+
+  const { api, isPlaying, isLoading } = useAlphaTab({
+    tex,
+    bassVolume,
+    chordsVolume,
+    isLooping,
+    metronomeVolume,
+    root,
+    scrollArea,
+    bpm,
+  })
 
   return (
     <div className={wrapStyle}>
@@ -124,31 +100,21 @@ export const Score: FC = () => {
           <div className="at-main" ref={setRootCallback}></div>
         </div>
       </div>
-      <div className={bottomBarStyle}>
-        <div className={volumeContainerStyle}>
-          <VolumeSlider
-            Icon={PiMetronomeBold}
-            value={metronomeVolume}
-            onChange={onMetronomeVolumeChange}
-          />
-          <VolumeSlider
-            Icon={GiGuitarBassHead}
-            value={bassVolume}
-            onChange={onBassVolumeChange}
-          />
-          <VolumeSlider
-            Icon={TbPiano}
-            value={chordsVolume}
-            onChange={onChordsVolumeChange}
-          />
-        </div>
-        <div className={controlsContainerStyle}>
-          <StopButton onClick={onStop} />
-          <PlayButton onClick={onPlayPause} isToggled={isPlaying} />
-          <LoopButton onClick={onLoop} isToggled={isLooping} />
-        </div>
-        <AlphaTabLogo />
-      </div>
+      <PlayerControls
+        bpm={bpm}
+        isPlaying={isPlaying}
+        isLooping={isLooping}
+        bassVolume={bassVolume}
+        chordsVolume={chordsVolume}
+        metronomeVolume={metronomeVolume}
+        onLoop={onLoop}
+        onStop={onStop}
+        onPlayPause={onPlayPause}
+        onTempoChange={onTempoChange}
+        onBassVolumeChange={onBassVolumeChange}
+        onChordsVolumeChange={onChordsVolumeChange}
+        onMetronomeVolumeChange={onMetronomeVolumeChange}
+      />
     </div>
   )
 }

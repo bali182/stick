@@ -39,9 +39,14 @@ const renderedByStyle = css`
   font-size: 0.85em;
   color: #ffffff99;
 `
-export const AlphaTabLogo: FC = () => {
+
+export type AlphaTabLogoProps = {
+  className?: string
+}
+
+export const AlphaTabLogo: FC<AlphaTabLogoProps> = ({ className }) => {
   return (
-    <a href="https://alphatab.net" target="_blank">
+    <a href="https://alphatab.net" target="_blank" className={className}>
       <span className={wrapperStyle}>
         <span className={renderedByStyle}>Tabs & score rendered by:</span>
         <span className={alphaTabLogoStyle}>

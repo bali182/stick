@@ -20,7 +20,7 @@ export function getAlphaTex(state: AppState, progressionId: string): string {
     prepareAlphaTexChords(state, progressionId),
   )
   return [
-    `\\title "${progression.name}"`,
+    `\\title "${progression.name}" \\tempo ${progression.bpm ?? 120}`,
     '.',
     toAlphaTex(bassTrack),
     toAlphaTex(accompanimentTrack),

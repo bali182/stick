@@ -1,41 +1,12 @@
-import { css, cx } from '@emotion/css'
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../state/store'
+import { useSelector } from 'react-redux'
 import { ChordProgression } from '../../model/types'
 import { progressionsSlice } from '../../state/progressions'
-import { configSlice } from '../../state/config'
-import { PiPlusBold } from 'react-icons/pi'
 import { ListSelector } from './ListSelector'
 
-export type TransitionSelectorListProps = {
+export type ProgressionListSelectorProps = {
   setOpen: (open: boolean) => void
-  add: () => void
 }
-
-const containerStyle = css`
-  width: 100%;
-  height: 300px;
-  padding-bottom: 30px;
-  overflow: auto;
-`
-
-const itemStyle = css`
-  padding: 6px 10px;
-  color: #ffffff;
-  font-size: 1em;
-  cursor: pointer;
-  &:hover {
-    background-color: #ffffff35;
-  }
-`
-
-const activeItemStyle = css`
-  background-color: #ffffff30;
-  &:hover {
-    background-color: #ffffff30;
-  }
-`
 
 const getChildren = (category: ChordProgression[]) => category
 const getCategoryKey = (_category: ChordProgression[]) => 'progressions'
@@ -47,26 +18,18 @@ const matches = (item: ChordProgression, search: string) =>
 const noHitsLabel = 'No progressions found! Please create one!'
 const getHyperLink = (item: ChordProgression) => `#/${item.id}/editor`
 
-export const ProgressionSelector: FC<TransitionSelectorListProps> = ({
+export const ProgressionListSelector: FC<ProgressionListSelectorProps> = ({
   setOpen,
-  add,
 }) => {
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
 
   const onItemClick = () => setOpen(false)
 
-  const onCreate = () => {
-    setOpen(false)
-    add()
-  }
-
   return (
     <ListSelector<ChordProgression[], ChordProgression>
       categories={[progressions]}
-      canCreate={true}
       canSearch={true}
-      createLabel="Create progression"
-      onCreate={onCreate}
+      canCreate={false}
       onItemClick={onItemClick}
       getChildren={getChildren}
       getCategoryKey={getCategoryKey}

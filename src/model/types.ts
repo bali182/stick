@@ -4,6 +4,7 @@ export type ChordProgression = HasId & {
   tuning: PitchedNote[]
   tags?: Tag[]
   noteCount: number
+  bpm?: number
 }
 
 export type Bar = HasId & {

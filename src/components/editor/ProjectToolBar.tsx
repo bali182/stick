@@ -3,8 +3,7 @@ import { FC, useState } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 import { RiBrushLine } from 'react-icons/ri'
 import { PiGear, PiNoteLight } from 'react-icons/pi'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '../../state/types'
+import { useDispatch } from 'react-redux'
 import {
   ClearTransitionsAction,
   FillTransitionsAction,
@@ -12,7 +11,7 @@ import {
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
-import { ProgressionSelector } from './ProgressionListSelector'
+import { ProgressionListSelector } from './ProgressionListSelector'
 import { NewProgressionModal } from './NewProgressionModal'
 import { useActiveProgression, useProgressionStatus } from '../../modelHooks'
 
@@ -132,10 +131,7 @@ export const ProjectToolBar: FC = () => {
                 arrowSize={10}
               >
                 <div className={popoverStyle}>
-                  <ProgressionSelector
-                    setOpen={setProgressionsOpen}
-                    add={onOpenProgressionModal}
-                  />
+                  <ProgressionListSelector setOpen={setProgressionsOpen} />
                 </div>
               </ArrowContainer>
             )}
