@@ -47,7 +47,7 @@ export function mapRecord<I, O>(
     .reduce((output, [key, value]) => ({ ...output, [key]: value }), {})
 }
 
-export function appendRecord<T extends HasId>(
+export function updateRecord<T extends HasId>(
   data: Record<string, T>,
   items: T[],
 ): Record<string, T> {
@@ -137,6 +137,16 @@ export function moveUp<T>(arr: T[], index: number): T[] {
 
 export function removeByIndex<T>(arr: T[], index: number): T[] {
   return arr.slice(0, index).concat(arr.slice(index + 1))
+}
+
+export function arrayMove<T>(array: T[], from: number, to: number): T[] {
+  const newArray = Array.from(array)
+  newArray.splice(
+    to < 0 ? newArray.length + to : to,
+    0,
+    newArray.splice(from, 1)[0]!,
+  )
+  return newArray
 }
 
 export function moveDown<T>(arr: T[], index: number): T[] {

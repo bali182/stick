@@ -7,11 +7,12 @@ import { configSlice } from './config'
 import { progressionsSlice } from './progressions'
 import { fillTransitionsReducer } from './reducers/fillTransitions'
 import { clearTransitionsReducer } from './reducers/clearTransitions'
-import { createProgressionFromTemplate } from './reducers/createProgressionFromTemplate'
-import { deleteChords } from './reducers/deleteChords'
-import { deleteBars } from './reducers/deleteBars'
-import { deleteProgressions } from './reducers/deleteProgressions'
-import { cloneBar } from './reducers/cloneBar'
+import { createProgressionFromTemplateReducer } from './reducers/createProgressionFromTemplate'
+import { deleteChordsReducer } from './reducers/deleteChords'
+import { deleteBarsReducer } from './reducers/deleteBars'
+import { deleteProgressionsReducer } from './reducers/deleteProgressions'
+import { cloneBarReducer } from './reducers/cloneBar'
+import { moveBarReducer } from './reducers/moveBar'
 
 const slicesReducer = combineReducers({
   bars: barsSlice.reducer,
@@ -27,15 +28,17 @@ export function reducer(state: AppState, action: AppActions): AppState {
     case 'global/clearTransitions':
       return clearTransitionsReducer(state, action)
     case 'global/createProgressionFromTemplate':
-      return createProgressionFromTemplate(state, action)
+      return createProgressionFromTemplateReducer(state, action)
     case 'global/deleteChords':
-      return deleteChords(state, action)
+      return deleteChordsReducer(state, action)
     case 'global/deleteBars':
-      return deleteBars(state, action)
+      return deleteBarsReducer(state, action)
     case 'global/deleteProgressions':
-      return deleteProgressions(state, action)
+      return deleteProgressionsReducer(state, action)
     case 'global/cloneBar':
-      return cloneBar(state, action)
+      return cloneBarReducer(state, action)
+    case 'global/moveBar':
+      return moveBarReducer(state, action)
     default:
       return slicesReducer(state, action)
   }

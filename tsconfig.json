@@ -19,6 +19,7 @@
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "lib": ["ES2022", "DOM"]
   },
   "include": [

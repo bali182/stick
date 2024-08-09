@@ -3,8 +3,9 @@ import { Bar, ChordProgression } from '../../model/types'
 import { mapRecord, removeByKeys } from '../../model/utils'
 import { DeleteBarsAction } from '../actionTypes'
 import { AppState } from '../types'
+import { removeOrphanedTransitions } from './utils'
 
-export function deleteBars(
+export function deleteBarsReducer(
   state: AppState,
   action: DeleteBarsAction,
 ): AppState {
@@ -26,10 +27,10 @@ export function deleteBars(
       return prog
     },
   )
-  return {
+  return removeOrphanedTransitions({
     ...state,
     bars,
     chords,
     progressions,
-  }
+  })
 }

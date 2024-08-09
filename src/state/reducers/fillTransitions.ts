@@ -1,7 +1,6 @@
 import { canTransition } from '../../model/canTransition'
 import { TRANSITIONS } from '../../model/constants'
 import { isNil } from '../../model/isNil'
-import { randomElement } from '../../model/randomElement'
 import { ChordSymbol, Transition } from '../../model/types'
 import { getRandomWeightedElement } from '../../model/utils'
 import { FillTransitionsAction } from '../actionTypes'

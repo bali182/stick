@@ -4,10 +4,6 @@ import { FiTrash2 } from 'react-icons/fi'
 import { RiBrushLine } from 'react-icons/ri'
 import { PiGear, PiArrowLeftBold } from 'react-icons/pi'
 import { useDispatch } from 'react-redux'
-import {
-  ClearTransitionsAction,
-  FillTransitionsAction,
-} from '../../state/actionTypes'
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
 import { NewProgressionModal } from './NewProgressionModal'
@@ -15,6 +11,7 @@ import { useActiveProgression, useProgressionStatus } from '../../modelHooks'
 import { Paths } from '../paths'
 import { progressionsSlice } from '../../state/progressions'
 import { AutoWidthInput } from '../AutoWidthInput'
+import { clearTransactions, fillTransactions } from '../../state/actionCreators'
 
 const toolbarStyle = css`
   display: flex;
@@ -120,22 +117,14 @@ export const ProjectToolBar: FC = () => {
     if (isNil(progression)) {
       return
     }
-    const action: FillTransitionsAction = {
-      type: 'global/fillTransitions',
-      payload: { progressionId: progression.id },
-    }
-    dispatch(action)
+    dispatch(fillTransactions({ progressionId: progression.id }))
   }
 
   const onClearTransitions = () => {
     if (isNil(progression)) {
       return
     }
-    const action: ClearTransitionsAction = {
-      type: 'global/clearTransitions',
-      payload: { progressionId: progression.id },
-    }
-    dispatch(action)
+    dispatch(clearTransactions({ progressionId: progression.id }))
   }
 
   const onNameChanged = (e: ChangeEvent<HTMLInputElement>) => {

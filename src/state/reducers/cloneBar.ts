@@ -3,9 +3,12 @@ import { isNil, isNotNil } from '../../model/isNil'
 import { Bar, ChordProgression, ChordSymbol } from '../../model/types'
 import { CloneBarAction } from '../actionTypes'
 import { AppState } from '../types'
-import { appendRecord, insertAt } from '../../model/utils'
+import { updateRecord, insertAt } from '../../model/utils'
 
-export function cloneBar(state: AppState, action: CloneBarAction): AppState {
+export function cloneBarReducer(
+  state: AppState,
+  action: CloneBarAction,
+): AppState {
   const { barId, progressionId } = action.payload
   const bar = state.bars[barId]
   const progression = state.progressions[progressionId]
@@ -40,8 +43,8 @@ export function cloneBar(state: AppState, action: CloneBarAction): AppState {
 
   return {
     ...state,
-    progressions: appendRecord(state.progressions, [updatedProgression]),
-    bars: appendRecord(state.bars, [clonedBar]),
-    chords: appendRecord(state.chords, clonedChords),
+    progressions: updateRecord(state.progressions, [updatedProgression]),
+    bars: updateRecord(state.bars, [clonedBar]),
+    chords: updateRecord(state.chords, clonedChords),
   }
 }

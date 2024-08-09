@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 import {
   ChordSymbol,
   ChordType,
-  HasId,
   Note,
   PitchedNote,
   Transition,
@@ -12,7 +11,6 @@ import { AppDispatch } from '../../state/store'
 import { FiTrash2 } from 'react-icons/fi'
 import { isNil } from '../../model/isNil'
 import { chordsSlice } from '../../state/chords'
-import { barsSlice } from '../../state/bars'
 import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { NOTE_COLORS } from '../colors'
 import {
@@ -40,7 +38,7 @@ import { getNoteRange } from '../../model/getNoteRange'
 import { TransitionButton } from './pure/ChordBlock/TransitionButton'
 import { MissingChordBlock } from './pure/ChordBlock/MissingChordBlock'
 import { canTransition } from '../../model/canTransition'
-import { DeleteChordsAction } from '../../state/actionTypes'
+import { deleteChords } from '../../state/actionCreators'
 
 export type ChordBlockProps = {
   barId: string
@@ -115,11 +113,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
         )
       })
     }
-    const action: DeleteChordsAction = {
-      type: 'global/deleteChords',
-      payload: { chordIds: [chordId] },
-    }
-    dispatch(action)
+    dispatch(deleteChords({ chordIds: [chordId] }))
   }
 
   const color = chord?.name ? NOTE_COLORS[chord?.name] : 'transparent'

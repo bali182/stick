@@ -17,6 +17,7 @@ import { aMinorBlues } from '../../state/templates/aMinorBlues'
 import { getUniqueName } from '../../model/utils'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
+import { createProgressionFromTemplate } from '../../state/actionCreators'
 
 export type NewProgressionModalProps = {
   onClose: () => void
@@ -205,7 +206,7 @@ export const NewProgressionModal: FC<NewProgressionModalProps> = ({
       type: 'global/createProgressionFromTemplate',
       payload: { template: projectTemplate },
     }
-    dispatch(action)
+    dispatch(createProgressionFromTemplate({ template: projectTemplate }))
     navigate(Paths.editor(projectTemplate.progression.id))
 
     if (canClose) {

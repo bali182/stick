@@ -7,12 +7,12 @@ import { PiPlusBold } from 'react-icons/pi'
 import { AppState } from '../../state/types'
 import { isNil } from '../../model/isNil'
 import { AppDispatch } from '../../state/store'
-import { CreateProgressionFromTemplateAction } from '../../state/actionTypes'
 import { getUniqueName } from '../../model/utils'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
 import { TemplateDescriptor } from './types'
 import { templates } from './templates'
+import { createProgressionFromTemplate } from '../../state/actionCreators'
 
 const containerStyle = css`
   display: flex;
@@ -168,11 +168,7 @@ export const NewProgression: FC = () => {
       useAutoName ? autoName : name,
       appState,
     )
-    const action: CreateProgressionFromTemplateAction = {
-      type: 'global/createProgressionFromTemplate',
-      payload: { template: projectTemplate },
-    }
-    dispatch(action)
+    dispatch(createProgressionFromTemplate({ template: projectTemplate }))
     navigate(Paths.editor(projectTemplate.progression.id))
   }
 

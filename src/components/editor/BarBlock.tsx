@@ -12,8 +12,8 @@ import { isNil } from '../../model/isNil'
 import { MissingBarBlock } from './pure/BarBlock/MissingBarBlock'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { CloneBarAction, DeleteBarsAction } from '../../state/actionTypes'
 import { EditorIds } from './EditorIds'
+import { cloneBar, deleteBars } from '../../state/actionCreators'
 
 export type BarBlockProps = {
   barId: string
@@ -45,11 +45,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   }, [newChordId])
 
   const onDeleteBar = () => {
-    const action: DeleteBarsAction = {
-      type: 'global/deleteBars',
-      payload: { barIds: [barId] },
-    }
-    dispatch(action)
+    dispatch(deleteBars({ barIds: [barId] }))
   }
 
   const onAddFirstChord = () => {
@@ -109,11 +105,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
     if (isNil(progression)) {
       return
     }
-    const action: CloneBarAction = {
-      type: 'global/cloneBar',
-      payload: { progressionId: progression.id, barId },
-    }
-    dispatch(action)
+    dispatch(cloneBar({ progressionId: progression.id, barId }))
   }
 
   if (isNil(bar)) {

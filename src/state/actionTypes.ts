@@ -24,6 +24,11 @@ export type CloneBarPayload = {
   progressionId: string
   barId: string
 }
+export type MoveBarPayload = {
+  progressionId: string
+  barId: string
+  overId: string
+}
 export type BarsPayload = {
   barIds: string[]
 }
@@ -52,6 +57,9 @@ export type DeleteProgressionsAction = PayloadAction<
   'global/deleteProgressions'
 >
 export type CloneBarAction = PayloadAction<CloneBarPayload, 'global/cloneBar'>
+
+export type MoveBarAction = PayloadAction<MoveBarPayload, 'global/moveBar'>
+
 export type GlobalActionTypes =
   | FillTransitionsAction
   | ClearTransitionsAction
@@ -67,3 +75,4 @@ export type AppActions =
   | DeleteBarsAction
   | DeleteProgressionsAction
   | CloneBarAction
+  | MoveBarAction

@@ -2,8 +2,9 @@ import { mapRecord, removeByKeys } from '../../model/utils'
 import { DeleteChordsAction } from '../actionTypes'
 import { AppState } from '../types'
 import { Bar } from '../../model/types'
+import { removeOrphanedTransitions } from './utils'
 
-export function deleteChords(
+export function deleteChordsReducer(
   state: AppState,
   action: DeleteChordsAction,
 ): AppState {
@@ -16,9 +17,9 @@ export function deleteChords(
     }
     return bar
   })
-  return {
+  return removeOrphanedTransitions({
     ...state,
     chords,
     bars,
-  }
+  })
 }

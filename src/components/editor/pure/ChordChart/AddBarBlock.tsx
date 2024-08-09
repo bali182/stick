@@ -43,7 +43,9 @@ const addButtonStyle = css`
   }
 `
 
-const addBarIconStyle = css``
+const addBarIconStyle = css`
+  flex-shrink: 0;
+`
 
 export type AddBarBlockProps = {
   onClick: () => void

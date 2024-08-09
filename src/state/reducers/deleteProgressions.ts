@@ -4,7 +4,7 @@ import { removeByKeys } from '../../model/utils'
 import { DeleteProgressionsAction } from '../actionTypes'
 import { AppState } from '../types'
 
-export function deleteProgressions(
+export function deleteProgressionsReducer(
   state: AppState,
   action: DeleteProgressionsAction,
 ): AppState {

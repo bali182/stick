@@ -1,7 +1,7 @@
 import { CreateProgressionFromTemplateAction } from '../actionTypes'
 import { AppState } from '../types'
 
-export function createProgressionFromTemplate(
+export function createProgressionFromTemplateReducer(
   state: AppState,
   action: CreateProgressionFromTemplateAction,
 ): AppState {

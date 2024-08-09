@@ -2,14 +2,13 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../state/store'
-import { progressionsSlice } from '../../state/progressions'
 import { FiTrash2 } from 'react-icons/fi'
 import { PageProps } from './types'
 import { isNil } from '../../model/isNil'
 import { useActiveProgression } from '../../modelHooks'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
-import { DeleteProgressionsAction } from '../../state/actionTypes'
+import { deleteProgressions } from '../../state/actionCreators'
 
 const sectionStyle = css`
   display: flex;
@@ -66,15 +65,11 @@ export const DangerPage: FC<PageProps> = () => {
   const progression = useActiveProgression()
   const navigate = useNavigate()
 
-  const deleteProgression = () => {
+  const onDeleteProgression = () => {
     if (isNil(progression)) {
       return
     }
-    const action: DeleteProgressionsAction = {
-      type: 'global/deleteProgressions',
-      payload: { progressionIds: [progression.id] },
-    }
-    dispatch(action)
+    dispatch(deleteProgressions({ progressionIds: [progression.id] }))
     navigate(Paths.home())
   }
 
@@ -85,7 +80,7 @@ export const DangerPage: FC<PageProps> = () => {
         Pressing this button will permanently delete this chord progression.
       </span>
       <div className={containerStyle}>
-        <button className={buttonStyle} onClick={deleteProgression}>
+        <button className={buttonStyle} onClick={onDeleteProgression}>
           <FiTrash2 />
           Permanently delete progression
         </button>

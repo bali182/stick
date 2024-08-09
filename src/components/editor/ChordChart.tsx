@@ -14,7 +14,6 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
-  arrayMove,
 } from '@dnd-kit/sortable'
 import { BarBlock } from './BarBlock'
 import { isNil } from '../../model/isNil'
@@ -29,6 +28,7 @@ import { AddBarBlock } from './pure/ChordChart/AddBarBlock'
 import { BarDragFeedback } from './pure/BarBlock/BarDragFeedback'
 import { PureChordChart } from './pure/ChordChart/PureChordChart'
 import { EditorIds } from './EditorIds'
+import { moveBar } from '../../state/actionCreators'
 
 export const ChordChart: FC = () => {
   const progression = useActiveProgression()
@@ -74,17 +74,25 @@ export const ChordChart: FC = () => {
       return
     }
 
-    const oldBars = progression.bars
-    const oldIndex = oldBars.indexOf(active.id as string)
-    const newIndex = oldBars.indexOf(over.id as string)
-    const newBars = arrayMove(progression.bars, oldIndex, newIndex)
-
     dispatch(
-      progressionsSlice.actions.updateProgression({
+      moveBar({
         progressionId: progression.id,
-        updates: { ...progression, bars: newBars },
+        barId: active.id as string,
+        overId: over.id as string,
       }),
     )
+
+    // const oldBars = progression.bars
+    // const oldIndex = oldBars.indexOf(active.id as string)
+    // const newIndex = oldBars.indexOf(over.id as string)
+    // const newBars = arrayMove(progression.bars, oldIndex, newIndex)
+
+    // dispatch(
+    //   progressionsSlice.actions.updateProgression({
+    //     progressionId: progression.id,
+    //     updates: { ...progression, bars: newBars },
+    //   }),
+    // )
   }
 
   const onDragStart = (event: DragStartEvent) => {
