@@ -8,8 +8,8 @@ const core: json.CoreSettingsJson = {
 
 const display: json.DisplaySettingsJson = {
   staveProfile: 'Default',
-  justifyLastSystem: true,
-  barsPerRow: 4,
+  // justifyLastSystem: true,
+  // barsPerRow: 4,
   resources: {
     staffLineColor: '#ffffff80',
     barSeparatorColor: '#fff',

@@ -5,7 +5,7 @@ import { PiMetronomeBold } from 'react-icons/pi'
 import { GiGuitarBassHead } from 'react-icons/gi'
 import { TbPiano } from 'react-icons/tb'
 import { LoopButton, PlayButton, StopButton } from './ScoreControls'
-import { AlphaTabLogo } from './AlphaTabLogo'
+import { SVGAlphaTabLogo } from './SVGAlphaTabLogo'
 
 const playerControlsStyle = css`
   padding: 0px 40px;
@@ -101,7 +101,8 @@ export const PlayerControls: FC<PlayerControlsProps> = ({
         </div>
         {/* <BpmInput value={bpm} onChange={onTempoChange} /> */}
       </div>
-      <AlphaTabLogo className={logoStyle} />
+      <SVGAlphaTabLogo className={logoStyle} />
+      {/* <AlphaTabLogo className={logoStyle} /> */}
     </div>
   )
 }
