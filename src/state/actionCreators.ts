@@ -13,6 +13,8 @@ import {
   MoveBarPayload,
   ProgressionPayload,
   ProgressionsPayload,
+  SetNoteCountAction,
+  SetNoteCountPayload,
   TemplatePayload,
 } from './actionTypes'
 
@@ -54,4 +56,8 @@ export function cloneBar(payload: CloneBarPayload): CloneBarAction {
 
 export function moveBar(payload: MoveBarPayload): MoveBarAction {
   return { type: 'global/moveBar', payload }
+}
+
+export function setNoteCount(payload: SetNoteCountPayload): SetNoteCountAction {
+  return { type: 'global/setNoteCount', payload }
 }

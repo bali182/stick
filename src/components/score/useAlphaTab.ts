@@ -20,6 +20,8 @@ export type UseAlphaTabConfig = {
   bpm: number
 }
 
+const noop = () => {}
+
 export function useAlphaTab({
   bpm,
   tex,
@@ -73,9 +75,9 @@ export function useAlphaTab({
       setTrackVolume(_api, 1, chordsVolume)
 
       setApi(_api)
+      return () => _api.destroy()
     }
-
-    return () => api?.destroy()
+    return noop
   }, [root, scrollArea])
 
   return {

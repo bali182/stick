@@ -9,6 +9,7 @@ import { Dropdown, MultiDropdown } from './Dropdown'
 import { ChordProgression, Tag } from '../../model/types'
 import { PageProps } from './types'
 import { useActiveProgression } from '../../modelHooks'
+import { setNoteCount } from '../../state/actionCreators'
 
 // const TAGS_MAP: Record<Tag, boolean> = {
 //   CHROMATIC_APPROACH: true,
@@ -50,7 +51,12 @@ export const BasePage: FC<PageProps> = () => {
   }
 
   const onNoteCountChange = (amount: string) => {
-    updateProgression({ noteCount: parseInt(amount) })
+    dispatch(
+      setNoteCount({
+        noteCount: parseInt(amount),
+        progressionId: progression!.id,
+      }),
+    )
   }
 
   // const onTagsChange = (tags: string[]) => {

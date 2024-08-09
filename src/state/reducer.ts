@@ -13,6 +13,7 @@ import { deleteBarsReducer } from './reducers/deleteBars'
 import { deleteProgressionsReducer } from './reducers/deleteProgressions'
 import { cloneBarReducer } from './reducers/cloneBar'
 import { moveBarReducer } from './reducers/moveBar'
+import { setNoteCountReducer } from './reducers/setNoteCount'
 
 const slicesReducer = combineReducers({
   bars: barsSlice.reducer,
@@ -39,6 +40,8 @@ export function reducer(state: AppState, action: AppActions): AppState {
       return cloneBarReducer(state, action)
     case 'global/moveBar':
       return moveBarReducer(state, action)
+    case 'global/setNoteCount':
+      return setNoteCountReducer(state, action)
     default:
       return slicesReducer(state, action)
   }

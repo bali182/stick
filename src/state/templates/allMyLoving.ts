@@ -4,6 +4,7 @@ export const allMyLoving: ProgressionTemplate = {
   progression: {
     id: 'all-my-loving',
     noteCount: 4,
+    bpm: 155,
     tuning: ['G2', 'D2', 'A1', 'E1'],
     name: 'All My Loving',
     bars: [

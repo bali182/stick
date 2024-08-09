@@ -14,6 +14,10 @@ export type ProgressionsActions = ActionType<typeof progressionsSlice.actions>
 export type ProgressionPayload = {
   progressionId: string
 }
+export type SetNoteCountPayload = {
+  noteCount: number
+  progressionId: string
+}
 export type TemplatePayload = {
   template: ProgressionTemplate
 }
@@ -59,6 +63,10 @@ export type DeleteProgressionsAction = PayloadAction<
 export type CloneBarAction = PayloadAction<CloneBarPayload, 'global/cloneBar'>
 
 export type MoveBarAction = PayloadAction<MoveBarPayload, 'global/moveBar'>
+export type SetNoteCountAction = PayloadAction<
+  SetNoteCountPayload,
+  'global/setNoteCount'
+>
 
 export type GlobalActionTypes =
   | FillTransitionsAction
@@ -76,3 +84,4 @@ export type AppActions =
   | DeleteProgressionsAction
   | CloneBarAction
   | MoveBarAction
+  | SetNoteCountAction
