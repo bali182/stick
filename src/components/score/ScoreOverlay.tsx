@@ -1,34 +1,32 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
+import { Spinner } from './Spinner'
 
 export type TabOverlayProps = {
   isVisible: boolean
 }
 
 const scoreOvelayStyle = css`
-  /** Fill Parent */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   z-index: 3;
 
-  /* Blurry dark shade */
-  backdrop-filter: blur(3px);
-  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  background: #22222299;
 
-  /** center content */
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  gap: 20px;
 `
 
 export const scoreOverlayContentStyle = css`
-  margin-top: 20px;
-  background: #fff;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
-  padding: 10px;
+  color: #ffffff;
+  font-size: 2em;
 `
 
 export const ScoreOverlay: FC<TabOverlayProps> = ({ isVisible }) => {
@@ -37,6 +35,7 @@ export const ScoreOverlay: FC<TabOverlayProps> = ({ isVisible }) => {
   }
   return (
     <div className={scoreOvelayStyle}>
+      <Spinner />
       <div className={scoreOverlayContentStyle}>Score is loading...</div>
     </div>
   )
