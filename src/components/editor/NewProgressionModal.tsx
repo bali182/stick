@@ -151,7 +151,7 @@ type TemplateDescriptor = {
 
 const templates: TemplateDescriptor[] = [
   {
-    name: 'From scratch',
+    name: 'New Progression',
     Icon: PiFileLight,
     description: 'Create your own progression from scratch.',
     factory: (name: string, state: AppState): ProgressionTemplate =>
