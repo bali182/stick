@@ -1,5 +1,13 @@
 import { css, cx } from '@emotion/css'
-import { ChangeEvent, FC, useMemo, useState } from 'react'
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { progressionsSlice } from '../../state/progressions'
 import { PiMusicNotesLight } from 'react-icons/pi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,10 +27,30 @@ const containerStyle = css`
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  padding: 12px 20px 20px 20px;
   border-radius: 10px;
   background-color: #ffffff15;
 `
+
+const baseContentContainerStyle = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+`
+
+const recentsContentContainerStyle = cx(
+  baseContentContainerStyle,
+  css`
+    padding: 12px 20px 20px 20px;
+  `,
+)
+
+const newContentContainerStyle = cx(
+  baseContentContainerStyle,
+  css`
+    padding: 12px 20px 0px 20px;
+  `,
+)
 
 const titleStyle = css`
   font-size: 1.6em;
@@ -77,7 +105,8 @@ const controlsContainerStyle = css`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin-top: 10px;
+  background-color: #ffffff10;
+  padding: 20px;
 `
 
 const inputStyle = css`
@@ -94,7 +123,13 @@ const inputStyle = css`
   }
 
   &:focus {
-    background-color: #ffffff50;
+    background-color: #ffffff40;
+  }
+
+  &:disabled {
+    background-color: #ffffff08;
+    color: #ffffff50;
+    cursor: not-allowed;
   }
 `
 
@@ -130,27 +165,36 @@ export const RecentProgressions: FC = () => {
   }
   return (
     <div className={containerStyle}>
-      <h2 className={titleStyle}>Recent progressions</h2>
-      {progressions.map((p) => (
-        <a className={itemStyle} href={`#/${p.id}/editor`} key={p.id}>
-          <PiMusicNotesLight className={iconStyle} />
-          <div className={labelContainer}>
-            <span className={nameStyle}>{p.name}</span>
-            <span className={detailStyle}>{p.bars.length} Bars</span>
-          </div>
-        </a>
-      ))}
+      <div className={recentsContentContainerStyle}>
+        <h2 className={titleStyle}>Recent progressions</h2>
+        {progressions.map((p) => (
+          <a className={itemStyle} href={`#/${p.id}/editor`} key={p.id}>
+            <PiMusicNotesLight className={iconStyle} />
+            <div className={labelContainer}>
+              <span className={nameStyle}>{p.name}</span>
+              <span className={detailStyle}>{p.bars.length} Bars</span>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   )
 }
 
 export const NewProgression: FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const [name, setName] = useState('')
+  const [templateClicked, setTemplateClicked] = useState(false)
   const [template, setTemplate] = useState<TemplateDescriptor>()
   const [useAutoName, setUseAutoName] = useState(true)
   const appState = useSelector<AppState, AppState>((state) => state)
   const navigate = useNavigate()
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
+  const hasTemplateSelected = isNil(template)
+
+  const dispatch = useDispatch<AppDispatch>()
+
   const autoName = useMemo(() => {
     const baseName = isNil(template) ? '' : template.name
     return getUniqueName(
@@ -159,54 +203,81 @@ export const NewProgression: FC = () => {
       ' ',
     )
   }, [template, progressions])
-  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    if (templateClicked) {
+      const { current: input } = inputRef
+      if (!isNil(input)) {
+        input.select()
+        input.focus()
+      }
+      setTemplateClicked(false)
+    }
+  }, [templateClicked])
+
   const onCreateProject = () => {
     if (isNil(template)) {
       return
     }
-    const projectTemplate = template.factory(
-      useAutoName ? autoName : name,
-      appState,
-    )
-    dispatch(createProgressionFromTemplate({ template: projectTemplate }))
-    navigate(Paths.editor(projectTemplate.progression.id))
+    const progressionName = name.length === 0 || useAutoName ? autoName : name
+    const templateWithIds = template.factory(progressionName, appState)
+    dispatch(createProgressionFromTemplate({ template: templateWithIds }))
+    navigate(Paths.editor(templateWithIds.progression.id))
+  }
+
+  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+    setUseAutoName(false)
+  }
+
+  const onBlur = () => {
+    if (name.length === 0) {
+      setUseAutoName(true)
+    }
+  }
+
+  const onTemplateClick = (template: TemplateDescriptor) => () => {
+    setTemplate(template)
+    setTemplateClicked(true)
   }
 
   return (
     <div className={containerStyle}>
-      <h2 className={titleStyle}>New progression</h2>
-      {templates.map((t) => {
-        const cls = cx(itemStyle, t === template ? selectedStyle : null)
-        return (
-          <div className={cls} key={t.name} onClick={() => setTemplate(t)}>
-            <t.Icon className={iconStyle} />
-            <div className={labelContainer}>
-              <span className={nameStyle}>{t.name}</span>
-              <span className={detailStyle}>{t.description}</span>
+      <div className={newContentContainerStyle}>
+        <h2 className={titleStyle}>New progression</h2>
+        {templates.map((t) => {
+          const cls = cx(itemStyle, t === template ? selectedStyle : null)
+          return (
+            <div className={cls} key={t.name} onClick={onTemplateClick(t)}>
+              <t.Icon className={iconStyle} />
+              <div className={labelContainer}>
+                <span className={nameStyle}>{t.name}</span>
+                <span className={detailStyle}>{t.description}</span>
+              </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
       <div className={controlsContainerStyle}>
         <input
+          ref={inputRef}
           type="text"
           placeholder="Progression name..."
           className={inputStyle}
+          disabled={hasTemplateSelected}
           value={useAutoName ? autoName : name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setName(e.target.value)
-            setUseAutoName(false)
-          }}
-          onBlur={() => {
-            if (name.length === 0) {
-              setUseAutoName(true)
+          onChange={onNameChange}
+          onBlur={onBlur}
+          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              onCreateProject()
             }
           }}
         />
         <button
           type="button"
           className={buttonStyle}
-          disabled={isNil(template)}
+          disabled={hasTemplateSelected}
           onClick={onCreateProject}
         >
           <PiPlusBold /> Create
