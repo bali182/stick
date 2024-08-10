@@ -3,11 +3,17 @@ import { ChordSymbol } from '../../model/types'
 import { updateRecord } from '../../model/utils'
 import { AppState } from '../types'
 
-export function removeOrphanedTransitions(state: AppState): AppState {
+export function removeOrphanedTransitions(
+  state: AppState,
+  progressionId: string | undefined,
+): AppState {
   const { progressions: _progressions, chords, bars } = state
   const chordsWithoutFollowup: ChordSymbol[] = []
 
-  const progressions = Object.values(_progressions)
+  const progressions = isNil(progressionId)
+    ? Object.values(_progressions)
+    : [_progressions[progressionId]]
+
   for (let p = 0; p < progressions.length; p++) {
     const progression = progressions[p]
     if (isNil(progression)) {

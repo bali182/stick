@@ -38,9 +38,12 @@ export function setNoteCountReducer(
     noteCount,
   }
 
-  return removeOrphanedTransitions({
-    ...state,
-    progressions: updateRecord(state.progressions, [updatedProg]),
-    chords: updateRecord(state.chords, chords),
-  })
+  return removeOrphanedTransitions(
+    {
+      ...state,
+      progressions: updateRecord(state.progressions, [updatedProg]),
+      chords: updateRecord(state.chords, chords),
+    },
+    progressionId,
+  )
 }

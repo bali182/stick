@@ -28,8 +28,11 @@ export function moveBarReducer(
     bars: arrayMove(progression.bars, oldIndex, newIndex),
   }
 
-  return removeOrphanedTransitions({
-    ...state,
-    progressions: updateRecord(state.progressions, [updatedProg]),
-  })
+  return removeOrphanedTransitions(
+    {
+      ...state,
+      progressions: updateRecord(state.progressions, [updatedProg]),
+    },
+    progressionId,
+  )
 }

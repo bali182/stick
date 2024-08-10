@@ -113,7 +113,9 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
         )
       })
     }
-    dispatch(deleteChords({ chordIds: [chordId] }))
+    dispatch(
+      deleteChords({ progressionId: progression?.id, chordIds: [chordId] }),
+    )
   }
 
   const color = chord?.name ? NOTE_COLORS[chord?.name] : 'transparent'

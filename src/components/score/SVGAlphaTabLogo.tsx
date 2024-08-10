@@ -33,7 +33,7 @@ const wrapperStyle = css`
 
 export const SVGAlphaTabLogo: FC<HTMLProps<HTMLElement>> = ({ className }) => {
   return (
-    <div className={cx(wrapperStyle, className)}>
+    <a className={cx(wrapperStyle, className)} href="https://alphatab.net">
       <span className={renderedByStyle}>Tabs & score rendered by:</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +54,6 @@ export const SVGAlphaTabLogo: FC<HTMLProps<HTMLElement>> = ({ className }) => {
           d="M169.275,36.386V142.305c-2.905-3.491-7.753-5.425-14.038-5.425-14.459,0-27.1,11.607-27.1,24.378,0,9.766,6.728,14.635,17.088,14.635,15.636,0,27.031-11.977,27.1-24.3V65.77c15.4,7.886,26.484,15.751,32.457,27.168C210.83,104.5,207,120.5,190.548,135.122c-0.421,1.521.258,2.306,1.447,2.254,29.206-24.517,24.482-55.245-2.072-76.383-8.654-6.888-14.95-16.1-17.6-24.608h-3.05Z"
         />
       </svg>
-    </div>
+    </a>
   )
 }

@@ -9,7 +9,16 @@ export function deleteBarsReducer(
   state: AppState,
   action: DeleteBarsAction,
 ): AppState {
-  const { barIds } = action.payload
+  const { barIds: _barIds, progressionId } = action.payload
+
+  const progression = isNil(progressionId)
+    ? undefined
+    : state.progressions[progressionId]
+
+  const barIds = isNil(progression)
+    ? _barIds
+    : _barIds.filter((barId) => progression.bars.includes(barId))
+
   const chordIds = barIds
     .map((id) => state.bars[id])
     .filter((bar): bar is Bar => !isNil(bar))
@@ -27,10 +36,13 @@ export function deleteBarsReducer(
       return prog
     },
   )
-  return removeOrphanedTransitions({
-    ...state,
-    bars,
-    chords,
-    progressions,
-  })
+  return removeOrphanedTransitions(
+    {
+      ...state,
+      bars,
+      chords,
+      progressions,
+    },
+    progressionId,
+  )
 }

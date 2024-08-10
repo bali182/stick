@@ -1,6 +1,6 @@
 import {
-  BarsPayload,
-  ChordsPayload,
+  DeleteBarsPayload,
+  DeleteChordsPayload,
   ClearTransitionsAction,
   CloneBarAction,
   CloneBarPayload,
@@ -36,11 +36,11 @@ export function createProgressionFromTemplate(
   return { type: 'global/createProgressionFromTemplate', payload }
 }
 
-export function deleteChords(payload: ChordsPayload): DeleteChordsAction {
+export function deleteChords(payload: DeleteChordsPayload): DeleteChordsAction {
   return { type: 'global/deleteChords', payload }
 }
 
-export function deleteBars(payload: BarsPayload): DeleteBarsAction {
+export function deleteBars(payload: DeleteBarsPayload): DeleteBarsAction {
   return { type: 'global/deleteBars', payload }
 }
 

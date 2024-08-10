@@ -21,7 +21,8 @@ export type SetNoteCountPayload = {
 export type TemplatePayload = {
   template: ProgressionTemplate
 }
-export type ChordsPayload = {
+export type DeleteChordsPayload = {
+  progressionId?: string
   chordIds: string[]
 }
 export type CloneBarPayload = {
@@ -33,7 +34,8 @@ export type MoveBarPayload = {
   barId: string
   overId: string
 }
-export type BarsPayload = {
+export type DeleteBarsPayload = {
+  progressionId?: string
   barIds: string[]
 }
 export type ProgressionsPayload = {
@@ -52,10 +54,13 @@ export type CreateProgressionFromTemplateAction = PayloadAction<
   'global/createProgressionFromTemplate'
 >
 export type DeleteChordsAction = PayloadAction<
-  ChordsPayload,
+  DeleteChordsPayload,
   'global/deleteChords'
 >
-export type DeleteBarsAction = PayloadAction<BarsPayload, 'global/deleteBars'>
+export type DeleteBarsAction = PayloadAction<
+  DeleteBarsPayload,
+  'global/deleteBars'
+>
 export type DeleteProgressionsAction = PayloadAction<
   ProgressionsPayload,
   'global/deleteProgressions'

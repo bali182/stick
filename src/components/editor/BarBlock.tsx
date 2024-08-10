@@ -45,7 +45,7 @@ export const BarBlock: FC<BarBlockProps> = ({ barId, count }) => {
   }, [newChordId])
 
   const onDeleteBar = () => {
-    dispatch(deleteBars({ barIds: [barId] }))
+    dispatch(deleteBars({ progressionId: progression?.id, barIds: [barId] }))
   }
 
   const onAddFirstChord = () => {
