@@ -3,6 +3,9 @@ import { chordTonesWithChromaticLeadingTone } from './chordTonesWithChromaticLea
 import { oneNote } from './oneNote'
 import { oneToFive } from './oneToFive'
 import { oneToFour } from './oneToFour'
+import { oneToSix } from './oneToSix'
+import { oneToThree } from './oneToThree'
+import { oneToTwo } from './oneToTwo'
 import { rootAndChordTone } from './rootAndChordTone'
 import { rootToChromaticPassingTone } from './rootToChromaticPassingTone'
 import { stationary } from './stationary'
@@ -13,6 +16,9 @@ export const TRANSITION_CATEGORIES: TransitionCategory[] = [
   oneNote,
   oneToFive,
   oneToFour,
+  oneToSix,
+  oneToThree,
+  oneToTwo,
   rootAndChordTone,
   rootToChromaticPassingTone,
   stationary,
