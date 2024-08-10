@@ -18,6 +18,7 @@ import { getUniqueName } from '../../model/utils'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
 import { createProgressionFromTemplate } from '../../state/actionCreators'
+import { templates } from '../home/templates'
 
 export type NewProgressionModalProps = {
   onClose: () => void
@@ -148,32 +149,6 @@ type TemplateDescriptor = {
   description: string
   factory: (name: string, state: AppState) => ProgressionTemplate
 }
-
-const templates: TemplateDescriptor[] = [
-  {
-    name: 'New Progression',
-    Icon: PiFileLight,
-    description: 'Create your own progression from scratch.',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, emptyTemplate, name),
-  },
-  {
-    name: 'A Minor Blues',
-    Icon: PiMusicNotesLight,
-    description:
-      'Simple minor blues progression, focusing on i, iv and v chords.',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, aMinorBlues, name),
-  },
-  {
-    name: 'Autumn Leaves',
-    Icon: PiMusicNotesLight,
-    description:
-      'Autumn Leaves in G minor. For practicing both the major and minor ii V I',
-    factory: (name: string, state: AppState): ProgressionTemplate =>
-      withUniqueIds(state, autumnLeavesTemplate, name),
-  },
-]
 
 export const NewProgressionModal: FC<NewProgressionModalProps> = ({
   onClose,
