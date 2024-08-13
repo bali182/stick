@@ -176,7 +176,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
             tabIndex={-1}
           >
             <div className={walkStyle}>
-              <RiFootprintFill className={addTransitionIconStyle} /> Walk
+              <RiFootprintFill className={addTransitionIconStyle} /> Transition
             </div>
           </button>
         )}

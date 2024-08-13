@@ -5,6 +5,17 @@ export const globalStyles = css`
     width: 100vw;
     height: 100vh;
   }
+  #modal {
+    /* No styling for now */
+  }
+  #tooltip {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+  }
 
   *,
   *::before,

@@ -6,6 +6,7 @@ import { ScoreView } from './score/ScoreView'
 import { Home } from './home/Home'
 import { NeedsProgressionRoute } from './NeedsProgressionRoute'
 import { NotFoundPage, ProgressionNotFoundPage } from './NotFoundPages'
+import TooltipManager from './TooltipManager'
 
 const appStyle = css`
   width: 100%;
@@ -16,6 +17,7 @@ const appStyle = css`
 export const App: FC = () => {
   return (
     <div className={appStyle}>
+      <TooltipManager />
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/:progressionId/404" Component={ProgressionNotFoundPage} />
