@@ -18,6 +18,11 @@ function canAutoFillTransitions(bars: Bar[], chords: ChordSymbol[]): boolean {
 }
 
 function canGenerateScore(bars: Bar[], chords: ChordSymbol[]): boolean {
+  // 1 bar and 1 chord slipped through the cracks, no progression then
+  if (bars.length === 1 && bars[0]!.chords.length < 2) {
+    return false
+  }
+
   // Empty bars, no score
   if (bars.some((bar) => bar.chords.length === 0)) {
     return false
