@@ -75,10 +75,10 @@ export const Navigation: FC = () => {
   return (
     <div className={tabContainerStyle}>
       {TABS.map(({ path, icon: Icon, label }) => {
-        const href = Paths[path](progression!.id)
+        const href = Paths.href[path](progression!.id)
         const cls = pathname === href ? cx(tabStyle, activeStyle) : tabStyle
         return (
-          <a href={`#${href}`} className={cls} key={path}>
+          <a href={href} className={cls} key={path}>
             <Icon /> {label}
           </a>
         )

@@ -168,7 +168,7 @@ export const RecentProgressions: FC = () => {
       <div className={recentsContentContainerStyle}>
         <h2 className={titleStyle}>Recent progressions</h2>
         {progressions.map((p) => (
-          <a className={itemStyle} href={`#/${p.id}/editor`} key={p.id}>
+          <a className={itemStyle} href={Paths.href.editor(p.id)} key={p.id}>
             <PiMusicNotesLight className={iconStyle} />
             <div className={labelContainer}>
               <span className={nameStyle}>{p.name}</span>
@@ -222,7 +222,7 @@ export const NewProgression: FC = () => {
     const progressionName = name.length === 0 || useAutoName ? autoName : name
     const templateWithIds = template.factory(progressionName, appState)
     dispatch(createProgressionFromTemplate({ template: templateWithIds }))
-    navigate(Paths.editor(templateWithIds.progression.id))
+    navigate(Paths.nav.editor(templateWithIds.progression.id))
   }
 
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {

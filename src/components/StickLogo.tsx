@@ -1,6 +1,7 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
 import { RiFootprintFill } from 'react-icons/ri'
+import { Paths } from './paths'
 
 const logoBlockStyle = css`
   display: flex;
@@ -44,7 +45,7 @@ const subTitleStyle = css`
 
 export const StickLogo: FC = () => {
   return (
-    <a className={logoBlockStyle} href="#/">
+    <a className={logoBlockStyle} href={Paths.href.home()}>
       <RiFootprintFill className={titleIconStyle} />
       <span className={logoTextStyle}>
         <h1 className={titleStyle}>Stick</h1>

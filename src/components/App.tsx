@@ -6,7 +6,7 @@ import { ScoreView } from './score/ScoreView'
 import { Home } from './home/Home'
 import { NeedsProgressionRoute } from './NeedsProgressionRoute'
 import { NotFoundPage, ProgressionNotFoundPage } from './NotFoundPages'
-import TooltipManager from './TooltipManager'
+import TooltipManager from './tooltip/TooltipManager'
 
 const appStyle = css`
   width: 100%;

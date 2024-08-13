@@ -3,6 +3,7 @@ import { Toolbar } from './Toolbar'
 import { css } from '@emotion/css'
 import { RiSearchLine } from 'react-icons/ri'
 import { buttonStyle } from './commonStyles'
+import { Paths } from './paths'
 
 const containerStyle = css`
   display: flex;
@@ -33,7 +34,7 @@ export const ProgressionNotFoundPage: FC = () => {
         <span className={textStyle}>
           The progression you are looking for doesn't exist!
         </span>
-        <a className={buttonStyle} href="/">
+        <a className={buttonStyle} href={Paths.href.home()}>
           Go back
         </a>
       </div>
@@ -48,7 +49,7 @@ export const NotFoundPage: FC = () => {
       <div className={containerStyle}>
         <RiSearchLine className={iconStyle} />
         <span className={textStyle}>404 - this page doesn't do anything.</span>
-        <a className={buttonStyle} href="/">
+        <a className={buttonStyle} href={Paths.href.home()}>
           Go back
         </a>
       </div>

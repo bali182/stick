@@ -164,7 +164,7 @@ export const ProjectToolBar: FC = () => {
       )}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>
-          <a className={backButtonStyle} href={Paths.home()}>
+          <a className={backButtonStyle} href={Paths.href.home()}>
             <PiArrowLeftBold className={buttonIconStyle} />
           </a>
           <AutoWidthInput
