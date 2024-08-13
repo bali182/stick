@@ -1,4 +1,4 @@
-const nav = {
+export const Paths = {
   score: (progressionId: string) => {
     return `/${progressionId}/score`
   },
@@ -8,21 +8,4 @@ const nav = {
   home: () => {
     return `/`
   },
-}
-
-const href = {
-  score: (progressionId: string) => {
-    return `/#${nav.score(progressionId)}`
-  },
-  editor: (progressionId: string) => {
-    return `/#${nav.editor(progressionId)}`
-  },
-  home: () => {
-    return `/#${nav.home()}`
-  },
-}
-
-export const Paths = {
-  nav,
-  href,
-}
+} as const

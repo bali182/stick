@@ -1,11 +1,4 @@
-import {
-  FC,
-  useRef,
-  useMemo,
-  useState,
-  useLayoutEffect,
-  useEffect,
-} from 'react'
+import { FC, useRef, useState, useLayoutEffect, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Tooltip } from './Tooltip'
 import { Position, PositionData } from './types'

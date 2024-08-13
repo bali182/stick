@@ -21,6 +21,7 @@ import { Paths } from '../paths'
 import { TemplateDescriptor } from './types'
 import { templates } from './templates'
 import { createProgressionFromTemplate } from '../../state/actionCreators'
+import { Link } from 'react-router-dom'
 
 const containerStyle = css`
   display: flex;
@@ -168,13 +169,13 @@ export const RecentProgressions: FC = () => {
       <div className={recentsContentContainerStyle}>
         <h2 className={titleStyle}>Recent progressions</h2>
         {progressions.map((p) => (
-          <a className={itemStyle} href={Paths.href.editor(p.id)} key={p.id}>
+          <Link to={Paths.editor(p.id)} className={itemStyle} key={p.id}>
             <PiMusicNotesLight className={iconStyle} />
             <div className={labelContainer}>
               <span className={nameStyle}>{p.name}</span>
               <span className={detailStyle}>{p.bars.length} Bars</span>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
@@ -222,7 +223,7 @@ export const NewProgression: FC = () => {
     const progressionName = name.length === 0 || useAutoName ? autoName : name
     const templateWithIds = template.factory(progressionName, appState)
     dispatch(createProgressionFromTemplate({ template: templateWithIds }))
-    navigate(Paths.nav.editor(templateWithIds.progression.id))
+    navigate(Paths.editor(templateWithIds.progression.id))
   }
 
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {

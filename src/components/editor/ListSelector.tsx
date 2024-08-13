@@ -4,6 +4,7 @@ import { IconType } from 'react-icons'
 import { RiSearchLine } from 'react-icons/ri'
 import { isNil } from '../../model/isNil'
 import { PiPlusBold } from 'react-icons/pi'
+import { Link } from 'react-router-dom'
 
 export type ListSelectorProps<C, I> = {
   categories: C[]
@@ -200,15 +201,15 @@ export function ListSelector<C, I>({
                 }
                 const link = getHyperLink(item)
                 return (
-                  <a
+                  <Link
+                    to={link}
                     key={key}
                     className={itemStyle}
-                    href={link}
                     onClick={click}
                   >
                     {ItemIcon && <ItemIcon />}
                     {label}
-                  </a>
+                  </Link>
                 )
               })}
             </Fragment>

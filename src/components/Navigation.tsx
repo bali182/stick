@@ -5,6 +5,7 @@ import { PiMusicNoteSimple, PiPencilLine } from 'react-icons/pi'
 import { Paths } from './paths'
 import { useLocation } from 'react-router'
 import { useActiveProgression } from '../modelHooks'
+import { Link } from 'react-router-dom'
 
 const tabContainerStyle = css`
   display: flex;
@@ -75,12 +76,12 @@ export const Navigation: FC = () => {
   return (
     <div className={tabContainerStyle}>
       {TABS.map(({ path, icon: Icon, label }) => {
-        const href = Paths.href[path](progression!.id)
+        const href = Paths[path](progression!.id)
         const cls = pathname === href ? cx(tabStyle, activeStyle) : tabStyle
         return (
-          <a href={href} className={cls} key={path}>
+          <Link to={href} className={cls} key={path}>
             <Icon /> {label}
-          </a>
+          </Link>
         )
       })}
     </div>

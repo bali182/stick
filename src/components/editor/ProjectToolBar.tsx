@@ -6,12 +6,12 @@ import { PiGear, PiArrowLeftBold } from 'react-icons/pi'
 import { useDispatch } from 'react-redux'
 import { SettingsModal } from '../settings/SettingsModal'
 import { isNil } from '../../model/isNil'
-import { NewProgressionModal } from './NewProgressionModal'
 import { useActiveProgression, useProgressionStatus } from '../../modelHooks'
 import { Paths } from '../paths'
 import { progressionsSlice } from '../../state/progressions'
 import { AutoWidthInput } from '../AutoWidthInput'
 import { clearTransactions, fillTransactions } from '../../state/actionCreators'
+import { Link } from 'react-router-dom'
 
 const toolbarStyle = css`
   display: flex;
@@ -103,7 +103,6 @@ const buttonIconStyle = css`
 
 export const ProjectToolBar: FC = () => {
   const [isSettingsOpen, setSettingsOpen] = useState(false)
-  const [isProgressionModalOpen, setProgressionModalOpen] = useState(false)
 
   const progression = useActiveProgression()
 
@@ -151,22 +150,15 @@ export const ProjectToolBar: FC = () => {
 
   const onOpenSettings = () => setSettingsOpen(true)
   const onCloseSettings = () => setSettingsOpen(false)
-  const onCloseProgressionModal = () => setProgressionModalOpen(false)
 
   return (
     <>
       {isSettingsOpen && <SettingsModal onClose={onCloseSettings} />}
-      {isProgressionModalOpen && (
-        <NewProgressionModal
-          onClose={onCloseProgressionModal}
-          canClose={true}
-        />
-      )}
       <div className={toolbarStyle}>
         <div className={buttonContainerStyle}>
-          <a className={backButtonStyle} href={Paths.href.home()}>
+          <Link to={Paths.home()} className={backButtonStyle}>
             <PiArrowLeftBold className={buttonIconStyle} />
-          </a>
+          </Link>
           <AutoWidthInput
             type="text"
             value={progression?.name ?? ''}
