@@ -8,7 +8,7 @@ import { TuningPage } from './TuningPage'
 import { DangerPage } from './DangerPage'
 
 export function useSettingsPages(): SettingsPage[] {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const pages = useMemo((): SettingsPage[] => {
     return [
       {
@@ -30,6 +30,6 @@ export function useSettingsPages(): SettingsPage[] {
         Component: DangerPage,
       },
     ]
-  }, [t])
+  }, [t, i18n.language])
   return pages
 }

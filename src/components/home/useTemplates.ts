@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function useTemplates(): TemplateDescriptor[] {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const templates = useMemo((): TemplateDescriptor[] => {
     return [
       {
@@ -42,6 +42,6 @@ export function useTemplates(): TemplateDescriptor[] {
           withUniqueIds(state, allMyLoving, name),
       },
     ]
-  }, [])
+  }, [t, i18n.language])
   return templates
 }

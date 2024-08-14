@@ -160,3 +160,5 @@ export type ProgressionsStatus = {
   canGenerateScore: boolean
   canClearTransitions: boolean
 }
+
+export type Language = 'hu' | 'en'

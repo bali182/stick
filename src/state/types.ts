@@ -1,4 +1,4 @@
-import { Bar, ChordProgression, ChordSymbol } from '../model/types'
+import { Bar, ChordProgression, ChordSymbol, Language } from '../model/types'
 
 export type BarsState = Record<string, Bar>
 export type ChordSymbolsState = Record<string, ChordSymbol>
@@ -10,6 +10,7 @@ export type ConfigState = {
   bassVolume: number
   chordsVolume: number
   isLooping: boolean
+  language?: Language
 }
 
 export type AppState = {

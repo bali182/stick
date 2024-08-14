@@ -13,6 +13,7 @@ export type ListSelectorProps<C, I> = {
   canCreate: boolean
   canSearch: boolean
   createLabel?: string
+  showCategories?: boolean
   onCreate?: () => void
   onItemClick: (item: I) => void
   getChildren: (category: C) => I[]
@@ -129,6 +130,7 @@ export function ListSelector<C, I>({
   canCreate,
   canSearch,
   createLabel,
+  showCategories = true,
   getChildren,
   getCategoryKey,
   getCategoryLabel,
@@ -184,10 +186,12 @@ export function ListSelector<C, I>({
             : getCategoryIcon(category)
           return (
             <Fragment key={getCategoryKey(category)}>
-              <div className={categoryTitleStyle}>
-                {CatIcon && <CatIcon />}
-                {getCategoryLabel(category)}
-              </div>
+              {showCategories && (
+                <div className={categoryTitleStyle}>
+                  {CatIcon && <CatIcon />}
+                  {getCategoryLabel(category)}
+                </div>
+              )}
               {items.map((item) => {
                 const ItemIcon = isNil(getItemIcon) ? null : getItemIcon(item)
                 const key = getItemKey(item)

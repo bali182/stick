@@ -10,6 +10,7 @@ const logoBlockStyle = css`
   align-items: center;
   gap: 6px;
   margin-right: 60px;
+  flex-shrink: 0;
   &:hover,
   &:active,
   &:visited {
@@ -42,6 +43,7 @@ const subTitleStyle = css`
   font-size: 0.8em;
   line-height: 90%;
   font-weight: normal;
+  white-space: nowrap;
 `
 
 export const StickLogo: FC = () => {

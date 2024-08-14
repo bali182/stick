@@ -9,6 +9,7 @@ import { ProgressionsStatus } from '../../model/types'
 import { useActiveProgression } from '../../modelHooks'
 import { Toolbar } from '../Toolbar'
 import { Navigation } from '../Navigation'
+import { LanguageSelector } from '../LanguageSelector'
 
 const scoreViewStyle = css`
   height: 100%;
@@ -26,6 +27,7 @@ export const ScoreView: FC = () => {
     <>
       <Toolbar>
         <Navigation />
+        <LanguageSelector />
       </Toolbar>
       <div className={scoreViewStyle}>
         {!canGenerateScore ? <NoScoreView /> : null}

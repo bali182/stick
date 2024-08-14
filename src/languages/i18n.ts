@@ -1,11 +1,15 @@
 import _i18n from 'i18next'
 import { en } from './en'
 import { hu } from './hu'
+import { store } from '../state/store'
+import { AppState } from '../state/types'
+
+const storedLanguage = (store?.getState?.() as AppState)?.config?.language
 
 _i18n.init({
   interpolation: { escapeValue: false },
   debug: true,
-  lng: window.navigator.language,
+  lng: storedLanguage ?? window.navigator.language,
   fallbackLng: 'en',
   resources: {
     en: { translation: en },

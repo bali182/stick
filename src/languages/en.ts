@@ -1,4 +1,5 @@
 export const en = {
+  Language: 'Language',
   Home: {
     RecentProgressions: 'Recent Progressions',
     NewProgression: 'New Progression',

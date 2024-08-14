@@ -1,6 +1,7 @@
 import { Messages } from './types'
 
 export const hu: Messages = {
+  Language: 'Nyelv',
   Home: {
     RecentProgressions: 'Akkordköreid',
     NewProgression: 'Új Akkordkör',

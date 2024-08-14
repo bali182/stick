@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { css } from '@emotion/css'
 import { Toolbar } from '../Toolbar'
 import { NewProgression, RecentProgressions } from './Progressions'
+import { LanguageSelector } from '../LanguageSelector'
+import { NavigationPlaceHolder } from '../Navigation'
 
 const contentContainerStyle = css`
   display: flex;
@@ -15,7 +17,10 @@ const contentContainerStyle = css`
 export const Home: FC = () => {
   return (
     <>
-      <Toolbar />
+      <Toolbar>
+        <NavigationPlaceHolder />
+        <LanguageSelector />
+      </Toolbar>
       <div className={contentContainerStyle}>
         <RecentProgressions />
         <NewProgression />

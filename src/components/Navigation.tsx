@@ -11,7 +11,9 @@ import { useTranslation } from 'react-i18next'
 const tabContainerStyle = css`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 16px;
+  flex: 1;
 `
 
 const tabStyle = css`
@@ -79,4 +81,8 @@ export const Navigation: FC = () => {
       </Link>
     </div>
   )
+}
+
+export const NavigationPlaceHolder: FC = () => {
+  return <div className={tabContainerStyle}>&nbsp;</div>
 }

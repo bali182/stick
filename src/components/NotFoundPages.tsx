@@ -6,6 +6,8 @@ import { buttonStyle } from './commonStyles'
 import { Paths } from './paths'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { LanguageSelector } from './LanguageSelector'
+import { NavigationPlaceHolder } from './Navigation'
 
 const containerStyle = css`
   display: flex;
@@ -31,7 +33,10 @@ export const ProgressionNotFoundPage: FC = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Toolbar />
+      <Toolbar>
+        <NavigationPlaceHolder />
+        <LanguageSelector />
+      </Toolbar>
       <div className={containerStyle}>
         <RiSearchLine className={iconStyle} />
         <span className={textStyle}>{t('404.MissingProgression')}</span>
@@ -47,7 +52,10 @@ export const NotFoundPage: FC = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Toolbar />
+      <Toolbar>
+        <NavigationPlaceHolder />
+        <LanguageSelector />
+      </Toolbar>
       <div className={containerStyle}>
         <RiSearchLine className={iconStyle} />
         <span className={textStyle}>{t('404.404')}</span>
