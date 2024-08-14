@@ -5,6 +5,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import { isNil } from '../../model/isNil'
 import { PiPlusBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export type ListSelectorProps<C, I> = {
   categories: C[]
@@ -140,6 +141,7 @@ export function ListSelector<C, I>({
   onCreate,
   matches,
 }: ListSelectorProps<C, I>): JSX.Element {
+  const { t } = useTranslation()
   const [search, setSearch] = useState('')
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -164,7 +166,7 @@ export function ListSelector<C, I>({
         <input
           type="text"
           className={searchTextBoxStyle}
-          placeholder="Search..."
+          placeholder={t('Progression.Search')}
           value={search}
           onChange={onSearchChange}
         />

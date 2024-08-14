@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Transition, TransitionCategory } from '../../../../model/types'
 import { ListSelector } from '../../ListSelector'
+import { useTranslation } from 'react-i18next'
 
 export type TransitionSelectorListProps = {
   setOpen: (open: boolean) => void
@@ -16,14 +17,13 @@ const getItemKey = (item: Transition) => item.id
 const getItemLabel = (item: Transition) => item.name
 const matches = (item: Transition, search: string) =>
   item.name.toLowerCase().includes(search.toLowerCase())
-const noHitsLabel =
-  'No transitions found! Consider changing the root notes, your preferences, or search criteria'
 
 export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
   setOpen,
   categories,
   onChange,
 }) => {
+  const { t } = useTranslation()
   const onItemClick = (transition: Transition) => {
     onChange(transition)
     setOpen(false)
@@ -40,7 +40,7 @@ export const TransitionSelectorList: FC<TransitionSelectorListProps> = ({
       getItemKey={getItemKey}
       getItemLabel={getItemLabel}
       matches={matches}
-      noHitsLabel={noHitsLabel}
+      noHitsLabel={t('Errors.NoTransitionsMessage')}
     />
   )
 }

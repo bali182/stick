@@ -24,6 +24,7 @@ import {
 } from 'react-icons/pi'
 import { useActiveProgression } from '../../modelHooks'
 import { isNil } from '../../model/isNil'
+import { useTranslation } from 'react-i18next'
 
 const sectionStyle = css`
   display: flex;
@@ -120,6 +121,7 @@ const hrStyle = css`
 export const TuningPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useActiveProgression()
+  const { t } = useTranslation()
   const tuning = progression?.tuning!
 
   function updateTuning(tuning: PitchedNote[]) {
@@ -164,9 +166,9 @@ export const TuningPage: FC = () => {
 
   return (
     <div className={sectionStyle}>
-      <label className={labelStyle}>Tuning</label>
+      <label className={labelStyle}>{t('Settings.TuningName')}</label>
       <span className={descriptionStyle}>
-        You can change the tuning here to the exact tuning you are using.
+        {t('Settings.TuningDescription')}
       </span>
       <div className={containerStyle}>
         {tuning.map((note, i) => {
@@ -219,7 +221,7 @@ export const TuningPage: FC = () => {
           </button>
         </div>
         <button className={buttonStyle} onClick={addString}>
-          <PiPlusBold /> Add String
+          <PiPlusBold /> {t('Settings.TuningAddString')}
         </button>
       </div>
     </div>

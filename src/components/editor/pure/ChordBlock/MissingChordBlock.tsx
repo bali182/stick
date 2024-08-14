@@ -2,6 +2,7 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 import { buttonStyle } from '../../../commonStyles'
+import { useTranslation } from 'react-i18next'
 
 const missingChordBlockStyle = css`
   display: flex;
@@ -28,14 +29,13 @@ export type MissingChordBlockProps = {
 }
 
 export const MissingChordBlock: FC<MissingChordBlockProps> = ({ onDelete }) => {
+  const { t } = useTranslation()
   return (
     <div className={missingChordBlockStyle}>
-      <span className={textStyle}>
-        This chord is missing! This is most likely the result of a bug.
-      </span>
+      <span className={textStyle}>{t('Errors.MissingChord')}</span>
       <button className={buttonStyle} onClick={onDelete}>
         <FiTrash2 />
-        Delete
+        {t('Errors.Delete')}
       </button>
     </div>
   )

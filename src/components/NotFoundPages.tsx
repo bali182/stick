@@ -5,6 +5,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import { buttonStyle } from './commonStyles'
 import { Paths } from './paths'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const containerStyle = css`
   display: flex;
@@ -27,16 +28,15 @@ const textStyle = css`
 `
 
 export const ProgressionNotFoundPage: FC = () => {
+  const { t } = useTranslation()
   return (
     <>
       <Toolbar />
       <div className={containerStyle}>
         <RiSearchLine className={iconStyle} />
-        <span className={textStyle}>
-          The progression you are looking for doesn't exist!
-        </span>
+        <span className={textStyle}>{t('404.MissingProgression')}</span>
         <Link to={Paths.home()} className={buttonStyle}>
-          Go back
+          {t('404.GoBack')}
         </Link>
       </div>
     </>
@@ -44,14 +44,15 @@ export const ProgressionNotFoundPage: FC = () => {
 }
 
 export const NotFoundPage: FC = () => {
+  const { t } = useTranslation()
   return (
     <>
       <Toolbar />
       <div className={containerStyle}>
         <RiSearchLine className={iconStyle} />
-        <span className={textStyle}>404 - this page doesn't do anything.</span>
+        <span className={textStyle}>{t('404.404')}</span>
         <Link to={Paths.home()} className={buttonStyle}>
-          Go back
+          {t('404.GoBack')}
         </Link>
       </div>
     </>

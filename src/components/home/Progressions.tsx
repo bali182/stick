@@ -19,7 +19,7 @@ import { getUniqueName } from '../../model/utils'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
 import { TemplateDescriptor } from './types'
-import { templates } from './templates'
+import { useTemplates } from './useTemplates'
 import { createProgressionFromTemplate } from '../../state/actionCreators'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -190,6 +190,7 @@ export const NewProgression: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const { t } = useTranslation()
+  const templates = useTemplates()
   const [name, setName] = useState('')
   const [templateClicked, setTemplateClicked] = useState(false)
   const [template, setTemplate] = useState<TemplateDescriptor>()

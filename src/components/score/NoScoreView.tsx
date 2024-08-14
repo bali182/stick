@@ -1,5 +1,6 @@
 import { css } from '@emotion/css'
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PiWarning } from 'react-icons/pi'
 
 const noScoreViewStyle = css`
@@ -39,16 +40,17 @@ const listStyle = css`
 `
 
 export const NoScoreView: FC = () => {
+  const { t } = useTranslation()
   return (
     <div className={noScoreViewStyle}>
       <PiWarning className={warningIconStyle} />
-      <span className={titleStyle}>Score cannot be generated!</span>
+      <span className={titleStyle}>{t('Errors.ScoreCannotBeGenerated')}</span>
       <div className={fixesContainerStyle}>
-        <span className={howToFixStyle}>What's missing?</span>
+        <span className={howToFixStyle}>{t('Errors.WhatsMissing')}</span>
         <ul className={listStyle}>
-          <li>You should have at least 2 bars</li>
-          <li>Each bar should have at least 1 chord in it</li>
-          <li>Each chord should have a transition defined to the next chord</li>
+          <li>{t('Errors.AtLeast2Bars')}</li>
+          <li>{t('Errors.AtLeast1Chord')}</li>
+          <li>{t('Errors.NeedsTransitions')}</li>
         </ul>
       </div>
     </div>

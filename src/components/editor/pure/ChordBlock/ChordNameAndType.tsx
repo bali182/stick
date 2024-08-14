@@ -14,6 +14,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import { ChordType, Note } from '../../../../model/types'
 import { isNil } from '../../../../model/isNil'
 import { EditorIds } from '../../EditorIds'
+import { useTranslation } from 'react-i18next'
 
 export type ChordNameAndTypeProps = {
   chordId: string
@@ -101,6 +102,7 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
   onChange,
   chords = ALL_CHORD_NAMES,
 }) => {
+  const { t } = useTranslation()
   const fireOnChange = (value: string | undefined) => {
     if (isNil(value)) {
       return
@@ -186,7 +188,7 @@ export const ChordNameAndType: FC<ChordNameAndTypeProps> = ({
         {filteredChords.length === 0 && (
           <div className={emptyContentStyle}>
             <RiSearchLine />
-            <span>Invalid chord</span>
+            <span>{t('Errors.InvalidChord')}</span>
           </div>
         )}
         {filteredChords.map((item, index) => {

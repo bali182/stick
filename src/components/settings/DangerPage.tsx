@@ -9,6 +9,7 @@ import { useActiveProgression } from '../../modelHooks'
 import { useNavigate } from 'react-router'
 import { Paths } from '../paths'
 import { deleteProgressions } from '../../state/actionCreators'
+import { useTranslation } from 'react-i18next'
 
 const sectionStyle = css`
   display: flex;
@@ -64,6 +65,7 @@ export const DangerPage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useActiveProgression()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const onDeleteProgression = () => {
     if (isNil(progression)) {
@@ -75,14 +77,16 @@ export const DangerPage: FC<PageProps> = () => {
 
   return (
     <div className={sectionStyle}>
-      <label className={labelStyle}>Delete chord progression</label>
+      <label className={labelStyle}>
+        {t('Settings.DeleteProgressionName')}
+      </label>
       <span className={descriptionStyle}>
-        Pressing this button will permanently delete this chord progression.
+        {t('Settings.DeleteProgressionDescription')}
       </span>
       <div className={containerStyle}>
         <button className={buttonStyle} onClick={onDeleteProgression}>
           <FiTrash2 />
-          Permanently delete progression
+          {t('Settings.DeleteProgressionButton')}
         </button>
       </div>
     </div>

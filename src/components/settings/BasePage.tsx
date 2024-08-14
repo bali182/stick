@@ -1,26 +1,16 @@
 import { FC } from 'react'
 import { InputSection } from './InputSection'
 import { TextInput } from './TextInput'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../state/store'
 import { isNil } from '../../model/isNil'
 import { progressionsSlice } from '../../state/progressions'
-import { Dropdown, MultiDropdown } from './Dropdown'
-import { ChordProgression, Tag } from '../../model/types'
+import { Dropdown } from './Dropdown'
+import { ChordProgression } from '../../model/types'
 import { PageProps } from './types'
 import { useActiveProgression } from '../../modelHooks'
 import { setNoteCount } from '../../state/actionCreators'
-
-// const TAGS_MAP: Record<Tag, boolean> = {
-//   CHROMATIC_APPROACH: true,
-//   CHORD_TONE_ONLY: true,
-//   ASCENDING: true,
-//   DESCENDING: true,
-// }
-
-// const tagsData = {
-//   values: Object.keys(TAGS_MAP) as Tag[],
-// }
+import { useTranslation } from 'react-i18next'
 
 const notesData = {
   values: ['2', '4'],
@@ -29,6 +19,7 @@ const notesData = {
 export const BasePage: FC<PageProps> = () => {
   const dispatch = useDispatch<AppDispatch>()
   const progression = useActiveProgression()
+  const { t } = useTranslation()
 
   function updateProgression(updates: Partial<ChordProgression>): void {
     if (isNil(progression)) {
@@ -41,10 +32,6 @@ export const BasePage: FC<PageProps> = () => {
       }),
     )
   }
-
-  // const onNameChange = (name: string) => {
-  //   updateProgression({ name })
-  // }
 
   const onBpmChange = (bpm: string) => {
     updateProgression({ bpm: parseInt(bpm) })
@@ -59,38 +46,19 @@ export const BasePage: FC<PageProps> = () => {
     )
   }
 
-  // const onTagsChange = (tags: string[]) => {
-  //   updateProgression({ tags: tags as Tag[] })
-  // }
-
   return (
     <>
-      {/* <InputSection
-        name="Progression name"
-        description="Name of your progression, helps you identify and find it later."
-        Editor={TextInput}
-        onChange={onNameChange}
-        value={progression?.name ?? ''}
-      /> */}
       <InputSection
-        name="Tempo"
-        description="Tempo of the project in BPM (beats per minute)"
+        name={t('Settings.TempoName')}
+        description={t('Settings.TempoDescription')}
         Editor={TextInput}
         onChange={onBpmChange}
         value={(progression?.bpm ?? 120).toString()}
         data={{ type: 'number', min: 60, max: 500, step: 1 }}
       />
-      {/* <InputSection
-        name="Tags"
-        description="Your global prefferences regarding how chords transition in this progression. Can be changed per chord."
-        Editor={MultiDropdown}
-        data={tagsData}
-        onChange={onTagsChange}
-        value={progression?.tags ?? []}
-      /> */}
       <InputSection
-        name="Notes in a bar"
-        description="Preferred amount of notes in a bar."
+        name={t('Settings.NotesInABarName')}
+        description={t('Settings.NotesInABarDescription')}
         Editor={Dropdown}
         data={notesData}
         onChange={onNoteCountChange}

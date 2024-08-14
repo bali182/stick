@@ -1,5 +1,6 @@
 import { css, cx } from '@emotion/css'
 import { FC, HTMLProps } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const alphaStyle = css`
   fill: #ffffff;
@@ -32,9 +33,10 @@ const wrapperStyle = css`
 `
 
 export const SVGAlphaTabLogo: FC<HTMLProps<HTMLElement>> = ({ className }) => {
+  const { t } = useTranslation()
   return (
     <a className={cx(wrapperStyle, className)} href="https://alphatab.net">
-      <span className={renderedByStyle}>Tabs & score rendered by:</span>
+      <span className={renderedByStyle}>{t('Score.AlphaTabRenderedBy')}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={200}

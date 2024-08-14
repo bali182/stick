@@ -13,7 +13,10 @@ import { Modal } from '../Modal'
 import { BasePage } from './BasePage'
 import { TuningPage } from './TuningPage'
 import { DangerPage } from './DangerPage'
-import { PageProps } from './types'
+import { PageProps, SettingsPage } from './types'
+import { i18n } from '../../languages/i18n'
+import { useTranslation } from 'react-i18next'
+import { useSettingsPages } from './useSettingsPages'
 
 const menuStyle = css`
   border-top-left-radius: 14px;
@@ -102,50 +105,24 @@ const contentContainerStyle = css`
   height: 600px;
 `
 
-type ModalEditor = {
-  id: string
-  name: string
-  Icon: IconType
-  Component: ComponentType<PageProps>
-}
-
-const editors: ModalEditor[] = [
-  {
-    id: nanoid(),
-    name: 'Preferences',
-    Icon: PiGear,
-    Component: BasePage,
-  },
-  {
-    id: nanoid(),
-    name: 'Tuning',
-    Icon: PiMusicNoteSimple,
-    Component: TuningPage,
-  },
-  {
-    id: nanoid(),
-    name: 'Danger Zone',
-    Icon: PiWarning,
-    Component: DangerPage,
-  },
-]
-
 export const SettingsModal: FC<PageProps> = ({ onClose }) => {
-  const [activeEditor, setActiveEditor] = useState<ModalEditor>(editors[0]!)
+  const pages = useSettingsPages()
+  const [activePage, setActivePage] = useState<SettingsPage>(pages[0]!)
+  const { t } = useTranslation()
   return (
     <Modal onBackdropClick={onClose}>
       <div className={menuStyle}>
         <header className={menuHeaderStyle}>
-          <PiGearFill className={headerIconStyle} /> Settings
+          <PiGearFill className={headerIconStyle} /> {t('Settings.Settings')}
         </header>
         <div className={menuContainerStyle}>
-          {editors.map((e) => {
+          {pages.map((e) => {
             const { id, name, Icon } = e
             const className = cx(
               menuItemStlye,
-              id === activeEditor.id ? activeMenuItemStyle : null,
+              id === activePage.id ? activeMenuItemStyle : null,
             )
-            const onClick = () => setActiveEditor(e)
+            const onClick = () => setActivePage(e)
             return (
               <div key={id} className={className} onClick={onClick}>
                 <Icon /> {name}
@@ -157,12 +134,12 @@ export const SettingsModal: FC<PageProps> = ({ onClose }) => {
       <div className={contentStyle}>
         <header className={contentHeaderStyle}>
           <div className={contentTitleStyle}>
-            <activeEditor.Icon /> {activeEditor.name}
+            <activePage.Icon /> {activePage.name}
           </div>
           <PiX className={closeIconStyle} onClick={onClose} />
         </header>
         <div className={contentContainerStyle}>
-          {<activeEditor.Component onClose={onClose} />}
+          {<activePage.Component onClose={onClose} />}
         </div>
       </div>
     </Modal>

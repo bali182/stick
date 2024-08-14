@@ -1,7 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { ListSelector } from '../../ListSelector'
 import { PitchedNote } from '../../../../model/types'
-import { i18n } from '../../../../languages/i18n'
+import { useTranslation } from 'react-i18next'
 
 export type RootSelectorListProps = {
   root: PitchedNote
@@ -11,8 +11,6 @@ export type RootSelectorListProps = {
 
 const getChildren = (counts: PitchedNote[]) => counts
 const getCategoryKey = (_: PitchedNote[]) => 'notes'
-const getCategoryLabel = (_: PitchedNote[]) =>
-  i18n.t('Progression.SelectRootNote')
 const getItemKey = (item: PitchedNote) => item.toString()
 const getItemLabel = (item: PitchedNote) => item
 const matches = (_item: PitchedNote, _search: string) => true
@@ -21,7 +19,12 @@ export const RootSelectorList: FC<RootSelectorListProps> = ({
   onChange,
   values,
 }) => {
+  const { t } = useTranslation()
   const wrappedValues = useMemo(() => [values], [values])
+  const getCategoryLabel = useCallback(
+    (_: PitchedNote[]) => t('Progression.SelectRootNote'),
+    [t],
+  )
 
   return (
     <ListSelector<PitchedNote[], PitchedNote>

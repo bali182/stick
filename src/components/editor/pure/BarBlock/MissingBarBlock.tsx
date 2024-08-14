@@ -2,6 +2,7 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 import { buttonStyle } from '../../../commonStyles'
+import { useTranslation } from 'react-i18next'
 
 const missingBarBlockStyle = css`
   display: flex;
@@ -33,14 +34,13 @@ export type MissingBarBlockProps = {
 }
 
 export const MissingBarBlock: FC<MissingBarBlockProps> = ({ onDelete }) => {
+  const { t } = useTranslation()
   return (
     <div className={missingBarBlockStyle}>
-      <span className={textStyle}>
-        This bar is missing! This is most likely the result of a bug.
-      </span>
+      <span className={textStyle}>{t('Errors.MissingBar')}</span>
       <button className={buttonStyle} onClick={onDelete}>
         <FiTrash2 />
-        Delete
+        {t('Errors.Delete')}
       </button>
     </div>
   )

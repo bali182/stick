@@ -1,7 +1,6 @@
 import { FC, useCallback } from 'react'
 import { ListSelector } from '../../ListSelector'
 import { isNil } from '../../../../model/isNil'
-import { i18n } from '../../../../languages/i18n'
 import { useTranslation } from 'react-i18next'
 
 export type NoteCountSelectorListProps = {
@@ -14,7 +13,6 @@ const noteCounts = [[1, 2, 4, undefined]]
 
 const getChildren = (counts: (number | undefined)[]) => counts
 const getCategoryKey = () => 'counts'
-const getCategoryLabel = () => i18n.t('Progression.SelectNoteCount')
 const getItemKey = (item: number | undefined) =>
   isNil(item) ? 'default' : item.toString()
 const matches = () => true
@@ -24,6 +22,11 @@ export const NoteCountSelectorList: FC<NoteCountSelectorListProps> = ({
   progressionNoteCount,
 }) => {
   const { t } = useTranslation()
+
+  const getCategoryLabel = useCallback(
+    () => t('Progression.SelectNoteCount'),
+    [t],
+  )
 
   const getItemLabel = useCallback(
     (item: number | undefined) => {
