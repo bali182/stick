@@ -2,6 +2,7 @@ import { css } from '@emotion/css'
 import { FC } from 'react'
 import { FiPlusSquare } from 'react-icons/fi'
 import { EditorIds } from '../../EditorIds'
+import { useTranslation } from 'react-i18next'
 
 const barBlockStyle = css`
   display: flex;
@@ -52,6 +53,7 @@ export type AddBarBlockProps = {
 }
 
 export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
+  const { t } = useTranslation()
   return (
     <button
       className={barBlockStyle}
@@ -59,7 +61,7 @@ export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
       id={EditorIds.addBarButton}
     >
       <div className={addButtonStyle}>
-        <FiPlusSquare className={addBarIconStyle} /> Bar
+        <FiPlusSquare className={addBarIconStyle} /> {t('Progression.Bar')}
       </div>
     </button>
   )

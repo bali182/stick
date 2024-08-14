@@ -12,6 +12,7 @@ import { progressionsSlice } from '../../state/progressions'
 import { AutoWidthInput } from '../AutoWidthInput'
 import { clearTransactions, fillTransactions } from '../../state/actionCreators'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const toolbarStyle = css`
   display: flex;
@@ -101,10 +102,11 @@ const buttonIconStyle = css`
   flex-shrink: 0;
 `
 
-export const ProjectToolBar: FC = () => {
+export const ProgressionToolBar: FC = () => {
   const [isSettingsOpen, setSettingsOpen] = useState(false)
 
   const progression = useActiveProgression()
+  const { t } = useTranslation()
 
   const { canAutoFillTransitions, canClearTransitions } = useProgressionStatus(
     progression?.id!,
@@ -174,7 +176,7 @@ export const ProjectToolBar: FC = () => {
             onClick={onAutoAddTransitions}
           >
             <RiBrushLine className={buttonIconStyle} />
-            Fill transitions
+            {t('EditorNavigation.FillTransitions')}
           </button>
 
           <button
@@ -183,7 +185,7 @@ export const ProjectToolBar: FC = () => {
             onClick={onClearTransitions}
           >
             <FiTrash2 className={buttonIconStyle} />
-            Clear transitions
+            {t('EditorNavigation.ClearTransitions')}
           </button>
         </div>
         <div className={buttonContainerStyle}>
@@ -193,7 +195,7 @@ export const ProjectToolBar: FC = () => {
             onClick={onOpenSettings}
           >
             <PiGear className={buttonIconStyle} />
-            Settings
+            {t('EditorNavigation.Settings')}
           </button>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { isNil } from '../../../../model/isNil'
 import { TransitionSelectorList } from './TransitionSelectorList'
 import { useOnEscape } from '../../useOnEscape'
 import { Transition, TransitionCategory } from '../../../../model/types'
+import { useTranslation } from 'react-i18next'
 
 export type TransitionButtonProps = {
   transition?: Transition
@@ -132,6 +133,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
   categories,
   onChange,
 }) => {
+  const { t } = useTranslation()
   const [isOpen, setOpen] = useState(false)
 
   const close = () => setOpen(false)
@@ -176,7 +178,9 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
             tabIndex={-1}
           >
             <div className={walkStyle}>
-              <RiFootprintFill className={addTransitionIconStyle} /> Transition
+              <RiFootprintFill className={addTransitionIconStyle} />
+              &nbsp;
+              {t('Progression.Transition')}
             </div>
           </button>
         )}

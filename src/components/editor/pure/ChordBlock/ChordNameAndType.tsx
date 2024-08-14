@@ -40,6 +40,7 @@ const inputStyle = css`
   transition: text-shadow 0.2s ease, color 0.2s ease;
   user-select: none;
   max-width: 150px;
+  height: 40px;
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -61,7 +62,7 @@ const openMenuStyle = css`
   position: absolute;
   overflow: auto;
   height: 110px;
-  width: 100%;
+  width: 153px;
   background-color: #181818;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
   margin-top: 2px;

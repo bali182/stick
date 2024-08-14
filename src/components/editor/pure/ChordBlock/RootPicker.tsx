@@ -3,6 +3,7 @@ import { css } from '@emotion/css'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { PitchedNote } from '../../../../model/types'
 import { RootSelectorList } from './RootSelectorList'
+import { useTranslation } from 'react-i18next'
 
 export type RootPickerProps = {
   root: PitchedNote
@@ -37,6 +38,7 @@ const popoverStyle = css`
 
 export const RootPicker: FC<RootPickerProps> = ({ root, values, onChange }) => {
   const [isOpen, setOpen] = useState(false)
+  const { t } = useTranslation()
   const onClose = () => setOpen(false)
   const onOpen = () => setOpen(true)
 
@@ -70,7 +72,7 @@ export const RootPicker: FC<RootPickerProps> = ({ root, values, onChange }) => {
       )}
     >
       <button className={rootPickerStyle} onClick={onOpen} tabIndex={-1}>
-        Root: {root}
+        {t('Progression.Root')}: {root}
       </button>
     </Popover>
   )

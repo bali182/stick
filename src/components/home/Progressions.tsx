@@ -22,6 +22,7 @@ import { TemplateDescriptor } from './types'
 import { templates } from './templates'
 import { createProgressionFromTemplate } from '../../state/actionCreators'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const containerStyle = css`
   display: flex;
@@ -160,6 +161,7 @@ const buttonStyle = css`
 `
 
 export const RecentProgressions: FC = () => {
+  const { t } = useTranslation()
   const progressions = useSelector(progressionsSlice.selectors.getProgressions)
   if (progressions.length === 0) {
     return null
@@ -167,13 +169,15 @@ export const RecentProgressions: FC = () => {
   return (
     <div className={containerStyle}>
       <div className={recentsContentContainerStyle}>
-        <h2 className={titleStyle}>Recent progressions</h2>
+        <h2 className={titleStyle}>{t('Home.RecentProgressions')}</h2>
         {progressions.map((p) => (
           <Link to={Paths.editor(p.id)} className={itemStyle} key={p.id}>
             <PiMusicNotesLight className={iconStyle} />
             <div className={labelContainer}>
               <span className={nameStyle}>{p.name}</span>
-              <span className={detailStyle}>{p.bars.length} Bars</span>
+              <span className={detailStyle}>
+                {p.bars.length} {t('Home.Bars')}
+              </span>
             </div>
           </Link>
         ))}
@@ -185,6 +189,7 @@ export const RecentProgressions: FC = () => {
 export const NewProgression: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [templateClicked, setTemplateClicked] = useState(false)
   const [template, setTemplate] = useState<TemplateDescriptor>()
@@ -245,7 +250,7 @@ export const NewProgression: FC = () => {
   return (
     <div className={containerStyle}>
       <div className={newContentContainerStyle}>
-        <h2 className={titleStyle}>New progression</h2>
+        <h2 className={titleStyle}>{t('Home.NewProgression')}</h2>
         {templates.map((t) => {
           const cls = cx(itemStyle, t === template ? selectedStyle : null)
           return (
@@ -263,7 +268,7 @@ export const NewProgression: FC = () => {
         <input
           ref={inputRef}
           type="text"
-          placeholder="Progression name..."
+          placeholder={t('Home.ProgressionName')}
           className={inputStyle}
           disabled={hasTemplateSelected}
           value={useAutoName ? autoName : name}
@@ -281,7 +286,7 @@ export const NewProgression: FC = () => {
           disabled={hasTemplateSelected}
           onClick={onCreateProject}
         >
-          <PiPlusBold /> Create
+          <PiPlusBold /> {t('Home.Create')}
         </button>
       </div>
     </div>

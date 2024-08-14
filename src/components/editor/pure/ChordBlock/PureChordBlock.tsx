@@ -12,6 +12,7 @@ const chordBlockStyle = css`
   align-items: center;
   flex: 1;
   border-radius: 10px;
+  gap: 3px;
   height: 138px;
   padding: 12px 14px 8px 14px;
 `

@@ -6,6 +6,7 @@ import { RiDraggable } from 'react-icons/ri'
 import { LuSplitSquareHorizontal } from 'react-icons/lu'
 import { PiCopyBold } from 'react-icons/pi'
 import { EditorIds } from '../../EditorIds'
+import { useTranslation } from 'react-i18next'
 
 export type PureBarBlockProps = HTMLProps<HTMLDivElement> & {
   barId: string
@@ -164,6 +165,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
   ) => {
     const [isHovered, setHovered] = useState(false)
     const [isChordsAreaHovered, setChordsAreaHovered] = useState(false)
+    const { t } = useTranslation()
 
     const onMouseEnter = () => setHovered(true)
     const onMouseLeave = () => setHovered(false)
@@ -202,7 +204,8 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
               onClick={onAddFirst}
               id={EditorIds.addChordButton(barId)}
             >
-              <FiPlusSquare className={addFirstChordStyle} /> Chord
+              <FiPlusSquare className={addFirstChordStyle} />
+              {t('Progression.Chord')}
             </button>
           ) : null}
         </div>

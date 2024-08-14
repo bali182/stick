@@ -6,36 +6,34 @@ import { aMinorBlues } from '../../state/templates/aMinorBlues'
 import { emptyTemplate } from '../../state/templates/emptyTemplate'
 import { autumnLeavesTemplate } from '../../state/templates/autumnLeavesTemplate'
 import { allMyLoving } from '../../state/templates/allMyLoving'
+import { i18n } from '../../languages/i18n'
 
 export const templates: TemplateDescriptor[] = [
   {
-    name: 'New Progression',
+    name: i18n.t('Templates.EmptyName'),
     Icon: PiFileLight,
-    description: 'Create your own progression from scratch.',
+    description: i18n.t('Templates.EmptyDescription'),
     factory: (name: string, state: AppState): ProgressionTemplate =>
       withUniqueIds(state, emptyTemplate, name),
   },
   {
-    name: 'A Minor Blues',
+    name: i18n.t('Templates.AMinorBluesName'),
     Icon: PiMusicNotesLight,
-    description:
-      'Simple minor blues progression, focusing on i, iv and v chords.',
+    description: i18n.t('Templates.AMinorBluesDescription'),
     factory: (name: string, state: AppState): ProgressionTemplate =>
       withUniqueIds(state, aMinorBlues, name),
   },
   {
-    name: 'Autumn Leaves',
+    name: i18n.t('Templates.AutumnLeavesName'),
     Icon: PiMusicNotesLight,
-    description:
-      'Autumn Leaves in G minor. For practicing both the major and minor ii V I.',
+    description: i18n.t('Templates.AutumnLeavesDescription'),
     factory: (name: string, state: AppState): ProgressionTemplate =>
       withUniqueIds(state, autumnLeavesTemplate, name),
   },
   {
-    name: 'All My Loving',
+    name: i18n.t('Templates.AllMyLovingName'),
     Icon: PiMusicNotesLight,
-    description:
-      'The verse of the Beatles song "All My Loving" which features a walking bassline.',
+    description: i18n.t('Templates.AllMyLovingDescription'),
     factory: (name: string, state: AppState): ProgressionTemplate =>
       withUniqueIds(state, allMyLoving, name),
   },

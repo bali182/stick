@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ProjectToolBar } from './ProjectToolBar'
+import { ProgressionToolBar } from './ProgressionToolBar'
 import { ChordChart } from './ChordChart'
 import { Toolbar } from '../Toolbar'
 import { Navigation } from '../Navigation'
@@ -10,7 +10,7 @@ export const Editor: FC = () => {
       <Toolbar>
         <Navigation />
       </Toolbar>
-      <ProjectToolBar />
+      <ProgressionToolBar />
       <ChordChart />
     </>
   )

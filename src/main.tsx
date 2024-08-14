@@ -7,24 +7,9 @@ import { App } from './components/App'
 import { HashRouter } from 'react-router-dom'
 import './state/templates/printTemplate'
 import { I18nextProvider } from 'react-i18next'
-import i18n from 'i18next'
-import { en } from './languages/en'
-import { hu } from './languages/hu'
+import { i18n } from './languages/i18n'
 
-i18n.init({
-  interpolation: { escapeValue: false },
-  debug: true,
-  lng: window.navigator.language,
-  fallbackLng: 'en',
-  resources: {
-    en: { translation: en },
-    hu: { translation: hu },
-  },
-})
-
-const rootDiv = document.getElementById('root')!
-
-createRoot(rootDiv).render(
+createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <HashRouter>
       <Global styles={globalStyles} />

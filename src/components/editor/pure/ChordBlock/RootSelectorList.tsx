@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 import { ListSelector } from '../../ListSelector'
 import { PitchedNote } from '../../../../model/types'
+import { i18n } from '../../../../languages/i18n'
 
 export type RootSelectorListProps = {
   root: PitchedNote
@@ -10,7 +11,8 @@ export type RootSelectorListProps = {
 
 const getChildren = (counts: PitchedNote[]) => counts
 const getCategoryKey = (_: PitchedNote[]) => 'notes'
-const getCategoryLabel = (_: PitchedNote[]) => 'Select root note'
+const getCategoryLabel = (_: PitchedNote[]) =>
+  i18n.t('Progression.SelectRootNote')
 const getItemKey = (item: PitchedNote) => item.toString()
 const getItemLabel = (item: PitchedNote) => item
 const matches = (_item: PitchedNote, _search: string) => true

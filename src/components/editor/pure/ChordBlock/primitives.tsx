@@ -11,8 +11,6 @@ const headerStyle = css`
 `
 
 const contentStyle = css`
-  position: relative;
-  top: -4px;
   display: flex;
   flex-direction: column;
   gap: 10px;

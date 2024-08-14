@@ -3,6 +3,7 @@ import { css, cx } from '@emotion/css'
 import { ArrowContainer, Popover } from 'react-tiny-popover'
 import { NoteCountSelectorList } from './NoteCountSelectorList'
 import { isNil } from '../../../../model/isNil'
+import { useTranslation } from 'react-i18next'
 
 export type NoteCountPickerProps = {
   noteCount?: number
@@ -44,7 +45,7 @@ const nonDefaultStyle = cx(
 const popoverStyle = css`
   background-color: #181818;
   border-radius: 12px;
-  width: 160px;
+  width: 190px;
   height: 180px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px;
@@ -56,6 +57,7 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({
   onChange,
 }) => {
   const [isOpen, setOpen] = useState(false)
+  const { t } = useTranslation()
   const onClose = () => setOpen(false)
   const onOpen = () => setOpen(true)
 
@@ -93,7 +95,7 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({
       )}
     >
       <button className={style} onClick={onOpen} tabIndex={-1}>
-        {noteCountComputed} Notes
+        {noteCountComputed} {t('Progression.Notes')}
       </button>
     </Popover>
   )
