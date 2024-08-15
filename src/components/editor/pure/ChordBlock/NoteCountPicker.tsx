@@ -94,7 +94,12 @@ export const NoteCountPicker: FC<NoteCountPickerProps> = ({
         </ArrowContainer>
       )}
     >
-      <button className={style} onClick={onOpen} tabIndex={-1}>
+      <button
+        className={style}
+        onClick={onOpen}
+        tabIndex={-1}
+        data-tooltip="Tooltips.Progression.SelectNoteCount"
+      >
         {noteCountComputed} {t('Progression.Notes')}
       </button>
     </Popover>

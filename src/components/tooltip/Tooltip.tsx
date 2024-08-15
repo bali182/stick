@@ -1,20 +1,22 @@
 import { css, cx } from '@emotion/css'
 import { Position } from './types'
 import { CSSProperties, forwardRef } from 'react'
+import { Trans } from 'react-i18next'
+import { MessageKey } from '../../languages/types'
 
-const color = '#666'
+const color = '#111'
 const arrowSize = 8
 const arrowSizeShift = arrowSize * 2 - 2
 
 export const baseTooltipStyle = css`
   position: fixed;
+  max-width: 400px;
   background-color: ${color};
-  color: #ffffffaa;
+  color: #ffffff;
   padding: 5px 10px;
   border-radius: 6px;
   pointer-events: none;
   z-index: 1000;
-  white-space: nowrap;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.1s ease, visibility 0.1s ease;
@@ -72,7 +74,7 @@ const arrowPositions: Record<Position, string> = {
 }
 
 export type TooltipProps = {
-  content: string
+  messageKey?: MessageKey
   x: number
   y: number
   position: Position
@@ -80,7 +82,7 @@ export type TooltipProps = {
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  ({ content, x, y, visible, position }, ref) => {
+  ({ messageKey, x, y, visible, position }, ref) => {
     const styles: CSSProperties = {
       top: y,
       left: x,
@@ -94,7 +96,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <div ref={ref} className={tooltipStyle} style={styles}>
         <div className={arrowStyle}></div>
-        {content}
+        <Trans i18nKey={messageKey} />
       </div>
     )
   },

@@ -5,13 +5,21 @@ import { Position, PositionData } from './types'
 import { useActiveElement } from './useActiveElement'
 import { isNil } from '../../model/isNil'
 import { getTooltipCoordinates, getTooltipPosition } from './utils'
+import { MessageKey } from '../../languages/types'
 
 const TOOLTIP_ROOT = document.getElementById('tooltip')!
+const TOOLTIP_DELAY = 800
+const NOOP = () => {}
 
-const TooltipManager: FC = () => {
+type TooltipManagerProps = {
+  disabled?: boolean
+}
+
+const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
   const tooltipRef = useRef<HTMLDivElement>(null)
   const element = useActiveElement()
-  const [content, setContent] = useState<string>('')
+  const [messageKey, setMessageKey] = useState<MessageKey>()
+  const [visible, setVisible] = useState(false)
 
   const [{ position, x, y }, setPositionData] = useState<PositionData>({
     position: 'bottom',
@@ -20,29 +28,47 @@ const TooltipManager: FC = () => {
   })
 
   useEffect(() => {
-    if (!isNil(element)) {
-      setContent(element.getAttribute('data-tooltip') ?? '')
+    let timeoutId: ReturnType<typeof setTimeout>
+    if (!isNil(element) && !disabled) {
+      setMessageKey(element.getAttribute('data-tooltip') as MessageKey)
+      timeoutId = setTimeout(() => setVisible(true), TOOLTIP_DELAY)
+      return () => clearTimeout(timeoutId)
+    } else {
+      setVisible(false)
+      return NOOP
     }
   }, [element])
 
   useLayoutEffect(() => {
-    if (!tooltipRef.current || !element) return
+    if (!tooltipRef.current || !element || disabled) {
+      return
+    }
     const tooltipRect = tooltipRef.current.getBoundingClientRect()
     const elementRect = element.getBoundingClientRect()
     const position: Position = getTooltipPosition(elementRect, tooltipRect)
     const [x, y] = getTooltipCoordinates(position, elementRect, tooltipRect)
     setPositionData({ position, x, y })
-  }, [element, content])
+  }, [element, messageKey])
 
   return createPortal(
-    <Tooltip
-      ref={tooltipRef}
-      content={content}
-      visible={!isNil(element)}
-      position={position}
-      x={x}
-      y={y}
-    />,
+    <>
+      <Tooltip
+        ref={tooltipRef}
+        messageKey={messageKey}
+        visible={visible}
+        position={position}
+        x={x}
+        y={y}
+      />
+      {/* <Tooltip
+        messageKey={'Tooltips.Progression.Transition'}
+        visible={true}
+        position={'bottom'}
+        x={500}
+        y={300}
+      /> */}
+    </>,
+
     TOOLTIP_ROOT,
   )
 }

@@ -174,6 +174,7 @@ export const ProgressionToolBar: FC = () => {
             className={buttonStyle}
             disabled={!canAutoFillTransitions}
             onClick={onAutoAddTransitions}
+            data-tooltip="Tooltips.Progression.FillTransitions"
           >
             <RiBrushLine className={buttonIconStyle} />
             {t('EditorNavigation.FillTransitions')}
@@ -183,6 +184,7 @@ export const ProgressionToolBar: FC = () => {
             className={buttonStyle}
             disabled={!canClearTransitions}
             onClick={onClearTransitions}
+            data-tooltip="Tooltips.Progression.ClearTransitions"
           >
             <FiTrash2 className={buttonIconStyle} />
             {t('EditorNavigation.ClearTransitions')}

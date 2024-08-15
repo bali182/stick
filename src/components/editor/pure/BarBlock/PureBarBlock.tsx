@@ -195,6 +195,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
               <LuSplitSquareHorizontal
                 className={addChordCloneStyle}
                 onClick={onAddSecond}
+                data-tooltip="Tooltips.Progression.SplitBar"
               />
             </div>
           ) : null}
@@ -203,6 +204,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
               className={emptyBarAddButtonStyle}
               onClick={onAddFirst}
               id={EditorIds.addChordButton(barId)}
+              data-tooltip="Tooltips.Progression.AddChord"
             >
               <FiPlusSquare className={addFirstChordStyle} />
               {t('Progression.Chord')}
@@ -213,6 +215,7 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
           <div className={footerBlockStyle}>
             <span>&#65283;{count}</span>
             <PiCopyBold
+              data-tooltip="Tooltips.Progression.CloneBar"
               style={{ visibility: isHovered ? 'visible' : 'hidden' }}
               className={iconStyle}
               onClick={onClone}
@@ -221,13 +224,16 @@ export const PureBarBlock = forwardRef<HTMLDivElement, PureBarBlockProps>(
           <div
             style={{ opacity: isHovered ? 1 : 0 }}
             className={dragAreaStyle}
+            data-tooltip="Tooltips.Progression.DragBar"
             {...listeners}
           >
             <RiDraggable className={dragIconStyle} />
           </div>
           <FiTrash2
+            data-tooltip="Tooltips.Progression.DeleteBar"
             style={{ visibility: isHovered ? 'visible' : 'hidden' }}
             className={binIconStyle}
+            data-tran
             onClick={onDelete}
           />
         </div>

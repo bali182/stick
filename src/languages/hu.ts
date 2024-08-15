@@ -31,7 +31,8 @@ export const hu: Messages = {
   },
   Settings: {
     Settings: 'Beállítások',
-    Preferences: 'Általános',
+    General: 'Általános',
+    Progression: 'Akkordkör',
     Tuning: 'Hangolás',
     DangerZone: 'Veszély Zóna',
     TempoName: 'Tempó',

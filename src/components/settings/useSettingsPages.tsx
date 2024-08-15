@@ -2,10 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { SettingsPage } from './types'
 import { useMemo } from 'react'
 import { nanoid } from 'nanoid'
-import { PiGear, PiMusicNoteSimple, PiWarning } from 'react-icons/pi'
-import { BasePage } from './BasePage'
+import { PiGear, PiMusicNotesSimple, PiWarning } from 'react-icons/pi'
+import { BasePage as ProgressionPage } from './ProgressionPage'
 import { TuningPage } from './TuningPage'
 import { DangerPage } from './DangerPage'
+import { GiGuitarBassHead } from 'react-icons/gi'
 
 export function useSettingsPages(): SettingsPage[] {
   const { t, i18n } = useTranslation()
@@ -13,14 +14,20 @@ export function useSettingsPages(): SettingsPage[] {
     return [
       {
         id: nanoid(),
-        name: t('Settings.Preferences'),
+        name: t('Settings.General'),
         Icon: PiGear,
-        Component: BasePage,
+        Component: () => <></>,
+      },
+      {
+        id: nanoid(),
+        name: t('Settings.Progression'),
+        Icon: PiMusicNotesSimple,
+        Component: ProgressionPage,
       },
       {
         id: nanoid(),
         name: t('Settings.Tuning'),
-        Icon: PiMusicNoteSimple,
+        Icon: GiGuitarBassHead,
         Component: TuningPage,
       },
       {

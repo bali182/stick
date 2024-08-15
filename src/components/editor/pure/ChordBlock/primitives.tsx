@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { DOMAttributes, FC, PropsWithChildren } from 'react'
 import { css } from '@emotion/css'
 import { IconType } from 'react-icons'
 import { isNil } from '../../../../model/isNil'
@@ -52,7 +52,7 @@ export const ChordBlockContent: FC<PropsWithChildren> = ({ children }) => {
 
 export const Spacer: FC = () => <div className={spacerStyle} />
 
-export type ChordBlockIconProps = {
+export type ChordBlockIconProps = DOMAttributes<any> & {
   icon: IconType
   onClick?: () => void
   visible?: boolean
@@ -62,12 +62,14 @@ export const ChordBlockIcon: FC<ChordBlockIconProps> = ({
   icon: Icon,
   visible,
   onClick,
+  ...rest
 }) => {
   return (
     <Icon
       className={iconStyle}
       onClick={onClick}
       style={{ visibility: isNil(visible) || visible ? 'visible' : 'hidden' }}
+      {...rest}
     />
   )
 }

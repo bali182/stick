@@ -158,6 +158,7 @@ export const ChordBlock: FC<ChordBlockProps> = ({ barId, chordId }) => {
           icon={FiTrash2}
           onClick={onChordDeleted}
           visible={isHovered}
+          data-tooltip="Tooltips.Progression.DeleteChord"
         />
       </ChordBlockFooter>
     </PureChordBlock>

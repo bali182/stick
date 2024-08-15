@@ -29,7 +29,8 @@ export const en = {
   },
   Settings: {
     Settings: 'Settings',
-    Preferences: 'Preferences',
+    General: 'General',
+    Progression: 'Progression',
     Tuning: 'Tuning',
     DangerZone: 'Danger Zone',
     TempoName: 'Tempo',
@@ -80,5 +81,31 @@ export const en = {
     AllMyLovingName: 'All My Loving',
     AllMyLovingDescription:
       'The verse of the Beatles song "All My Loving" which features a walking bassline.',
+  },
+  Tooltips: {
+    Progression: {
+      FillTransitions: `Click to automatically fill transitions. For this to work, you need at least 2 bars and each should have at least 1 chord in it. <br/><br/><strong>This will leave existing transitions intact.</strong>`,
+      ClearTransitions: `Click to clear all transitions. Great for experimenting a new set of transitions between chords.`,
+      AddBar:
+        'Click to add a new bar. You can add up to two chords to each bar.',
+      AddChord: 'Click to add a chord to this bar.',
+      SelectRoot:
+        'Select the root note of this chord. Each note of this chords transition will be selected relative to this root note.',
+      SelectNoteCount:
+        "Select how many notes you want to generate for the duration of this chord. By default each chord will be using the progression's preferred note count",
+
+      Transition: `Pick a transition to the next chord from the appropriate transitons.<br/>
+      <br/><strong>R</strong> = Current chords root note
+      <br/><strong>3</strong> = Third of the current chord
+      <br/><strong>5</strong> = Fifth of the current chord
+      <br/><strong>NR</strong> = Next chords root note
+      <br/><br/><strong>↑</strong> means up and <strong>↓</strong> means down from the current chords root. Numeric modifiers like +1 or -2 mean the given chord tone shifted with that amount of semitones.`,
+      DeleteBar: 'Click to delete this bar.',
+      DeleteChord: 'Click to delete this chord.',
+      DeleteTransition: 'Click to delete this transition.',
+      SplitBar: 'Click to add a second chord to this bar.',
+      CloneBar: 'Click to clone this bar.',
+      DragBar: 'Grab to move this bar.',
+    },
   },
 }

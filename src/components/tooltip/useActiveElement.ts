@@ -32,12 +32,20 @@ export const useActiveElement = (
       setElement(undefined)
     }
 
+    const resetElement = () => {
+      setElement(undefined)
+    }
+
     document.addEventListener('mouseover', handleMouseOver)
     document.addEventListener('mouseout', handleMouseOut)
+    document.addEventListener('wheel', resetElement)
+    document.addEventListener('keydown', resetElement)
 
     return () => {
       document.removeEventListener('mouseover', handleMouseOver)
       document.removeEventListener('mouseout', handleMouseOut)
+      document.removeEventListener('wheel', resetElement)
+      document.removeEventListener('keydown', resetElement)
     }
   }, [])
 

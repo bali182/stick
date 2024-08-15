@@ -16,7 +16,6 @@ export type TransitionButtonProps = {
 }
 
 const containerStyle = css`
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,6 +175,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
             className={transitionButtonStyle}
             onClick={toggle}
             tabIndex={-1}
+            data-tooltip="Tooltips.Progression.Transition"
           >
             <div className={walkStyle}>
               <RiFootprintFill className={addTransitionIconStyle} />
@@ -190,6 +190,7 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
               className={transitionNameBtnStyle}
               onClick={toggle}
               tabIndex={-1}
+              data-tooltip="Tooltips.Progression.Transition"
             >
               {transition.name}
             </button>
@@ -198,7 +199,10 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
               onClick={onTransitionDeleted}
               tabIndex={-1}
             >
-              <FiTrash2 className={buttonIconStyle} />
+              <FiTrash2
+                className={buttonIconStyle}
+                data-tooltip="Tooltips.Progression.DeleteTransition"
+              />
             </button>
           </div>
         )}

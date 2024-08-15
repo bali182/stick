@@ -1,10 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Messages } from './languages/types'
+import { MessageKey, Messages } from './languages/types'
 
 declare module 'react' {
-  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    'data-tooltip'?: string
+  interface DOMAttributes<T> {
+    'data-tooltip'?: MessageKey
   }
 }
 
@@ -13,6 +13,7 @@ declare module 'i18next' {
     defaultNS: 'en'
     resources: {
       en: Messages
+      hu: Messages
     }
   }
 }

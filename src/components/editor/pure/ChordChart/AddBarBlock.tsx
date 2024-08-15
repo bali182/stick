@@ -59,6 +59,7 @@ export const AddBarBlock: FC<AddBarBlockProps> = ({ onClick }) => {
       className={barBlockStyle}
       onClick={onClick}
       id={EditorIds.addBarButton}
+      data-tooltip="Tooltips.Progression.AddBar"
     >
       <div className={addButtonStyle}>
         <FiPlusSquare className={addBarIconStyle} /> {t('Progression.Bar')}

@@ -71,7 +71,12 @@ export const RootPicker: FC<RootPickerProps> = ({ root, values, onChange }) => {
         </ArrowContainer>
       )}
     >
-      <button className={rootPickerStyle} onClick={onOpen} tabIndex={-1}>
+      <button
+        className={rootPickerStyle}
+        onClick={onOpen}
+        tabIndex={-1}
+        data-tooltip="Tooltips.Progression.SelectRoot"
+      >
         {t('Progression.Root')}: {root}
       </button>
     </Popover>

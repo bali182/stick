@@ -10,7 +10,7 @@ import {
   PiX,
 } from 'react-icons/pi'
 import { Modal } from '../Modal'
-import { BasePage } from './BasePage'
+import { BasePage } from './ProgressionPage'
 import { TuningPage } from './TuningPage'
 import { DangerPage } from './DangerPage'
 import { PageProps, SettingsPage } from './types'

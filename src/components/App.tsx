@@ -17,7 +17,7 @@ const appStyle = css`
 export const App: FC = () => {
   return (
     <div className={appStyle}>
-      <TooltipManager />
+      <TooltipManager disabled={true} />
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/:progressionId/404" Component={ProgressionNotFoundPage} />

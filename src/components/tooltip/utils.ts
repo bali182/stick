@@ -28,7 +28,7 @@ export function getTooltipPosition(
 export function getTooltipCoordinates(
   position: Position,
   elementRect: DOMRect,
-  tooltipRect: DOMRect,
+  _tooltipRect: DOMRect,
 ): [number, number] {
   let x = 0
   let y = 0
@@ -58,17 +58,17 @@ export function getTooltipCoordinates(
     }
   }
   // Ensure tooltip stays within viewport boundaries
-  if (x < 0) {
-    x = 0
-  }
-  if (x + tooltipRect.width > viewportWidth) {
-    x = viewportWidth - tooltipRect.width
-  }
-  if (y < 0) {
-    y = 0
-  }
-  if (y + tooltipRect.height > viewportHeight) {
-    y = viewportHeight - tooltipRect.height
-  }
+  // if (x < 0) {
+  //   x = 0
+  // }
+  // if (x + tooltipRect.width > viewportWidth) {
+  //   x = viewportWidth - tooltipRect.width
+  // }
+  // if (y < 0) {
+  //   y = 0
+  // }
+  // if (y + tooltipRect.height > viewportHeight) {
+  //   y = viewportHeight - tooltipRect.height
+  // }
   return [x, y]
 }
