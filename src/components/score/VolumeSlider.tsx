@@ -1,5 +1,5 @@
 import { css } from '@emotion/css'
-import { FC } from 'react'
+import { DOMAttributes, FC } from 'react'
 import { IconType } from 'react-icons'
 import { RiVolumeMuteFill, RiVolumeUpFill } from 'react-icons/ri'
 
@@ -78,7 +78,10 @@ const iconStyle = css`
   color: #ffffff;
 `
 
-export type VolumeSliderProps = {
+export type VolumeSliderProps = Omit<
+  DOMAttributes<HTMLDivElement>,
+  'onChange'
+> & {
   value: number
   Icon: IconType
   onChange: (value: number) => void
@@ -88,9 +91,10 @@ export const VolumeSlider: FC<VolumeSliderProps> = ({
   value,
   onChange,
   Icon,
+  ...rest
 }) => {
   return (
-    <div className={containerStyle}>
+    <div className={containerStyle} {...rest}>
       <Icon className={iconStyle} />
       <RiVolumeMuteFill
         className={controlIconStyle}

@@ -16,16 +16,19 @@ type TooltipManagerProps = {
 }
 
 const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
-  const tooltipRef = useRef<HTMLDivElement>(null)
+  const measureRef = useRef<HTMLDivElement>(null)
   const element = useActiveElement()
   const [messageKey, setMessageKey] = useState<MessageKey>()
   const [visible, setVisible] = useState(false)
 
-  const [{ position, x, y }, setPositionData] = useState<PositionData>({
-    position: 'bottom',
-    x: 0,
-    y: 0,
-  })
+  const [{ position, x, y, width, height }, setPositionData] =
+    useState<PositionData>({
+      position: 'bottom',
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    })
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>
@@ -40,33 +43,42 @@ const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
   }, [element])
 
   useLayoutEffect(() => {
-    if (!tooltipRef.current || !element || disabled) {
+    if (isNil(measureRef.current) || isNil(element) || disabled) {
       return
     }
-    const tooltipRect = tooltipRef.current.getBoundingClientRect()
+    const tooltipRect = measureRef.current.getBoundingClientRect()
     const elementRect = element.getBoundingClientRect()
     const position: Position = getTooltipPosition(elementRect, tooltipRect)
     const [x, y] = getTooltipCoordinates(position, elementRect, tooltipRect)
-    setPositionData({ position, x, y })
+    setPositionData({
+      position,
+      x,
+      y,
+      width: tooltipRect.width,
+      height: tooltipRect.height,
+    })
   }, [element, messageKey])
 
   return createPortal(
     <>
+      {/* The real tooltip */}
       <Tooltip
-        ref={tooltipRef}
         messageKey={messageKey}
         visible={visible}
         position={position}
         x={x}
         y={y}
+        width={width}
+        height={height}
       />
-      {/* <Tooltip
-        messageKey={'Tooltips.Progression.Transition'}
-        visible={true}
-        position={'bottom'}
-        x={500}
-        y={300}
-      /> */}
+      {/* Used for measuring text without position based distortion */}
+      <Tooltip
+        ref={measureRef}
+        messageKey={messageKey}
+        visible={false}
+        x={1}
+        y={1}
+      />
     </>,
 
     TOOLTIP_ROOT,

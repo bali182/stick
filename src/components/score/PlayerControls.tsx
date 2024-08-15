@@ -81,28 +81,37 @@ export const PlayerControls: FC<PlayerControlsProps> = ({
           Icon={PiMetronomeBold}
           value={metronomeVolume}
           onChange={onMetronomeVolumeChange}
+          data-tooltip="Tooltips.Score.MetronomeVolume"
         />
         <VolumeSlider
           Icon={GiGuitarBassHead}
           value={bassVolume}
           onChange={onBassVolumeChange}
+          data-tooltip="Tooltips.Score.BassVolume"
         />
         <VolumeSlider
           Icon={TbPiano}
           value={chordsVolume}
           onChange={onChordsVolumeChange}
+          data-tooltip="Tooltips.Score.ChordsVolume"
         />
       </div>
       <div className={middleContainerStyle}>
         <div className={controlsContainerStyle}>
-          <StopButton onClick={onStop} />
-          <PlayButton onClick={onPlayPause} isToggled={isPlaying} />
-          <LoopButton onClick={onLoop} isToggled={isLooping} />
+          <StopButton onClick={onStop} data-tooltip="Tooltips.Score.Stop" />
+          <PlayButton
+            onClick={onPlayPause}
+            isToggled={isPlaying}
+            data-tooltip="Tooltips.Score.PlayPause"
+          />
+          <LoopButton
+            onClick={onLoop}
+            isToggled={isLooping}
+            data-tooltip="Tooltips.Score.Loop"
+          />
         </div>
-        {/* <BpmInput value={bpm} onChange={onTempoChange} /> */}
       </div>
       <SVGAlphaTabLogo className={logoStyle} />
-      {/* <AlphaTabLogo className={logoStyle} /> */}
     </div>
   )
 }

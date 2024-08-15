@@ -1,5 +1,5 @@
 import { css, cx } from '@emotion/css'
-import { FC } from 'react'
+import { DOMAttributes, FC } from 'react'
 import {
   RiPauseLargeFill,
   RiPlayLargeFill,
@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ri'
 import { RxLoop } from 'react-icons/rx'
 
-export type BasicButtonProps = {
+export type BasicButtonProps = DOMAttributes<HTMLButtonElement> & {
   onClick: () => void
 }
 
@@ -66,37 +66,45 @@ const toogledButtonStyle = css`
   }
 `
 
-export const PlayButton: FC<ToggleButtonProps> = ({ onClick, isToggled }) => {
+export const PlayButton: FC<ToggleButtonProps> = ({
+  onClick,
+  isToggled,
+  ...rest
+}) => {
   return (
-    <button className={playButtonStyle} onClick={onClick}>
+    <button className={playButtonStyle} onClick={onClick} {...rest}>
       {isToggled ? <RiPauseLargeFill /> : <RiPlayLargeFill />}
     </button>
   )
 }
 
-export const LoopButton: FC<ToggleButtonProps> = ({ onClick, isToggled }) => {
+export const LoopButton: FC<ToggleButtonProps> = ({
+  onClick,
+  isToggled,
+  ...rest
+}) => {
   const className = cx(
     secondaryButtonStyle,
     isToggled ? toogledButtonStyle : null,
   )
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} {...rest}>
       <RxLoop />
     </button>
   )
 }
 
-export const StopButton: FC<BasicButtonProps> = ({ onClick }) => {
+export const StopButton: FC<BasicButtonProps> = ({ onClick, ...rest }) => {
   return (
-    <button className={secondaryButtonStyle} onClick={onClick}>
+    <button className={secondaryButtonStyle} onClick={onClick} {...rest}>
       <RiStopLargeFill />
     </button>
   )
 }
 
-export const PrintButton: FC<BasicButtonProps> = ({ onClick }) => {
+export const PrintButton: FC<BasicButtonProps> = ({ onClick, ...rest }) => {
   return (
-    <button className={secondaryButtonStyle} onClick={onClick}>
+    <button className={secondaryButtonStyle} onClick={onClick} {...rest}>
       <RiPrinterFill />
     </button>
   )

@@ -3,6 +3,7 @@ import { Position } from './types'
 import { CSSProperties, forwardRef } from 'react'
 import { Trans } from 'react-i18next'
 import { MessageKey } from '../../languages/types'
+import { isNil } from '../../model/isNil'
 
 const color = '#111'
 const arrowSize = 8
@@ -77,12 +78,14 @@ export type TooltipProps = {
   messageKey?: MessageKey
   x: number
   y: number
-  position: Position
+  width?: number
+  height?: number
+  position?: Position
   visible: boolean
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  ({ messageKey, x, y, visible, position }, ref) => {
+  ({ messageKey, x, y, width, height, visible, position }, ref) => {
     const styles: CSSProperties = {
       top: y,
       left: x,
@@ -90,8 +93,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       opacity: visible ? 1 : 0,
     }
 
-    const tooltipStyle = cx(baseTooltipStyle, tooltipPositions[position])
-    const arrowStyle = cx(baseArrowStyle, arrowPositions[position])
+    if (!isNil(width) && width > 0) {
+      styles.width = width
+    }
+    if (!isNil(height) && height > 0) {
+      styles.height = height
+    }
+
+    const tooltipStyle = cx(
+      baseTooltipStyle,
+      isNil(position) ? undefined : tooltipPositions[position],
+    )
+
+    const arrowStyle = cx(
+      baseArrowStyle,
+      isNil(position) ? undefined : arrowPositions[position],
+    )
 
     return (
       <div ref={ref} className={tooltipStyle} style={styles}>

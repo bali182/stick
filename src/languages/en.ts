@@ -107,5 +107,13 @@ export const en = {
       CloneBar: 'Click to clone this bar.',
       DragBar: 'Grab to move this bar.',
     },
+    Score: {
+      Stop: 'Click to stop playback and reset playhead',
+      PlayPause: 'Click to play or pause',
+      Loop: 'Click to turn on or off looping selection',
+      MetronomeVolume: 'Metronome volume',
+      BassVolume: 'Bass volume',
+      ChordsVolume: 'Chords volume',
+    },
   },
 }
