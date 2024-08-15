@@ -3,10 +3,11 @@ import { SettingsPage } from './types'
 import { useMemo } from 'react'
 import { nanoid } from 'nanoid'
 import { PiGear, PiMusicNotesSimple, PiWarning } from 'react-icons/pi'
+import { GiGuitarBassHead } from 'react-icons/gi'
 import { BasePage as ProgressionPage } from './ProgressionPage'
 import { TuningPage } from './TuningPage'
 import { DangerPage } from './DangerPage'
-import { GiGuitarBassHead } from 'react-icons/gi'
+import { GeneralPage } from './GeneralPage'
 
 export function useSettingsPages(): SettingsPage[] {
   const { t, i18n } = useTranslation()
@@ -16,7 +17,7 @@ export function useSettingsPages(): SettingsPage[] {
         id: nanoid(),
         name: t('Settings.General'),
         Icon: PiGear,
-        Component: () => <></>,
+        Component: GeneralPage,
       },
       {
         id: nanoid(),

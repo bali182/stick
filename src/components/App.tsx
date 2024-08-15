@@ -6,7 +6,8 @@ import { ScoreView } from './score/ScoreView'
 import { Home } from './home/Home'
 import { NeedsProgressionRoute } from './NeedsProgressionRoute'
 import { NotFoundPage, ProgressionNotFoundPage } from './NotFoundPages'
-import TooltipManager from './tooltip/TooltipManager'
+import { TooltipManager } from './tooltip/TooltipManager'
+import { useConfig } from '../modelHooks'
 
 const appStyle = css`
   width: 100%;
@@ -15,9 +16,10 @@ const appStyle = css`
 `
 
 export const App: FC = () => {
+  const { showTooltips = true } = useConfig()
   return (
     <div className={appStyle}>
-      <TooltipManager disabled={true} />
+      <TooltipManager disabled={!showTooltips} />
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/:progressionId/404" Component={ProgressionNotFoundPage} />

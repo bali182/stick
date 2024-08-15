@@ -33,6 +33,9 @@ export const en = {
     Progression: 'Progression',
     Tuning: 'Tuning',
     DangerZone: 'Danger Zone',
+    ShowTooltipsName: 'Show Tooltips',
+    ShowTooltipsDescription:
+      'Turn on or off tooltips appearing on controls in the application.',
     TempoName: 'Tempo',
     TempoDescription: 'Tempo of the project in BPM (beats per minute)',
     NotesInABarName: 'Notes in a bar',

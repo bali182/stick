@@ -6,16 +6,16 @@ import { useActiveElement } from './useActiveElement'
 import { isNil } from '../../model/isNil'
 import { getTooltipCoordinates, getTooltipPosition } from './utils'
 import { MessageKey } from '../../languages/types'
+import { noop } from '../../model/utils'
 
 const TOOLTIP_ROOT = document.getElementById('tooltip')!
 const TOOLTIP_DELAY = 800
-const NOOP = () => {}
 
 type TooltipManagerProps = {
   disabled?: boolean
 }
 
-const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
+export const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
   const measureRef = useRef<HTMLDivElement>(null)
   const element = useActiveElement()
   const [messageKey, setMessageKey] = useState<MessageKey>()
@@ -38,7 +38,7 @@ const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
       return () => clearTimeout(timeoutId)
     } else {
       setVisible(false)
-      return NOOP
+      return noop
     }
   }, [element])
 
@@ -84,5 +84,3 @@ const TooltipManager: FC<TooltipManagerProps> = ({ disabled }) => {
     TOOLTIP_ROOT,
   )
 }
-
-export default TooltipManager

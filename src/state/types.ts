@@ -11,6 +11,7 @@ export type ConfigState = {
   chordsVolume: number
   isLooping: boolean
   language?: Language
+  showTooltips?: boolean
 }
 
 export type AppState = {
