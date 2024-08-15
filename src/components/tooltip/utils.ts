@@ -1,15 +1,17 @@
 import { isNil } from '../../model/isNil'
 import { CanFitFn, Position, Spaces } from './types'
 
+const EXTRA_SPACE = 10
+
 const CanFit: Record<Position, CanFitFn> = {
   top: (
     rect: DOMRect,
     { spaceAbove, spaceLeft, spaceRight }: Spaces,
   ): boolean => {
     return (
-      spaceAbove > rect.height &&
-      spaceLeft > rect.width / 2 &&
-      spaceRight > rect.width / 2
+      spaceAbove > rect.height + EXTRA_SPACE &&
+      spaceLeft > rect.width / 2 + EXTRA_SPACE &&
+      spaceRight > rect.width / 2 + EXTRA_SPACE
     )
   },
   bottom: (
@@ -17,9 +19,9 @@ const CanFit: Record<Position, CanFitFn> = {
     { spaceBelow, spaceLeft, spaceRight }: Spaces,
   ): boolean => {
     return (
-      spaceBelow > rect.height &&
-      spaceLeft > rect.width / 2 &&
-      spaceRight > rect.width / 2
+      spaceBelow > rect.height + EXTRA_SPACE &&
+      spaceLeft > rect.width / 2 + EXTRA_SPACE &&
+      spaceRight > rect.width / 2 + EXTRA_SPACE
     )
   },
   left: (
@@ -27,9 +29,9 @@ const CanFit: Record<Position, CanFitFn> = {
     { spaceLeft, spaceAbove, spaceBelow }: Spaces,
   ): boolean => {
     return (
-      spaceLeft > rect.width &&
-      spaceAbove > rect.height / 2 &&
-      spaceBelow > rect.height / 2
+      spaceLeft > rect.width + EXTRA_SPACE &&
+      spaceAbove > rect.height / 2 + EXTRA_SPACE &&
+      spaceBelow > rect.height / 2 + EXTRA_SPACE
     )
   },
   right: (
@@ -37,9 +39,9 @@ const CanFit: Record<Position, CanFitFn> = {
     { spaceRight, spaceAbove, spaceBelow }: Spaces,
   ): boolean => {
     return (
-      spaceRight > rect.width &&
-      spaceAbove > rect.height / 2 &&
-      spaceBelow > rect.height / 2
+      spaceRight > rect.width + EXTRA_SPACE &&
+      spaceAbove > rect.height / 2 + EXTRA_SPACE &&
+      spaceBelow > rect.height / 2 + EXTRA_SPACE
     )
   },
 }

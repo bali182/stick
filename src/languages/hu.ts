@@ -37,6 +37,8 @@ export const hu: Messages = {
     DangerZone: 'Veszély Zóna',
     TempoName: 'Tempó',
     TempoDescription: 'Az akkordkör tempója BPM-ben.',
+    ShowTooltipsName: 'Súgó (Tooltip-ek) engedélyezése',
+    ShowTooltipsDescription: 'Itt ki és bekapcsolhatod a Súgót (Tooltip-eket)',
     NotesInABarName: 'Hangok egy ütemben',
     NotesInABarDescription: 'Alapértelmezett hangmennyiség egy ütemben.',
     TuningName: 'Hangolás',
@@ -82,5 +84,38 @@ export const hu: Messages = {
     MissingProgression: 'Ez az akkordkör nem létezik!',
     GoBack: 'Vissza a főoldalra',
     '404': '404 - Ez az oldal nem csinál semmit.',
+  },
+  Tooltips: {
+    Progression: {
+      FillTransitions: `Az akkordok közötti átmenetek automatikus kitöltése. Ahhoz hogy ez működjön legyen legalább 2 ütemed, és minden ütemben legyen legalább 1 akkord. <br/><br/><strong>Ez a funkció a kitöltött átmeneteket nem változtatja meg.</strong>`,
+      ClearTransitions: `Az összes átmenet törlése. <strong>Ez az akció nem vonható vissza.</strong><br/><br>Ideális, ha új átmenetekkel akarsz kísérletezni.`,
+      AddBar: 'Új ütem hozzáadása az akkordkörhöz.',
+      AddChord: 'Új akkord hozzáadása az ütemhez.',
+      SelectRoot:
+        'Válaszd ki az akkord alaphangját. Az akkord átmenetének hangjai ehhez a hanghoz képest lesznek számítva.',
+      SelectNoteCount:
+        'Válaszd ki hány hangból álló átmenetet szeretnél használni ehhez az akkordhoz. Alapértelmezetten az akkordkörben definiált mennyiségű hang lesz használva.',
+
+      Transition: `Válasz egy átmenetet a következő akkordhoz.<br/>
+      <br/><strong>R</strong> = Az akkord alpahangja
+      <br/><strong>3</strong> = Az akkord terce
+      <br/><strong>5</strong> = Az akkord kvintje
+      <br/><strong>NR</strong> = A következő akkord alpahangja
+      <br/><br/><strong>↑</strong> - az alaphanghoz képes magasabb <strong>↓</strong> - illetve az alaphanghoz képest mélyebb akkordhangot jelent. +x vagy -x az akkordhangtól x félhang távolságra levő hangot jelent.`,
+      DeleteBar: 'Az ütem törlése.',
+      DeleteChord: 'Az akkord törlése.',
+      DeleteTransition: 'Az átmenet törlése.',
+      SplitBar: 'Új akkord hozzáadása az ütemhez.',
+      CloneBar: 'Az ütem duplikálása.',
+      DragBar: 'Az ütem mozgatása.',
+    },
+    Score: {
+      Stop: 'Lejátszás megállítása, és ugrás az elejére',
+      PlayPause: 'Lejátszás vagy a lejátszás szüneteltetése',
+      Loop: 'A kijelölt szakasz ismétlésének ki és bekapcsolása',
+      MetronomeVolume: 'Metronóm hangereje',
+      BassVolume: 'Basszus hangereje',
+      ChordsVolume: 'Akkordok/kíséret hangereje',
+    },
   },
 }
