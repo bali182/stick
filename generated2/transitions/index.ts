@@ -11,6 +11,12 @@ import { down6 } from './down6'
 import { down7 } from './down7'
 import { down8 } from './down8'
 import { down9 } from './down9'
+import {
+  generic4NoteChromatic,
+  generic2NoteChromatic,
+  generic2NoteChordTones,
+  generic1Note,
+} from './generic'
 import { stationary } from './stationary'
 import { up1 } from './up1'
 import { up10 } from './up10'
@@ -38,6 +44,10 @@ export const TRANSITION_CATEGORIES: TransitionCategory2[] = [
   down7,
   down8,
   down9,
+  generic4NoteChromatic,
+  generic2NoteChromatic,
+  generic2NoteChordTones,
+  generic1Note,
   stationary,
   up1,
   up10,
