@@ -128,6 +128,14 @@ export function getNoteParts(note: Note): [BaseNoteName, Accidental?] {
   return [base, accidental && accidental.length > 0 ? accidental : undefined]
 }
 
+export function takeWhile<T>(
+  array: T[],
+  predicate: (item: T, index: number, array: T[]) => boolean,
+) {
+  const i = array.findIndex((e, i, a) => !predicate(e, i, a))
+  return i >= 0 ? array.slice(0, i) : []
+}
+
 export function lerp(start: number, end: number, ratio: number): number {
   return Math.floor((1 - ratio) * start + ratio * end)
 }

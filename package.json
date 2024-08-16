@@ -12,7 +12,8 @@
     "gg2": "rm -rf generated/wbp2 && antlr4 -Dlanguage=TypeScript  -no-visitor -no-listener -o generated/wbp2 wbp2.g4",
     "gt": "rm -rf generated/transitions && ts-node ./generator/generate.ts",
     "gt2": "rm -rf generated2/transitions && ts-node ./generator2/generate.ts",
-    "prefix": "ts-node src/state/templates/prefixWithProgressionName.ts"
+    "prefix": "ts-node src/state/templates/prefixWithProgressionName.ts",
+    "ch": "ts-node src/state/getFittingScales.ts"
   },
   "author": "Balázs Édes ",
   "license": "ISC",
