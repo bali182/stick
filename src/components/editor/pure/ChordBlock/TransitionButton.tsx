@@ -198,11 +198,9 @@ export const TransitionButton: FC<TransitionButtonProps> = ({
               className={removeButtonStyle}
               onClick={onTransitionDeleted}
               tabIndex={-1}
+              data-tooltip="Tooltips.Progression.DeleteTransition"
             >
-              <FiTrash2
-                className={buttonIconStyle}
-                data-tooltip="Tooltips.Progression.DeleteTransition"
-              />
+              <FiTrash2 className={buttonIconStyle} />
             </button>
           </div>
         )}
