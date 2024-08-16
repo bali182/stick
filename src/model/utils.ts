@@ -76,6 +76,20 @@ export function updatePartial<T>(
   }
 }
 
+export function groupBy<T, S extends string>(
+  data: T[],
+  fn: (item: T) => S,
+): Record<S, T[]> {
+  return data.reduce((obj, item) => {
+    const key = fn(item)
+    if (!obj.hasOwnProperty(key)) {
+      obj[key] = []
+    }
+    obj[key].push(item)
+    return obj
+  }, {} as Record<S, T[]>)
+}
+
 export function insertAt<T>(array: T[], item: T, index: number): T[] {
   return [...array.slice(0, index), item, ...array.slice(index)]
 }

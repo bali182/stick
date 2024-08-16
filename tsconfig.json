@@ -25,7 +25,10 @@
   "include": [
     "src/**/*",
     "generated/**/*",
+    "generated2/**/*",
     "transitions/**/*",
-    "generator/**/*"
+    "transitions2/**/*",
+    "generator/**/*",
+    "generator2/**/*"
   ]
 }

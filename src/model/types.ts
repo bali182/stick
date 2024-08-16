@@ -114,10 +114,25 @@ export type RawTransitionCategory = {
   transitions: string[]
 }
 
+export type RawTransitionCategory2 = {
+  transitions: string[]
+  tags?: Tag[]
+  source?: ChordType[]
+  target?: number
+}
+
 export type TransitionCategory = {
   id: string
   name: string
   description: string
+  tags: Tag[]
+  transitions: Transition[]
+}
+export type TransitionCategory2 = {
+  id: string
+  name: string
+  sourceFileName: string
+  variableName: string
   tags: Tag[]
   transitions: Transition[]
 }
