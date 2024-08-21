@@ -1,5 +1,6 @@
 import { canTransition } from '../../model/canTransition'
 import { TRANSITIONS } from '../../model/constants'
+import { getChordSymbolName } from '../../model/getChordSymbolName'
 import { isNil } from '../../model/isNil'
 import { ChordSymbol, Transition } from '../../model/types'
 import { getRandomWeightedElement } from '../../model/utils'
@@ -24,6 +25,9 @@ export function fillTransitionsReducer(
     const updatedChords: ChordSymbol[] = []
     const chordsGenerator = chordsIterator(state, action.payload.progressionId)
     const chordsWithBars = Array.from(chordsGenerator)
+    console.log(
+      JSON.stringify(chordsWithBars.map(([c]) => getChordSymbolName(c))),
+    )
     for (let i = 0; i < chordsWithBars.length; i += 1) {
       const [from] = chordsWithBars[i]!
       // Already has a transition or last chord
